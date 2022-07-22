@@ -17,7 +17,7 @@ module.exports = {
       },
       tipoUsuario: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,

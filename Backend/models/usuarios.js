@@ -10,15 +10,15 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Usuarios.hasMany(models.professores);
-      Usuarios.hasMany(models.alunos);
+      // Usuarios.hasMany(models.professores);
+      // Usuarios.hasMany(models.alunos);
     }
   }
   Usuarios.init({
     matricula: DataTypes.STRING,
     nome: DataTypes.STRING,
     emailInstitucional: DataTypes.STRING,
-    tipoUsuario: DataTypes.STRING
+    tipoUsuario: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Usuarios',

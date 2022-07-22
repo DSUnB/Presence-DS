@@ -2,14 +2,9 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('EfetuarChamada', {
-      idEfetuarChamada: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
       idChamada: {
         allowNull: false,
+        primaryKey: true,
         type: Sequelize.INTEGER,
         references: {
           model: 'chamadas',
@@ -20,6 +15,7 @@ module.exports = {
       },
       codigoTurma: {
         allowNull: false,
+        primaryKey: true,
         type: Sequelize.STRING,
         references: {
           model: 'turmas',

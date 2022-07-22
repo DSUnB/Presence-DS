@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Chamadas.hasMany(models.realizarChamada);
-      Chamadas.hasMany(models.responderChamada);
+      // Chamadas.hasMany(models.realizarChamada);
+      // Chamadas.hasMany(models.responderChamada);
     }
   }
   Chamadas.init({

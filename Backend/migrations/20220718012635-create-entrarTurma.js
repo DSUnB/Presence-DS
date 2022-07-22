@@ -2,14 +2,9 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('EntrarTurma', {
-      idEntrarTurma: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
       idAluno: {
         allowNull: false,
+        primaryKey: true,
         type: Sequelize.INTEGER,
         references: {
           model: 'alunos',
@@ -20,6 +15,7 @@ module.exports = {
       },
       codigoTurma: {
         allowNull: false,
+        primaryKey: true,
         type: Sequelize.STRING,
         references: {
           model: 'turmas',
