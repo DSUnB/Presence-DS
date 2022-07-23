@@ -1,17 +1,25 @@
-import React from 'react'
-import { View } from 'react-native';
-import { Botao, Img } from './styles';
+import React from 'react';
+import { Input, Div } from './styles';
+import IconF from 'react-native-vector-icons/Feather';
+import IconM from 'react-native-vector-icons/MaterialIcons';
+import { StyleSheet } from 'react-native';
 
-function Inputs(props) {
-  return (
-    <View>
-      <Img
-      source={{  
-        uri: 'Presence\src\assets\favicon.png',
-      }}/>
-      <Botao placeholder={props.place}></Botao>
-    </View>
-  )
+export default function Inputs(props) {
+return (
+<Div>
+<IconF style={style.icone} name={props.iconeF} size={23}/>
+<IconM style={style.icone} name={props.iconeM} size={23}/>
+<Input placeholder={props.place}/>
+</Div>
+)
 }
 
-export default Inputs;
+const style = StyleSheet.create({
+icone:{
+zIndex: 2,
+position: 'absolute',
+left: 10,
+bottom: 19,
+color: '#7B6F72',}
+
+})
