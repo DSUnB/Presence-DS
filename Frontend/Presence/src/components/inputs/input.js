@@ -1,14 +1,16 @@
 import React from 'react';
 import { Input, Div } from './styles';
 import IconF from 'react-native-vector-icons/Feather';
-import IconM from 'react-native-vector-icons/MaterialIcons';
+import IconO from 'react-native-vector-icons/Octicons';
+import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
 import { StyleSheet } from 'react-native';
 
 export default function Inputs(props) {
 return (
 <Div>
 <IconF style={style.icone} name={props.iconeF} size={23}/>
-<IconM style={style.icone} name={props.iconeM} size={23}/>
+<IconO style={style.icone} name={props.iconeO} size={23}/>
+<IconMC style={style.icone} name={props.iconeMC} size={23}/>
 <Input placeholder={props.place}/>
 </Div>
 )
