@@ -21,9 +21,8 @@ return (
   <Inputs place="Email" iconeF='mail'/>
   <Inputs place="Senha" iconeMC='lock-outline'/>
   <Inputs place="Confirmação de Senha" iconeMC='lock-plus-outline'/>
-  <Text style={{fontFamily:'poppinsr', fontSize:12, marginTop:40}}>Não tem uma conta ainda?</Text>
     <Button
-    title='Registre-se'
+    title='Registrar'
     onPress={() => navigation.navigate('Form')}
     ></Button>
 </Div>
