@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   RealizarChamada .init({
     idChamada: DataTypes.INTEGER,
-    idProfessor: DataTypes.INTEGER
+    idProfessor: DataTypes.INTEGER,
+    codigoTurma: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'RealizarChamada ',

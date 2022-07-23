@@ -15,8 +15,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   IniciarTurma.init({
-    idProfessor: DataTypes.INTEGER,
-    codigoTurma: DataTypes.STRING
+    codigoTurma: DataTypes.STRING,
+    idProfessor: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'IniciarTurma',

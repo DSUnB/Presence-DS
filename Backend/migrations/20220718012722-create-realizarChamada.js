@@ -15,13 +15,22 @@ module.exports = {
       },
       idProfessor: {
         allowNull: false,
-        primaryKey: true,
         type: Sequelize.INTEGER,
         references:{
           model: 'professores',
           key: 'idProfessor'
         },
         onUpdate: 'cascade',  
+        onDelete: 'cascade'
+      },
+      codigoTurma: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        references: {
+          model: 'turmas',
+          key: 'codigoTurma'
+        },
+        onUpdate: 'cascade',
         onDelete: 'cascade'
       },
       createdAt: {
