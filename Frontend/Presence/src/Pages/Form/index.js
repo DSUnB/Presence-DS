@@ -10,7 +10,7 @@ Poppins_700Bold,
 import * as Font from 'expo-font'
 import { AppLoading } from "expo";
 
-function Login({ navigation }) {
+function Form({ navigation }) {
 
 return (
 <Div>
@@ -21,14 +21,13 @@ return (
   <Inputs place="Email" iconeF='mail'/>
   <Inputs place="Senha" iconeMC='lock-outline'/>
   <Inputs place="Confirmação de Senha" iconeMC='lock-plus-outline'/>
-  <Text style={{fontFamily:'poppinsr', fontSize:12, marginTop:40}}>Não tem uma conta ainda?</Text>
+  <Text style={{marginTop:30}}></Text>
     <Button
     title='Registre-se'
-    onPress={() => navigation.navigate('Form')}
     ></Button>
 </Div>
 );
 }
 
-export default Login;
+export default Form;
 
