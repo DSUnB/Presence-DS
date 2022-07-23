@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Div } from './styles';
+import { Input, Div } from './styled';
 import IconF from 'react-native-vector-icons/Feather';
 import IconO from 'react-native-vector-icons/Octicons';
 import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
