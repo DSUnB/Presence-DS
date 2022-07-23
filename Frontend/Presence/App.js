@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as Font from 'expo-font';
-import Login from './src/Pages/Login/Login';
-import Form from './src/Pages/Form/Form';
+import Login from './src/Pages/Login';
+import Form from './src/Pages/Form';
 import AppLoading from 'expo-app-loading';
 
 

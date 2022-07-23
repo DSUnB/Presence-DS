@@ -1,7 +1,7 @@
 import React from "react";
 import { Div } from "./Styles";
 import { Text, Button } from "react-native";
-import Inputs from "../../components/inputs/input";
+import Inputs from "../../components/inputs";
 import {
 useFonts,
 Poppins_400Regular,
