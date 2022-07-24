@@ -9,12 +9,16 @@ const app=express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-let teste=models.teste;
+let usuario=models.Usuarios;
 
 //Rotas:
 app.get('/create', async(req,res) => {
-    let create= await teste.create({
+    let create= await usuario.create({
+        matricula: '21112312',
         nome: "Daniel",
+        emailInstitucional: 'bomdiaecia@email.com',
+        senha: '123123',
+        tipoUsuario: 0,
         createdAt: new Date(),
         updateAt: new Date(),
     });
