@@ -18,28 +18,36 @@ export default function Form({ navigation }) {
   const [matricula, setMatricula]=useState(null);
   const [email, setEmail]=useState(null);
   const [password, setPassword]=useState(null);
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked]=useState(false);
+  const [message, setMessage]=useState(null);
 
   // Criação da função para envio para o Backend:
   async function Registro(){
-    let reqs = await fetch('http://192.168.0.10:19000/create', {
+    let reqs = await fetch('http://192.168.0.10:3000/create', {
       method: 'POST',
       headers:{
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        id: null,
         matricula: matricula,
         nome: name,
         emailInstitucional: email,
         senha: password,
-        tipoUsuario: 1,
+        tipoUsuario: checked,
       })
-    })
+    });
+    let res= await reqs.json();
+    setMessage(res)
   }
 
 return (
 <Div>
+  {message && (
+    <Text>{message}</Text>
+  )}
+  
   <Text style={{fontFamily:'poppinsr', fontSize:16}}>Ei Estudante!</Text>
   <Text style={{fontFamily:'poppinsb', fontSize:20, marginBottom:20}}>Crie uma conta</Text>
   <Inputs place='Nome' iconeO='person' onChange={(text) => setName(text)}/>
