@@ -1,22 +1,24 @@
 import React, { useState } from "react";
 import { Div } from "./styled";
-import { Text, Button } from "react-native";
+import { Text, Button, View, StyleSheet } from "react-native";
+import { Checkbox } from 'react-native-paper';
 import Inputs from "../../components/inputs";
 import {
 useFonts,
 Poppins_400Regular,
 Poppins_700Bold,
 } from '@expo-google-fonts/poppins';
-import * as Font from 'expo-font'
+import * as Font from 'expo-font';
 import { AppLoading } from "expo";
 
-function Form({ navigation }) {
+export default function Form({ navigation }) {
 
   // Criação das States para serem enviadas ao Banco de Dados:
   const [name, setName]=useState(null);
   const [matricula, setMatricula]=useState(null);
   const [email, setEmail]=useState(null);
   const [password, setPassword]=useState(null);
+  const [checked, setChecked] = React.useState(false);
 
   // Criação da função para envio para o Backend:
   async function Registro(){
@@ -45,6 +47,16 @@ return (
   <Inputs place="Email" iconeF='mail' onChange={(text) => setEmail(text)}/>
   <Inputs place="Senha" iconeMC='lock-outline' onChange={(text) => setPassword(text)}/>
   <Inputs place="Confirmação de Senha" iconeMC='lock-plus-outline'/>
+  <View style={styles.container}>
+    <Checkbox
+      status={checked ? 'checked' : 'unchecked'}
+      onPress={() => {
+        setChecked(!checked);
+      }}
+    />
+    <Text style={{fontFamily:'poppinsr', fontSize:16}}>Sou professor</Text>
+  </View>
+  <Text style={{marginTop:30}}></Text>
     <Button
     title='Registrar'
     onPress={Registro}
@@ -53,4 +65,13 @@ return (
 );
 }
 
-export default Form;
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 2,
+    flexDirection: "row",
+    alignItems: 'center',
+    position: 'relative',
+    right: 85,
+  }
+})
+
