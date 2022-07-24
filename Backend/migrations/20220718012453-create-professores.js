@@ -2,6 +2,10 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Professores', {
+      id: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       idProfessor: {
         allowNull: false,
         autoIncrement: true,

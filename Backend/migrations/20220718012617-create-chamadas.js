@@ -2,6 +2,10 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Chamadas', {
+      id: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       idChamada: {
         allowNull: false,
         autoIncrement: true,

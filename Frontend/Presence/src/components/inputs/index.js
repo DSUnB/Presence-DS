@@ -11,7 +11,7 @@ return (
 <IconF style={style.icone} name={props.iconeF} size={23}/>
 <IconO style={style.icone} name={props.iconeO} size={23}/>
 <IconMC style={style.icone} name={props.iconeMC} size={23}/>
-<Input placeholder={props.place}/>
+<Input placeholder={props.place} onChangeText={props.onChange}/>
 </Div>
 )
 }

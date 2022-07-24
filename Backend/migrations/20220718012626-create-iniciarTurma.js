@@ -2,6 +2,10 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('IniciarTurma', {
+      id: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       codigoTurma: {
         allowNull: false,
         primaryKey: true,
