@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState } from "react";
 import { Div } from "./styled";
 import { Text, Button } from "react-native";
 import Inputs from "../../components/inputs";
