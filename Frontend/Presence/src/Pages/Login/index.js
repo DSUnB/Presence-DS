@@ -2,13 +2,7 @@ import React from "react";
 import { Div } from "./styled";
 import { Text, Button } from "react-native";
 import Inputs from "../../components/inputs";
-import {
-useFonts,
-Poppins_400Regular,
-Poppins_700Bold,
-} from '@expo-google-fonts/poppins';
-import * as Font from 'expo-font'
-import { AppLoading } from "expo";
+import Pressables from "../../components/pressables";
 
 function Login({ navigation }) {
 
@@ -18,6 +12,7 @@ return (
   <Text style={{fontFamily:'poppinsr', fontSize:16}}>Estudante!</Text>
   <Inputs place='Matrícula' iconeF='mail' />
   <Inputs place="Senha" iconeMC='lock-outline'/>
+  <Pressables iconeM='login' click={() => navigation.navigate('Main')}/>
   <Text style={{fontFamily:'poppinsr', fontSize:12, marginTop:40}}>Não tem uma conta ainda?</Text>
     <Button
     title='Registre-se'
@@ -29,3 +24,4 @@ return (
 }
 
 export default Login;
+

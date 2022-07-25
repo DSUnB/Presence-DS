@@ -3,13 +3,6 @@ import { Div } from "./styled";
 import { Text, Button, View, StyleSheet } from "react-native";
 import { Checkbox } from 'react-native-paper';
 import Inputs from "../../components/inputs";
-import {
-useFonts,
-Poppins_400Regular,
-Poppins_700Bold,
-} from '@expo-google-fonts/poppins';
-import * as Font from 'expo-font';
-import { AppLoading } from "expo";
 
 export default function Form({ navigation }) {
 

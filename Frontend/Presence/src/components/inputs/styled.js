@@ -4,7 +4,7 @@ export const Input = styled.TextInput`
 display: flex;
 background-color: #F7F8F8;
 border-radius: 14px;
-text-align: center;
+padding-left: 45px;
 width: 315px;
 height: 48px;
 margin-top: 7.5px;
