@@ -15,7 +15,7 @@ export default function Pressables(props) {
           style={style.button}
           >
           <IconM style={style.icone} name={props.iconeM} size={23}/>
-          <PsbT style={{fontFamily:'poppinsb', fontSize: 17}}>Login</PsbT>
+          <PsbT style={{fontFamily:'poppinsb', fontSize: 17}}>{props.texto}</PsbT>
         </LinearGradient>
       </Psb>
     </View>

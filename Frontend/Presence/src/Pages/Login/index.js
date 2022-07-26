@@ -11,9 +11,9 @@ return (
   <Text style={{fontFamily:'poppinsb', fontSize:20}}>Bem vindo,</Text>
   <Text style={{fontFamily:'poppinsr', fontSize:16, marginBottom:40}}>Estudante!</Text>
   <Inputs place='Matrícula' iconeF='mail' />
-  <Inputs place="Senha" iconeMC='lock-outline'/>
+  <Inputs place="Senha" senha={true} iconeMC='lock-outline'/>
   <Text style={{marginTop: 70}}> </Text>
-  <Pressables iconeM='login' click={() => navigation.navigate('Main')}/>
+  <Pressables iconeM='login' texto='Login' click={() => navigation.navigate('Main')}/>
   <View style={{flexDirection: 'row', alignItems: 'center', marginTop:18}}>
     <View style={{flex: 1, height: 1 ,backgroundColor: '#DDDADA'}} />
       <View>
