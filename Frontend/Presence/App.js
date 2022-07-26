@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as Font from 'expo-font';
 import Login from './src/Pages/Login';
 import Form from './src/Pages/Form';
-import Main from './src/Pages/Main/Main';
+import Main from './src/Pages/Main';
 import AppLoading from 'expo-app-loading';
 
 
