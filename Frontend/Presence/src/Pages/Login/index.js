@@ -3,6 +3,7 @@ import { Div } from "./styled";
 import { Text, View, StyleSheet } from "react-native";
 import Inputs from "../../components/inputs";
 import Pressables from "../../components/pressables";
+import InputsS from '../../components/inputsenha/index';
 
 export default function Login({ navigation }) {
 
@@ -11,7 +12,7 @@ return (
   <Text style={{fontFamily:'poppinsb', fontSize:20}}>Bem vindo,</Text>
   <Text style={{fontFamily:'poppinsr', fontSize:16, marginBottom:40}}>Estudante!</Text>
   <Inputs place='Matrícula' iconeF='mail' />
-  <Inputs place="Senha" senha={true} iconeMC='lock-outline'/>
+  <InputsS place="Senha" iconeMC='lock-outline'/>
   <Text style={{marginTop: 70}}> </Text>
   <Pressables iconeM='login' texto='Login' click={() => navigation.navigate('Main')}/>
   <View style={{flexDirection: 'row', alignItems: 'center', marginTop:18}}>
