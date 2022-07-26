@@ -4,7 +4,7 @@ import { Psb, PsbT } from './styled';
 import IconM from 'react-native-vector-icons/MaterialIcons';
 import { LinearGradient } from 'expo-linear-gradient';
 
-function Pressables(props) {
+export default function Pressables(props) {
   return (
     <View>
       <Psb onPress={props.click}>
@@ -21,8 +21,6 @@ function Pressables(props) {
     </View>
   )
 }
-
-export default Pressables;
 
 const style = StyleSheet.create({
   icone:{

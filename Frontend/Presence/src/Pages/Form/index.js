@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Div } from "./styled";
-import { Text, Button, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { Checkbox } from 'react-native-paper';
 import Inputs from "../../components/inputs";
+import Pressables from "../../components/pressables";
 
 export default function Form({ navigation }) {
 
@@ -58,10 +59,7 @@ return (
     <Text style={{fontFamily:'poppinsr', fontSize:16}}>Sou professor</Text>
   </View>
   <Text style={{marginTop:30}}></Text>
-    <Button
-    title='Registrar'
-    onPress={Registro}
-    ></Button>
+    <Pressables click={() => navigation.navigate('Main')}/>
 </Div>
 );
 }
