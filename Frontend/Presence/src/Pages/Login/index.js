@@ -1,31 +1,44 @@
 import React from "react";
 import { Div } from "./styled";
-import { Text, Button } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import Inputs from "../../components/inputs";
-import {
-useFonts,
-Poppins_400Regular,
-Poppins_700Bold,
-} from '@expo-google-fonts/poppins';
-import * as Font from 'expo-font'
-import { AppLoading } from "expo";
+import Pressables from "../../components/pressables";
+import InputsS from '../../components/inputsenha/index';
 
-function Login({ navigation }) {
+export default function Login({ navigation }) {
 
 return (
 <Div>
   <Text style={{fontFamily:'poppinsb', fontSize:20}}>Bem vindo,</Text>
-  <Text style={{fontFamily:'poppinsr', fontSize:16}}>Estudante!</Text>
+  <Text style={{fontFamily:'poppinsr', fontSize:16, marginBottom:40}}>Estudante!</Text>
   <Inputs place='Matrícula' iconeF='mail' />
-  <Inputs place="Senha" iconeMC='lock-outline'/>
-  <Text style={{fontFamily:'poppinsr', fontSize:12, marginTop:40}}>Não tem uma conta ainda?</Text>
-    <Button
-    title='Registre-se'
-    onPress={() => navigation.navigate('Form')}
-    ></Button>
+  <InputsS place="Senha" iconeMC='lock-outline'/>
+  <Text style={{marginTop: 70}}> </Text>
+  <Pressables iconeM='login' texto='Login' click={() => navigation.navigate('Main')}/>
+  <View style={{flexDirection: 'row', alignItems: 'center', marginTop:18}}>
+    <View style={{flex: 1, height: 1 ,backgroundColor: '#DDDADA'}} />
+      <View>
+        <Text style={{width: 40, fontSize:12, textAlign: 'center', fontFamily:'poppinsr'}}>Ou</Text>
+      </View>
+      <View style={{flex: 1, height: 1, backgroundColor: '#DDDADA'}} />
+      </View>
+      <View>
+      </View>
+      <Text style={{fontFamily:'poppinsr', fontSize:15, marginTop:18}}>Não tem uma conta ainda?
+      <Text style={{color:'white'}}>.  .</Text>                    
+        <Text style={styles.hypertexto} onPress={() => navigation.navigate('Form')}> 
+          Registre-se 
+        </Text> 
+      </Text>
+      
   
 </Div>
 );
 }
 
-export default Login;
+const styles = StyleSheet.create({
+  hypertexto: {
+    color: '#0D5354',
+  }
+})
+

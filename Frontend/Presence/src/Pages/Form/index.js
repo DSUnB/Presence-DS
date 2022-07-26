@@ -1,15 +1,10 @@
 import React, { useState } from "react";
 import { Div } from "./styled";
-import { Text, Button, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { Checkbox } from 'react-native-paper';
 import Inputs from "../../components/inputs";
-import {
-useFonts,
-Poppins_400Regular,
-Poppins_700Bold,
-} from '@expo-google-fonts/poppins';
-import * as Font from 'expo-font';
-import { AppLoading } from "expo";
+import Pressables from "../../components/pressables";
+import InputsS from "../../components/inputsenha";
 
 export default function Form({ navigation }) {
 
@@ -53,8 +48,8 @@ return (
   <Inputs place='Nome' iconeO='person' onChange={(text) => setName(text)}/>
   <Inputs place="Matrícula" iconeMC='smart-card-outline' onChange={(text) => setMatricula(text)}/>
   <Inputs place="Email" iconeF='mail' onChange={(text) => setEmail(text)}/>
-  <Inputs place="Senha" iconeMC='lock-outline' onChange={(text) => setPassword(text)}/>
-  <Inputs place="Confirmação de Senha" iconeMC='lock-plus-outline'/>
+  <InputsS place="Senha" senha={true} iconeMC='lock-outline' onChange={(text) => setPassword(text)}/>
+  <Inputs place="Confirmação de Senha" senha={true} iconeMC='lock-plus-outline'/>
   <View style={styles.container}>
     <Checkbox
       status={checked ? 'checked' : 'unchecked'}
@@ -65,10 +60,9 @@ return (
     <Text style={{fontFamily:'poppinsr', fontSize:16}}>Sou professor</Text>
   </View>
   <Text style={{marginTop:30}}></Text>
-    <Button
-    title='Registrar'
-    onPress={Registro}
-    ></Button>
+    <Pressables texto='Registre-se' click={() => navigation.navigate('Main')}>
+      <Text>Registre-se</Text>
+    </Pressables>
 </Div>
 );
 }
