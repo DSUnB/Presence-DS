@@ -40,7 +40,7 @@ export default function Form({ navigation }) {
     setTimeout(() => {
       setMessage(null);
       navigation.navigate('Main');
-    }, 5000);
+    }, 3000);
     }
     else {
       setMessage('Senhas Diferentes!');
