@@ -20,7 +20,7 @@ export default function Form({ navigation }) {
   // Criação da função para envio para o Backend:
   async function Registro(){
     if (password === passwordConfirm){
-      let reqs = await fetch('http://192.168.0.10:3000/create', {
+      let reqs = await fetch('http://192.168.0.10:3000/cad', {
       method: 'POST',
       headers:{
         'Accept': 'application/json',
@@ -39,7 +39,8 @@ export default function Form({ navigation }) {
     setMessage(res);
     setTimeout(() => {
       setMessage(null);
-    }, 8000);
+      navigation.navigate('Main');
+    }, 5000);
     }
     else {
       setMessage('Senhas Diferentes!');
