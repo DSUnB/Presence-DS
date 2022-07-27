@@ -18,7 +18,7 @@ app.post('/cad', async(req,res) => {
         'matricula': req.body.matricula,
         'nome': req.body.nome,
         'emailInstitucional': req.body.emailInstitucional,
-        'senha': await bcrypt.hash(req.body.senha, 10),
+        'senha': req.body.senha,
         'tipoUsuario': req.body.tipoUsuario,
         'createdAt': new Date(),
         'updatedAt': new Date()
@@ -33,7 +33,7 @@ app.post('/log', async(req,res) => {
     let reqs = await model.Usuarios.findOne({
         where:{
             'matricula': req.body.matricula,
-            'senha': await bcrypt.compare(req.body.senha, 'senha'),
+            'senha': req.body.senha,
         }
     });
     if(reqs === null){
