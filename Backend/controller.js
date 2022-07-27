@@ -12,6 +12,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //Rotas:
+// Registrar a Conta do usuário:
 app.post('/cad', async(req,res) => {
     let reqs = await model.Usuarios.create({
         'matricula': req.body.matricula,
@@ -24,6 +25,22 @@ app.post('/cad', async(req,res) => {
     });
     if (reqs){
         res.send(JSON.stringify('O usuário foi cadastrado com sucesso! Redirecionando...'));
+    }
+});
+
+// Verificação de credenciamento do login:
+app.post('/log', async(req,res) => {
+    let reqs = await model.Usuarios.findOne({
+        where:{
+            'matricula': req.body.matricula,
+            'senha': await bcrypt.compare(req.body.senha, 'senha'),
+        }
+    });
+    if(reqs === null){
+        res.send(JSON.stringify('error'));
+    }
+    else{
+        res.send(reqs);
     }
 });
 

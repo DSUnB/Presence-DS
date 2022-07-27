@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Div } from "./styled";
 import { Text, View, StyleSheet } from "react-native";
 import Inputs from "../../components/inputs";
@@ -7,14 +7,48 @@ import InputsS from '../../components/inputsenha/index';
 
 export default function Login({ navigation }) {
 
+  // Criação das States para serem enviadas ao Banco de Dados:
+  const [matricula, setMatricula]= useState(null);
+  const [senha,setSenha]= useState(null);
+  const [message, setMessage]=useState(null);
+
+  async function envLogin(){
+    let reqs = await fetch('http://192.168.0.10:3000/log', {
+      method: 'POST',
+      headers:{
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        matricula: matricula,
+        senha: senha,
+      })
+    });
+    let json= await reqs.json();
+    if(json === 'error'){
+      setMessage('Matrícula ou Senha incorreta!');
+      setTimeout(() => {
+      setMessage(null);
+    }, 5000);
+    }
+    else{
+      navigation.navigate('Main');
+    }
+  }
+
 return (
 <Div>
   <Text style={{fontFamily:'poppinsb', fontSize:20}}>Bem vindo,</Text>
   <Text style={{fontFamily:'poppinsr', fontSize:16, marginBottom:40}}>Estudante!</Text>
-  <Inputs place='Matrícula' iconeF='mail' />
-  <InputsS place="Senha" iconeMC='lock-outline'/>
+
+  {message && (
+    <Text>{message}</Text>
+  )}
+
+  <Inputs place='Matrícula' iconeF='mail' onChange={(text) => setMatricula(text)}/>
+  <InputsS place="Senha" iconeMC='lock-outline' onChange={(text) => setSenha(text)}/>
   <Text style={{marginTop: 70}}> </Text>
-  <Pressables iconeM='login' texto='Login' click={() => navigation.navigate('Main')}/>
+  <Pressables iconeM='login' texto='Login' click={envLogin}/>
   <View style={{flexDirection: 'row', alignItems: 'center', marginTop:18}}>
     <View style={{flex: 1, height: 1 ,backgroundColor: '#DDDADA'}} />
       <View>
