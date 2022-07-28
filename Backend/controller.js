@@ -5,6 +5,8 @@ const bodyParser=require('body-parser');
 const model=require('./models');
 const bcrypt=require('bcrypt');
 
+var salt = bcrypt.genSaltSync(10)
+
 // Configuração das bibliotecas:
 const app=express();
 app.use(cors());
@@ -18,7 +20,7 @@ app.post('/cad', async(req,res) => {
         'matricula': req.body.matricula,
         'nome': req.body.nome,
         'emailInstitucional': req.body.emailInstitucional,
-        'senha': req.body.senha,
+        'senha': bcrypt.hashSync(req.body.senha, salt),
         'tipoUsuario': req.body.tipoUsuario,
         'createdAt': new Date(),
         'updatedAt': new Date()
@@ -33,7 +35,7 @@ app.post('/log', async(req,res) => {
     let reqs = await model.Usuarios.findOne({
         where:{
             'matricula': req.body.matricula,
-            'senha': req.body.senha,
+            'senha': bcrypt.hashSync(req.body.senha, salt),
         }
     });
     if(reqs === null){

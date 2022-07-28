@@ -39,7 +39,7 @@ export default function Form({ navigation }) {
     setMessage(res);
     setTimeout(() => {
       setMessage(null);
-      navigation.navigate('Main');
+      navigation.navigate('Login');
     }, 5000);
     }
     else {
