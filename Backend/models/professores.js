@@ -10,10 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // Professores.belongsTo(models.Usuarios);
-      // Professores.hasMany(models.iniciarTurma);
-      // Professores.hasMany(models.realizarChamada);
-    }
+      //Professores.belongsTo(models.Usuarios);
+      //Professores.hasMany(models.IniciarTurma);
+      //Professores.hasMany(models.RealizarChamada);
+  }
   }
   Professores.init({
     idProfessor: DataTypes.INTEGER,
