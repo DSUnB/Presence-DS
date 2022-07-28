@@ -4,6 +4,7 @@ import { Text, View, StyleSheet } from "react-native";
 import Inputs from "../../components/inputs";
 import Pressables from "../../components/pressables";
 import InputsS from '../../components/inputsenha/index';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({ navigation }) {
 
@@ -30,8 +31,10 @@ export default function Login({ navigation }) {
       setTimeout(() => {
       setMessage(null);
     }, 5000);
+      await AsyncStorage.clear();
     }
     else{
+      await AsyncStorage.setItem('userData', JSON.stringify(json));
       navigation.navigate('Main');
     }
   }
