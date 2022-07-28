@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       //Chamadas.hasMany(models.RealizarChamada);
-      //Chamadas.hasMany(models.ResponderChamada);
+      Chamadas.hasMany(models.ResponderChamada);
     }
   }
   Chamadas.init({

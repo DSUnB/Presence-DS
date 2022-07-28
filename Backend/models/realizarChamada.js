@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       RealizarChamada.belongsTo(models.Professores);
       RealizarChamada.belongsTo(models.Chamadas);
+      RealizarChamada.belongsTo(models.Turmas);
     }
   }
   RealizarChamada .init({
