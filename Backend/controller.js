@@ -5,6 +5,7 @@ const bodyParser=require('body-parser');
 const model=require('./models');
 const bcrypt=require('bcrypt');
 
+
 var salt = bcrypt.genSaltSync(10)
 
 // Configuração das bibliotecas:
@@ -16,7 +17,8 @@ app.use(bodyParser.json());
 //Rotas:
 // Registrar a Conta do usuário:
 app.post('/cad', async(req,res) => {
-    let reqs = await model.Usuarios.create({
+    try {
+        let reqs = await model.Usuarios.create({
         'matricula': req.body.matricula,
         'nome': req.body.nome,
         'emailInstitucional': req.body.emailInstitucional,
@@ -28,11 +30,17 @@ app.post('/cad', async(req,res) => {
     if (reqs){
         res.send(JSON.stringify('O usuário foi cadastrado com sucesso! Redirecionando...'));
     }
+    }
+    catch {
+        res.send(JSON.stringify('error'));
+    }
+    
 });
 
 // Verificação de credenciamento do login:
 app.post('/log', async(req,res) => {
-    let reqs = await model.Usuarios.findOne({
+    try {
+      let reqs = await model.Usuarios.findOne({
         where:{
             'matricula': req.body.matricula,
             'senha': bcrypt.hashSync(req.body.senha, salt),
@@ -43,6 +51,10 @@ app.post('/log', async(req,res) => {
     }
     else{
         res.send(reqs);
+    }  
+    }
+    catch {
+        res.send(JSON.stringify('error'))
     }
 });
 

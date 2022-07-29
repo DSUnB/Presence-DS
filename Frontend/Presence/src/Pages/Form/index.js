@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Div } from "./styled";
 import { Text, View, StyleSheet } from "react-native";
 import { Checkbox } from 'react-native-paper';
 import Inputs from "../../components/inputs";
 import Pressables from "../../components/pressables";
 import InputsS from "../../components/inputsenha";
+
 
 export default function Form({ navigation }) {
 
@@ -19,7 +20,7 @@ export default function Form({ navigation }) {
 
   // Criação da função para envio para o Backend:
   async function Registro(){
-    if (password === passwordConfirm){
+    if (password === passwordConfirm && name != '' && matricula != '' && email != '' && password != ''){
       let reqs = await fetch('http://192.168.0.10:3000/cad', {
       method: 'POST',
       headers:{
@@ -36,14 +37,29 @@ export default function Form({ navigation }) {
       })
     });
     let res= await reqs.json();
-    setMessage(res);
+    if (res === 'error'){
+      setMessage('Todos os campos são obrigatórios!');
+      setTimeout(() => {
+      setMessage(null);
+    }, 5000);
+    }
+    else{
+      setMessage(res);
     setTimeout(() => {
       setMessage(null);
       navigation.navigate('Login');
     }, 5000);
     }
-    else {
+    
+    }
+    else if (password != passwordConfirm) {
       setMessage('Senhas Diferentes!');
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    }
+    else{
+      setMessage('Todos os campos são obrigatórios!');
       setTimeout(() => {
         setMessage(null);
       }, 5000);

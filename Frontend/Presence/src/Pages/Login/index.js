@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Div } from "./styled";
 import { Text, View, StyleSheet } from "react-native";
 import Inputs from "../../components/inputs";
 import Pressables from "../../components/pressables";
 import InputsS from '../../components/inputsenha/index';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({ navigation }) {
 
@@ -25,16 +24,14 @@ export default function Login({ navigation }) {
         senha: senha,
       })
     });
-    let json= await reqs.json();
-    if(json === 'error'){
+    let res= await reqs.json();
+    if(res === 'error'){
       setMessage('Matrícula ou Senha incorreta!');
       setTimeout(() => {
       setMessage(null);
     }, 5000);
-      await AsyncStorage.clear();
     }
     else{
-      await AsyncStorage.setItem('userData', JSON.stringify(json));
       navigation.navigate('Main');
     }
   }
