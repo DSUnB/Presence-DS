@@ -4,6 +4,7 @@ import { Text, View, StyleSheet } from "react-native";
 import Inputs from "../../components/inputs";
 import Pressables from "../../components/pressables";
 import InputsS from '../../components/inputsenha/index';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({ navigation }) {
 
@@ -11,6 +12,9 @@ export default function Login({ navigation }) {
   const [matricula, setMatricula]= useState(null);
   const [senha,setSenha]= useState(null);
   const [message, setMessage]=useState(null);
+  const [matToken, setMatToken]=useState(null);
+  const [senhaToken, setSenhaToken]=useState(null);
+  const [loadingToken, setLoadingToken]=useState(true);
 
   async function envLogin(){
     let reqs = await fetch('http://192.168.0.10:3000/log', {
@@ -30,11 +34,47 @@ export default function Login({ navigation }) {
       setTimeout(() => {
       setMessage(null);
     }, 5000);
+      await AsyncStorage.clear();
     }
     else{
+      await AsyncStorage.setItem('userData', JSON.stringify(res));
       navigation.navigate('Main');
     }
   }
+
+  async function AutoLogin(){
+    let reqs = await fetch('http://192.168.0.10:3000/Autolog', {
+      method: 'POST',
+      headers:{
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        matricula: matToken,
+        senha: senhaToken,
+      })
+    });
+    let res= await reqs.json();
+    if(res === 'error'){
+      setLoadingToken(false);
+      AsyncStorage.clear();
+    }
+    else{
+      await AsyncStorage.setItem('userData', JSON.stringify(res));
+      navigation.navigate('Main');
+    }
+  }
+
+  useEffect(() => {
+    AsyncStorage.getItem('userData').then((userData) => {
+      if (userData != null){
+        let json = JSON.parse(userData);
+        setMatToken(json.matricula);
+        setSenhaToken(json.senha);
+        AutoLogin();
+      }
+    })
+  })
 
 return (
 <Div>

@@ -6,7 +6,7 @@ const model=require('./models');
 const bcrypt=require('bcrypt');
 
 
-var salt = bcrypt.genSaltSync(10)
+let salt = bcrypt.genSaltSync(10)
 
 // Configuração das bibliotecas:
 const app=express();
@@ -44,6 +44,27 @@ app.post('/log', async(req,res) => {
         where:{
             'matricula': req.body.matricula,
             'senha': bcrypt.hashSync(req.body.senha, salt),
+        }
+    });
+    if(reqs === null){
+        res.send(JSON.stringify('error'));
+    }
+    else{
+        res.send(reqs);
+    }  
+    }
+    catch {
+        res.send(JSON.stringify('error'))
+    }
+});
+
+// Verificação de Autologin:
+app.post('/Autolog', async(req,res) => {
+    try {
+      let reqs = await model.Usuarios.findOne({
+        where:{
+            'matricula': req.body.matricula,
+            'senha': req.body.senha,
         }
     });
     if(reqs === null){
