@@ -25,8 +25,9 @@ export default function App() {
   })
 
   if(!dummy){
-    return <AppLoading></AppLoading>
-
+    return (
+      <AppLoading />
+    );
   }
 
   return (
