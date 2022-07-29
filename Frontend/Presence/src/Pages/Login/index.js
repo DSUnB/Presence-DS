@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Div } from "./styled";
 import { Text, View, StyleSheet } from "react-native";
 import Inputs from "../../components/inputs";
@@ -12,48 +12,6 @@ export default function Login({ navigation }) {
   const [matricula, setMatricula]= useState(null);
   const [senha,setSenha]= useState(null);
   const [message, setMessage]=useState(null);
-  const [login, setLogin]=useState(false);
-
-  useEffect(()=>{
-    verifyLogin();
-  },[]);
-
-  useEffect(()=>{
-      if(login === true){
-          biometric();
-      }
-  },[login]);
-
-  //Verifica se o usuário já possui algum login
-  async function verifyLogin()
-  {
-      let response=await AsyncStorage.getItem('userData');
-      let json=await JSON.parse(response);
-      if(json !== null){
-          setMatricula(json.matricula);
-          setSenha(json.senha);
-          setLogin(true);
-      }
-  }
-  //Biometria
-  async function biometric()
-  {
-      let compatible= await LocalAuthentication.hasHardwareAsync();
-      if(compatible){
-          let biometricRecords = await LocalAuthentication.isEnrolledAsync();
-          if(!biometricRecords){
-              alert('Biometria não cadastrada');
-          }else{
-              let result=await  LocalAuthentication.authenticateAsync();
-              if(result.success){
-                envLogin()();
-              }else{
-                  setMatricula(null);
-                  setSenha(null);
-              }
-          }
-      }
-  }
 
   async function envLogin(){
     let reqs = await fetch('http://192.168.0.10:3000/log', {
