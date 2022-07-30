@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, Modal, StyleSheet } from "react-native";
+import { Text, View, Modal, StyleSheet, ProgressViewIOSComponent } from "react-native";
 import Pressables from "../../components/pressables";
 import { LinearGradient } from 'expo-linear-gradient';
 import { Div } from "./styled";
@@ -11,10 +11,10 @@ export default function Main({ navigation }) {
     const [modalActive, setModalActive] = useState(false)
 
 return (
-    <Div>
+    <Div> 
         <Pressables iconeM='login' texto='Login' click={() => setModalActive(true)}/>
 
-        <Modal visible={modalActive} animationType='fade' transparent={true} onRequestClose={() => setModalActive(false)}>
+        <Modal visible={modalActive} animationType='fade' transparent={true} >
             <View style={style.fundoModal}>
                 <LinearGradient
                     // Button Linear Gradient
@@ -23,7 +23,8 @@ return (
                     style={style.modal}
                     >
                     <Text style={{fontFamily:'poppinsb', fontSize:15, color:'white'}}>Crie sua turma</Text>
-                    <Inputs place="Matéria" iconeF='book'/>
+                    <IconX style={style.close} name='close-circle' size={30} onPress={() => setModalActive(false)}/>
+                    <Inputs place="Matéria" iconeF='book' />
                     <Inputs place="Turma" iconeO='people'/>
                     </LinearGradient>
             </View>
@@ -44,5 +45,12 @@ const style = StyleSheet.create({
         padding: 35,
         width: 350,
         alignItems: 'center'
+    },
+    close:{
+        color:"#ffffff",
+        position: "absolute",
+        right: 10,
+        top: 10,
+    
     }
 })
