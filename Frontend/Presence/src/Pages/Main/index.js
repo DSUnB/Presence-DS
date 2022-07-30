@@ -4,6 +4,7 @@ import Pressables from "../../components/pressables";
 import { LinearGradient } from 'expo-linear-gradient';
 import { Div } from "./styled";
 import Inputs from "../../components/inputs";
+import IconX from 'react-native-vector-icons/Ionicons';
 
 export default function Main({ navigation }) {
 
