@@ -13,7 +13,13 @@ export default function Main({ navigation }) {
 
 return (
     <Div> 
+        <View style={style.header}>
+        <Text style={{fontFamily:'poppinsb', fontSize: 18}}> Turmas Ministradas</Text>
+        </View>
+        
+        <View style={style.botao}>
         <Pressables iconeFA5='users' texto='Criar uma turma' click={() => setModalActive(true)}/>
+        </View>
 
         <Modal visible={modalActive} animationType='fade' transparent={true} >
             <View style={style.fundoModal}>
@@ -55,5 +61,17 @@ const style = StyleSheet.create({
         position: "absolute",
         right: 20,
         top: 20,
-    }
+    },
+
+    header:{
+        position:"absolute",
+        top: 26,
+
+    },    
+
+    botao:{
+            position:"absolute",
+            bottom: 92,
+    },
+
 })
