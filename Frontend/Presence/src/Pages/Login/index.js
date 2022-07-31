@@ -14,7 +14,7 @@ return (
   <Inputs place='Matrícula' iconeF='mail' />
   <InputsS place="Senha" iconeMC='lock-outline'/>
   <Text style={{marginTop: 70}}> </Text>
-  <Pressables iconeM='login' texto='Login' click={() => navigation.navigate('Main')}/>
+  <Pressables iconeM='login' texto='Login' click={() => navigation.navigate('MainAlun')}/>
   <View style={{flexDirection: 'row', alignItems: 'center', marginTop:18}}>
     <View style={{flex: 1, height: 1 ,backgroundColor: '#DDDADA'}} />
       <View>
