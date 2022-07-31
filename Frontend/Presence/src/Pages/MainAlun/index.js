@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, Modal, StyleSheet, ProgressViewIOSComponent } from "react-native";
+import { Text, View, Modal, StyleSheet } from "react-native";
 import Pressables from "../../components/pressables";
 import PressablesModal from "../../components/pressablesModal";
 import { LinearGradient } from 'expo-linear-gradient';
@@ -14,11 +14,15 @@ export default function MainAlun({ navigation }) {
 
 return (
     <Div> 
-        <View>
+        
+        <View style={style.header}> 
+            <Text style={{fontFamily:'poppinsb', fontSize: 18}}> Turmas Inscritas</Text>
+             </View>
+        
+        <View></View>
 
-        </View>
-        <View>
-            <Pressables iconeM='login' texto='Entrar em uma turma' click={() => setModalActive(true)}/>
+        <View style={style.botao}>
+            <Pressables iconeM='login' texto='Entrar em uma turma' click={() => setModalActive(true)} />
         </View>
         <Modal visible={modalActive} animationType='fade' transparent={true} >
             <View style={style.fundoModal}>
@@ -60,5 +64,19 @@ const style = StyleSheet.create({
         position: "absolute",
         right: 20,
         top: 20,
-    }
+    },
+
+    header:{
+        position:"absolute",
+        top: 26,
+
+    },
+
+    botao:{
+        position:"absolute",
+        bottom: 92,
+
+
+    },
+
 })
