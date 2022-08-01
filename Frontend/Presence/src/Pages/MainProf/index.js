@@ -1,19 +1,29 @@
 import React, { useState } from "react";
 import { Text, View, Modal, StyleSheet, ProgressViewIOSComponent } from "react-native";
 import Pressables from "../../components/pressables";
-import PressablesModal from "../../components/pressablesModal";
+import PressablesModal from "../../components/pressablesModalS";
+import PressablesModal2 from "../../components/pressableModalN";
 import { LinearGradient } from 'expo-linear-gradient';
 import { Div } from "./styled";
 import Inputs from "../../components/inputs";
 import IconX from 'react-native-vector-icons/Ionicons';
+import Pressablesconf from "../../components/pressablesconf";
 
 export default function Main({ navigation }) {
 
     const [modalActive, setModalActive] = useState(false)
+    const [modalActive2, setModalActive2] = useState(false)
+
+    const handleCloseAndRoute = () => {
+        setModalActive2(false)
+        navigation.navigate('Login')
+
+    }
 
 return (
     <Div> 
-        <View style={style.header}>
+        <View style={style.header}> 
+        <Pressablesconf iconeLo='logout' click={() => setModalActive2(true)}/> 
         <Text style={{fontFamily:'poppinsb', fontSize: 18}}> Turmas Ministradas</Text>
         </View>
         
@@ -37,6 +47,21 @@ return (
                 </LinearGradient>
             </View>
         </Modal>
+        <Modal visible={modalActive2} animationType='fade' transparent={true} >
+            <View style={style.fundoModal}>
+                <LinearGradient
+                  colors={['#2C5E7A', '#338995']}
+                  start={[ 1.0, 0.5 ]}
+                  style={style.modal2}>
+                    
+                    <Text style={{fontFamily:'poppinsb', fontSize:15, color:'white' }}>Deseja mesmo sair?</Text>
+                    <View>
+                    <PressablesModal texto='Sim' click={() =>  handleCloseAndRoute()}/>
+                    <PressablesModal2 texto='Não' click={() => setModalActive2(false)}/>
+                    </View>
+                  </LinearGradient>
+            </View>
+        </Modal>
     </Div>
 );
 }
@@ -48,11 +73,20 @@ const style = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'rgba(0,0,0,0.2)'
     },
+    modal2:{
+        width:275,
+        height:173,
+        borderRadius:22,
+        alignItems: 'center',
+        justifyContent: 'space-around',
+
+    },
+
     modal:{
-        borderRadius: 30,
+        borderRadius: 22,
         padding: 35,
         width: 335,
-        height: 315,
+        height: 220,
         alignItems: 'center',
         justifyContent: 'space-around',
     },
