@@ -43,7 +43,7 @@ return (
     <Text>{message}</Text>
   )}
   
-  <Text style={{fontFamily:'poppinsr', fontSize:16}}>Ei Estudante!</Text>
+  <Text style={{fontFamily:'poppinsr', fontSize:16}}>Ei!</Text>
   <Text style={{fontFamily:'poppinsb', fontSize:20, marginBottom:20}}>Crie uma conta</Text>
   <Inputs place='Nome' iconeO='person' onChange={(text) => setName(text)}/>
   <Inputs place="Matrícula" iconeMC='smart-card-outline' onChange={(text) => setMatricula(text)}/>

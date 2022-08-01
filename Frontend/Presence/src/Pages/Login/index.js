@@ -5,12 +5,12 @@ import Inputs from "../../components/inputs";
 import Pressables from "../../components/pressables";
 import InputsS from '../../components/inputsenha/index';
 
-export default function Login({ navigation }) {
+export default function Login({ navigation }){
 
 return (
 <Div>
-  <Text style={{fontFamily:'poppinsb', fontSize:20}}>Bem vindo,</Text>
-  <Text style={{fontFamily:'poppinsr', fontSize:16, marginBottom:40}}>Estudante!</Text>
+  <Text style={{fontFamily:'poppinsb', fontSize:20}}>Bem vindo</Text>
+  <Text style={{fontFamily:'poppinsr', fontSize:16, marginBottom:40}}>ao Presence!</Text>
   <Inputs place='Matrícula' iconeF='mail' />
   <InputsS place="Senha" iconeMC='lock-outline'/>
   <Text style={{marginTop: 70}}> </Text>
@@ -20,9 +20,9 @@ return (
       <View>
         <Text style={{width: 40, fontSize:12, textAlign: 'center', fontFamily:'poppinsr'}}>Ou</Text>
       </View>
-      <View style={{flex: 1, height: 1, backgroundColor: '#DDDADA'}} />
+      <View style={{ flex:1, height: 1, backgroundColor: '#DDDADA'}} />
       </View>
-      <View>
+      <View> 
       </View>
       <Text style={{fontFamily:'poppinsr', fontSize:15, marginTop:18}}>Não tem uma conta ainda?
       <Text style={{color:'white'}}>.  .</Text>                    

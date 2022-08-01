@@ -35,5 +35,8 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
+    position: "absolute",
+    bottom:4,
+    right:20,
   }
 })
