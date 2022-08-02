@@ -37,13 +37,15 @@ export default function Login({ navigation }) {
     }
     else{
       await AsyncStorage.setItem('userData', JSON.stringify(res));
-      await AsyncStorage.getItem('userData');
-      let json = JSON.parse(userData);
+      let response = await AsyncStorage.getItem('userData');
+      let json = JSON.parse(response);
 
-      if (json.tipoUsuario === 0){
+      if (json.tipoUsuario === false){
+        await AsyncStorage.setItem('userData', JSON.stringify(res));
         navigation.navigate('Main');
       }
       else {
+        await AsyncStorage.setItem('userData', JSON.stringify(res));
         navigation.navigate('MainProfessor');
       }
     }
@@ -67,7 +69,17 @@ export default function Login({ navigation }) {
     }
     else{
       await AsyncStorage.setItem('userData', JSON.stringify(res));
-      navigation.navigate('Main');
+      let response = await AsyncStorage.getItem('userData');
+      let json = JSON.parse(response);
+
+      if (json.tipoUsuario === false){
+        await AsyncStorage.setItem('userData', JSON.stringify(res));
+        navigation.navigate('Main');
+      }
+      else {
+        await AsyncStorage.setItem('userData', JSON.stringify(res));
+        navigation.navigate('MainProfessor');
+      }
     }
   }
 
