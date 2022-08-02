@@ -11,8 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Professores.belongsTo(models.Usuarios);
-      Professores.hasMany(models.IniciarTurma);
-      //Professores.hasMany(models.RealizarChamada);
+      Professores.hasMany(models.Turmas);
   }
   }
   Professores.init({

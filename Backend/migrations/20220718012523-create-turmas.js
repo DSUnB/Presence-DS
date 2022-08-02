@@ -11,9 +11,23 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.STRING
       },
+      curso: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       nomeTurma: {
         allowNull: false,
         type: Sequelize.STRING
+      },
+      idProfessor: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references:{
+          model: 'professores',
+          key: 'idProfessor'
+        },
+        onUpdate: 'cascade',  
+        onDelete: 'cascade'
       },
       createdAt: {
         allowNull: false,
