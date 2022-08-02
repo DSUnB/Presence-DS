@@ -48,7 +48,7 @@ export default function Form({ navigation }) {
     setTimeout(() => {
       setMessage(null);
       navigation.navigate('Login');
-    }, 5000);
+    }, 2000);
     }
     
     }

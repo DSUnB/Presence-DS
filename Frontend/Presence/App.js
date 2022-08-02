@@ -7,6 +7,7 @@ import Login from './src/Pages/Login';
 import Form from './src/Pages/Form';
 import Main from './src/Pages/Main';
 import AppLoading from 'expo-app-loading';
+import MainProfessor from './src/Pages/MainProfessor';
 
 
 const Stack = createNativeStackNavigator();
@@ -35,6 +36,7 @@ export default function App() {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Form" component={Form} />
         <Stack.Screen name="Main" component={Main} />
+        <Stack.Screen name="MainProfessor" component={MainProfessor} />
       </Stack.Navigator>
     </NavigationContainer>
   );

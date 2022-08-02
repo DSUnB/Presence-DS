@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-function Main({ navigation }) {
+function MainProfessor() {
 
 return (
     <View>
@@ -10,4 +10,4 @@ return (
 );
 }
 
-export default Main;
+export default MainProfessor;
