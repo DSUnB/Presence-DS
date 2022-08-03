@@ -27,7 +27,7 @@ return (
       <Text style={{fontFamily:'poppinsr', fontSize:15, marginTop:18}}>Não tem uma conta ainda?
       <Text style={{color:'white'}}>.  .</Text>                    
         <Text style={styles.hypertexto} onPress={() => navigation.navigate('Form')}> 
-          Registre-se.
+          Registre-se
         </Text> 
       </Text>
       
