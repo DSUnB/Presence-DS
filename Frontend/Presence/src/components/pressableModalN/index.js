@@ -30,9 +30,5 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    position:"absolute",
-    left:20,
-    bottom: 4,
-
   }
 })

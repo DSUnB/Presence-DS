@@ -34,7 +34,10 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator 
-      initialRouteName="MainProf" 
+        initialRouteName="Login" 
+        screenOptions={{
+          headerShown: false
+        }}
       >
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Form" component={Form} />
