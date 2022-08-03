@@ -100,9 +100,9 @@ return (
   <Text style={{fontFamily:'poppinsr', fontSize:16, marginBottom:40}}>ao Presence!</Text>
   <Inputs place='Matrícula' iconeF='mail' onChange={(text) => setMatricula(text)} />
   <InputsS place="Senha" iconeMC='lock-outline' onChange={(text) => setSenha(text)}/>
-  <Text style={{marginTop: 70}}> </Text>
+  <Text style={{marginTop: 20}}> </Text>
   <Pressables iconeM='login' texto='Login' click={envLogin}/>
-  <View style={{flexDirection: 'row', alignItems: 'center', marginTop:18}}>
+  <View style={{flexDirection: 'row', alignItems: 'center', marginTop:90}}>
     <View style={{flex: 1, height: 1 ,backgroundColor: '#DDDADA'}} />
       <View>
         <Text style={{width: 40, fontSize:12, textAlign: 'center', fontFamily:'poppinsr'}}>Ou</Text>

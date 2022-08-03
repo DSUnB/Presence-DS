@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, Modal, StyleSheet, ProgressViewIOSComponent } from "react-native";
+import { Text, View, Modal, StyleSheet } from "react-native";
 import Pressables from "../../components/pressables";
 import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
@@ -7,7 +7,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Div } from "./styled";
 import Inputs from "../../components/inputs";
 import IconX from 'react-native-vector-icons/Ionicons';
-import Pressablesconf from "../../components/pressablesconf";
+import PressablesConf from "../../components/pressablesConf/index";
 
 export default function Main({ navigation }) {
 
@@ -23,7 +23,7 @@ export default function Main({ navigation }) {
 return (
     <Div> 
         <View style={style.header}> 
-        <Pressablesconf iconeLo='logout' click={() => setModalActive2(true)}/> 
+        <PressablesConf iconeLo='logout' click={() => setModalActive2(true)}/> 
         <Text style={{fontFamily:'poppinsb', fontSize: 18}}> Turmas Ministradas</Text>
         </View>
         
@@ -73,15 +73,14 @@ const style = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'rgba(0,0,0,0.2)'
     },
-    modal2:{
-        width:275,
-        height:173,
-        borderRadius:22,
-        alignItems: 'center',
-        justifyContent: 'space-around',
-
+    header:{
+        position:"absolute",
+        top: 26,
+    },    
+    botao:{
+            position:"absolute",
+            bottom: 92,
     },
-
     modal:{
         borderRadius: 22,
         padding: 35,
@@ -96,16 +95,11 @@ const style = StyleSheet.create({
         right: 20,
         top: 20,
     },
-
-    header:{
-        position:"absolute",
-        top: 26,
-
-    },    
-
-    botao:{
-            position:"absolute",
-            bottom: 92,
+    modal2:{
+        width:275,
+        height:173,
+        borderRadius:22,
+        alignItems: 'center',
+        justifyContent: 'space-around',
     },
-
 })

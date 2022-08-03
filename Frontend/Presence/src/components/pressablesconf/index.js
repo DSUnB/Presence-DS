@@ -3,7 +3,7 @@ import { Text, View, StyleSheet } from 'react-native'
 import { Psb, PsbT } from './styled';
 import IconLo from 'react-native-vector-icons/AntDesign';
 
-export default function Pressablesconf(props) {
+export default function PressablesConf(props) {
     return (
       <View>
         <Psb onPress={props.click} style={style.button}>
