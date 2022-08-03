@@ -1,23 +1,19 @@
 import React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { Psb, PsbT } from './styled';
-import IconM from 'react-native-vector-icons/MaterialIcons';
-import IconFA5 from 'react-native-vector-icons/FontAwesome5';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default function Pressables(props) {
+export default function PressablesModal(props) {
   return (
     <View>
       <Psb onPress={props.click}>
         <LinearGradient
           // Button Linear Gradient
-          colors={['#46B297', '#9DCEFF']}
+          colors={['#69D498', '#43AC9B']}
           start={[ 0.9, 0.5 ]}
           style={style.button}
           >
-          <IconM style={style.icone} name={props.iconeM} size={23}/>
-          <IconFA5 style={style.icone} name={props.iconeFA5} size={23}/>
-          <PsbT style={{fontFamily:'poppinsb', fontSize: 17}}>{props.texto}</PsbT>
+          <PsbT style={{fontFamily:'poppinsb', fontSize: 12}}>{props.texto}</PsbT>
         </LinearGradient>
       </Psb>
     </View>
@@ -32,13 +28,15 @@ const style = StyleSheet.create({
   },
 
   button:{
-    width: 315,
-    height: 60,
-    borderRadius: 99,
+    width: 91,
+    height: 36,
+    borderRadius: 50,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    position:"relative",
+    position: "absolute",
+    bottom:4,
+    right:20,
   }
 })
