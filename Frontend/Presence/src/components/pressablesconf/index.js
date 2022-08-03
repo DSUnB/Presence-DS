@@ -1,5 +1,5 @@
-import React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import { Psb, PsbT } from './styled';
 import IconLo from 'react-native-vector-icons/AntDesign';
 

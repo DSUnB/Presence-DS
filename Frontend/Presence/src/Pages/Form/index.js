@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Div } from "./styled";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, ImageBackground } from "react-native";
 import { Checkbox } from 'react-native-paper';
 import Inputs from "../../components/inputs";
 import Pressables from "../../components/pressables";
@@ -38,11 +38,11 @@ export default function Form({ navigation }) {
   }
 
 return (
+<ImageBackground source={require('../../assets/images/VetorCad.png')} resizeMode="cover">
 <Div>
   {message && (
     <Text>{message}</Text>
   )}
-  
   <Text style={{fontFamily:'poppinsr', fontSize:16}}>Ei!</Text>
   <Text style={{fontFamily:'poppinsb', fontSize:20, marginBottom:20}}>Crie uma conta</Text>
   <Inputs place='Nome' iconeO='person' onChange={(text) => setName(text)}/>
@@ -64,6 +64,7 @@ return (
       <Text>Registre-se</Text>
     </Pressables>
 </Div>
+</ImageBackground>
 );
 }
 

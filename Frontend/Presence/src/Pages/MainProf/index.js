@@ -7,7 +7,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Div } from "./styled";
 import Inputs from "../../components/inputs";
 import IconX from 'react-native-vector-icons/Ionicons';
-import PressablesConf from "../../components/pressablesConf/index";
+import PressablesConf from "../../components/pressablesconf";
 
 export default function Main({ navigation }) {
 
