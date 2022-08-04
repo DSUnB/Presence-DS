@@ -3,7 +3,7 @@ import { Div } from "./styled";
 import { Text, View, StyleSheet, ImageBackground } from "react-native";
 import Inputs from "../../components/inputs";
 import Pressables from "../../components/pressables";
-import InputsS from '../../components/inputsenha/index';
+import InputsS from "../../components/inputsenha";
 
 export default function Login({ navigation }){
 
@@ -15,7 +15,7 @@ return (
   <Inputs place='Matrícula' iconeF='mail'/>
   <InputsS place="Senha" iconeMC='lock-outline'/>
   <Text style={{marginTop: 90}}> </Text>
-  <Pressables iconeM= 'login' texto= 'Login' click={() => navigation.navigate('MainAlun')}/>
+  <Pressables iconeM= 'login' texto= 'Login' click={() => navigation.navigate('MainProf')}/>
   <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 30}}>
     <View style={{flex: 1, height: 1, marginLeft: 40, backgroundColor: '#DDDADA'}} />
       <View>

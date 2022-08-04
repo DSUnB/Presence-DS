@@ -18,7 +18,8 @@ export default function App() {
 
   Font.loadAsync({
     'poppinsb':require('./src/assets/fonts/Poppins-Bold.ttf'),
-    'poppinsr':require('./src/assets/fonts/Poppins-Regular.ttf')
+    'poppinsr':require('./src/assets/fonts/Poppins-Regular.ttf'),
+    'poppinsm':require('./src/assets/fonts/Poppins-Medium.ttf'),
 
 
   }).then(() => {
@@ -34,7 +35,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName="Login" 
+        initialRouteName="MainAlun" 
         screenOptions={{
           headerShown: false
         }}

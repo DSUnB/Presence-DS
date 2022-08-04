@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Psb, PsbT } from './styled';
-import IconLo from 'react-native-vector-icons/AntDesign';
+import IconLo from 'react-native-vector-icons/MaterialIcons';
 
 export default function PressablesConf(props) {
     return (
@@ -18,19 +18,14 @@ export default function PressablesConf(props) {
 
     icone:{
         color:"black",
-        marginLeft:5,
-        marginTop:4,
-
+        marginLeft: 5,
+        marginTop: 4,
     },
 
     button:{
       width: 33,
       height: 33,
       borderRadius: 8,
-      position:"absolute",
-      zIndex: 2,
-      top:-10,
-      right:-100,
       backgroundColor:'#E0E1E1',
     }
   })
