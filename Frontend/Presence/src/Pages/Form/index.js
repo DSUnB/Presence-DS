@@ -38,7 +38,7 @@ export default function Form({ navigation }) {
     });
     let res= await reqs.json();
     if (res === 'error'){
-      setMessage('Todos os campos são obrigatórios!');
+      setMessage('Preencha os Campos corretamente!');
       setTimeout(() => {
       setMessage(null);
     }, 5000);

@@ -15,6 +15,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //Rotas:
+
+// ====================================================
 // Registrar a Conta do usuário:
 app.post('/cad', async(req,res) => {
     try {
@@ -36,7 +38,9 @@ app.post('/cad', async(req,res) => {
     }
     
 });
+// ====================================================
 
+// ====================================================
 // Verificação de credenciamento do login:
 app.post('/log', async(req,res) => {
     try {
@@ -57,7 +61,9 @@ app.post('/log', async(req,res) => {
         res.send(JSON.stringify('error'))
     }
 });
+// ====================================================
 
+// ====================================================
 // Verificação de Autologin:
 app.post('/Autolog', async(req,res) => {
     try {
@@ -73,6 +79,22 @@ app.post('/Autolog', async(req,res) => {
     else{
         res.send(reqs);
     }  
+    }
+    catch {
+        res.send(JSON.stringify('error'))
+    }
+});
+// ====================================================
+
+// ====================================================
+// Criação de Turma:
+app.get('/turmac', async (req,res)=>{
+    try{
+        let read=await Professores.findAll({
+            'matricula': req.body.professor,
+            raw:true,
+        });
+        console.log(read);
     }
     catch {
         res.send(JSON.stringify('error'))

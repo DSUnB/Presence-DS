@@ -7,17 +7,39 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Div } from "./styled";
 import Inputs from "../../components/inputs";
 import IconX from 'react-native-vector-icons/Ionicons';
-//import PressablesConf from "../../components/pressablesConf";
+
 
 export default function MainProf({ navigation }) {
 
     const [modalActive, setModalActive] = useState(false)
     const [modalActive2, setModalActive2] = useState(false)
+    const [materia, setMateria] = useState(null)
+    const [nomeTurma, setNomeTurma] = useState(null)
 
     const handleCloseAndRoute = () => {
         setModalActive2(false)
         navigation.navigate('Login')
 
+    }
+
+    async function CriarTurma(){
+        let response = await AsyncStorage.getItem('userData');
+        let json = JSON.parse(response);
+        console.log(json.matricula);
+        // if (materia != '' && nomeTurma != ''){
+        //   let reqs = await fetch('http://192.168.0.10:3000/turmac', {
+        //   method: 'POST',
+        //   headers:{
+        //     'Accept': 'application/json',
+        //     'Content-Type': 'application/json',
+        //   },
+        //   body: JSON.stringify({
+        //     id: null,
+        //     materia: materia,
+        //     nomeTurma: nomeTurma,
+        //     professor: json.matricula,
+        //   })
+        // });
     }
 
 return (
@@ -41,9 +63,9 @@ return (
                 >
                     <IconX style={style.close} name='close-circle' size={30} onPress={() => setModalActive(false)}/>
                     <Text style={{fontFamily:'poppinsb', fontSize:15, color:'white' }}>Crie sua turma</Text>
-                        <Inputs place="Matéria" iconeF='book' />
-                        <Inputs place="Turma" iconeO='people'/>
-                        <PressablesModal texto='Criar' click={() => setModalActive(false)}/>
+                        <Inputs place="Matéria" iconeF='book' onChange={(text) => setMateria(text)}/>
+                        <Inputs place="Turma" iconeO='people'onChange={(text) => setNomeTurma(text)}/>
+                        <PressablesModal texto='Criar' click={CriarTurma}/>
                 </LinearGradient>
             </View>
         </Modal>

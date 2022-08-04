@@ -36,9 +36,9 @@ export default function Login({ navigation }) {
       await AsyncStorage.clear();
     }
     else{
-      // await AsyncStorage.setItem('userData', JSON.stringify(res));
-      // let response = await AsyncStorage.getItem('userData');
-      let json = JSON.parse(res);
+      await AsyncStorage.setItem('userData', JSON.stringify(res));
+      let response = await AsyncStorage.getItem('userData');
+      let json = JSON.parse(response);
 
       if (json.tipoUsuario === false){
         await AsyncStorage.setItem('userData', JSON.stringify(res));
@@ -68,9 +68,9 @@ export default function Login({ navigation }) {
       AsyncStorage.clear();
     }
     else{
-      // await AsyncStorage.setItem('userData', JSON.stringify(res));
-      // let response = await AsyncStorage.getItem('userData');
-      let json = JSON.parse(res);
+      await AsyncStorage.setItem('userData', JSON.stringify(res));
+      let response = await AsyncStorage.getItem('userData');
+      let json = JSON.parse(response);
 
       if (json.tipoUsuario === false){
         await AsyncStorage.setItem('userData', JSON.stringify(res));
