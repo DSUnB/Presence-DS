@@ -8,6 +8,14 @@ import { Div } from "./styled";
 import Inputs from "../../components/inputs";
 import IconX from 'react-native-vector-icons/Ionicons';
 
+function codigo() {
+    let codigo = '';
+    do {
+    codigo =  Math.random().toString(36).substring(2)   
+    } while(codigo.length > 6)
+    console.log(codigo.toUpperCase());
+    return codigo;
+}
 
 export default function MainProf({ navigation }) {
 
