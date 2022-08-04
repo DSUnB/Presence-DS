@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { Psb, PsbT } from './styled';
-import IconLo from 'react-native-vector-icons/AntDesign';
+import IconLo from 'react-native-vector-icons/MaterialIcons';
 
 export default function PressablesConf(props) {
     return (
