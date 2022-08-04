@@ -64,7 +64,7 @@ return (
     <Text style={{fontFamily:'poppinsr', fontSize:16}}>Sou professor</Text>
   </View>
   <Text style={{marginTop:30}}></Text>
-    <Pressables texto='Registre-se' click={() => navigation.navigate('Main')}>
+    <Pressables texto='Registre-se' click={() => navigation.navigate('MainProf')}>
       <Text>Registre-se</Text>
     </Pressables>
 </Div>
