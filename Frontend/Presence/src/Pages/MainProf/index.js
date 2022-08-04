@@ -7,9 +7,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Div } from "./styled";
 import Inputs from "../../components/inputs";
 import IconX from 'react-native-vector-icons/Ionicons';
-import PressablesConf from "../../components/pressablesConf/index";
+//import PressablesConf from "../../components/pressablesConf";
 
-export default function Main({ navigation }) {
+export default function MainProf({ navigation }) {
 
     const [modalActive, setModalActive] = useState(false)
     const [modalActive2, setModalActive2] = useState(false)
@@ -23,7 +23,7 @@ export default function Main({ navigation }) {
 return (
     <Div> 
         <View style={style.header}> 
-        <PressablesConf iconeLo='logout' click={() => setModalActive2(true)}/> 
+        {/* <PressablesConf iconeLo='logout' click={() => setModalActive2(true)}/>  */}
         <Text style={{fontFamily:'poppinsb', fontSize: 18}}> Turmas Ministradas</Text>
         </View>
         
