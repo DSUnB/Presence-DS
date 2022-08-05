@@ -7,7 +7,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Div } from "./styled";
 import Inputs from "../../components/inputs";
 import IconX from "react-native-vector-icons/Ionicons";
-import PressablesConf from "../../components/pressablesconf";
+import PressablesConf from "../../components/pressablesConf";
 
 export default function MainAlun({ navigation }) {
     const DADOS = [
@@ -37,11 +37,14 @@ export default function MainAlun({ navigation }) {
 
   return (
     <Div>
+      <View style={style.logout}>
+        <PressablesConf iconeLo="logout" click={() => setModalActive2(true)} />
+      </View>
+
       <View style={style.header}>
         <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>
           Turmas Inscritas
         </Text>
-        <PressablesConf iconeLo="logout" click={() => setModalActive2(true)} />
       </View>
 
       <View style={style.lista}>
@@ -206,5 +209,11 @@ turma:{
   lista: {
     marginTop: 110,
     marginBottom: 110,
+  },
+  logout:{
+    position:"absolute",
+      zIndex: 2,
+      top: 55,
+      right: 20,
   }
 });

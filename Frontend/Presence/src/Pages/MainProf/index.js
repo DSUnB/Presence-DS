@@ -12,7 +12,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Pressables from "../../components/pressables";
 import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
-import PressablesConf from "../../components/pressablesconf"; 
+import PressablesConf from "../../components/pressablesConf"; 
 import Inputs from "../../components/inputs";
 import IconX from "react-native-vector-icons/Ionicons";
 
@@ -43,12 +43,16 @@ export default function MainProf({ navigation }) {
 
   return (
     <SafeAreaView style={style.container}>
+
+      <View style={style.logout}>
+        <PressablesConf iconeLo="logout" click={() => setModalActive2(true)} />
+      </View>
+
       <View style={style.header}>
         <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>
           {" "}
           Turmas Ministradas
         </Text>
-        <PressablesConf iconeLo="logout" click={() => setModalActive2(true)} />
       </View>
 
       <View style={style.lista}>
@@ -209,4 +213,10 @@ const style = StyleSheet.create({
     marginTop: 110,
     marginBottom: 110,
   },
+  logout:{
+    position:"absolute",
+      zIndex: 2,
+      top: 55,
+      right: 20,
+  }
 });

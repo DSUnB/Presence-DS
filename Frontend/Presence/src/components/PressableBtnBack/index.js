@@ -28,7 +28,7 @@ const style = StyleSheet.create({
       position:"absolute",
       zIndex: 2,
       top: 45,
-      left: "5%",
+      left: 15,
       backgroundColor:'rgba(247, 248, 248, 1)',
     }
   })
