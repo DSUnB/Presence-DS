@@ -12,7 +12,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Pressables from "../../components/pressables";
 import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
-import PressablesConf from "../../components/pressablesConf/index";
+import PressablesConf from "../../components/pressablesconf"; 
 import Inputs from "../../components/inputs";
 import IconX from "react-native-vector-icons/Ionicons";
 

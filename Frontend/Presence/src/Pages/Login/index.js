@@ -3,7 +3,7 @@ import { Div } from "./styled";
 import { Text, View, StyleSheet } from "react-native";
 import Inputs from "../../components/inputs";
 import Pressables from "../../components/pressables";
-import InputsS from '../../components/inputsenha/index';
+import InputsS from "../../components/inputsenha";
 
 export default function Login({ navigation }){
 
