@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Text, View, Modal, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Text, View, Modal, StyleSheet, BackHandler, Alert } from "react-native";
 import Pressables from "../../components/pressables";
 import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
@@ -10,6 +10,31 @@ import IconX from 'react-native-vector-icons/Ionicons';
 //import PressablesConf from "../../components/pressablesConf";
 
 export default function MainAlun({ navigation }) {
+
+    useEffect(() => {
+        const backAction = () => {
+            Alert.alert("Alerta!", "Deseja mesmo sair do app?", [
+                {
+                    text: "Não",
+                    onPress: () => null,
+                    style: "cancel"
+                },
+                { text: "Sim", onPress: () => {
+                    //navigation.navigate('Login');
+                    BackHandler.exitApp();
+                    }
+                }
+            ]);
+            return true;
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+        );
+    
+        return () => backHandler.remove();
+    }, []);
 
     const [modalActive2, setModalActive2] = useState(false)
     const [modalActive3, setModalActive3] = useState(false)

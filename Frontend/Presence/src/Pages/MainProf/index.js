@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Text, View, Modal, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Text, View, Modal, StyleSheet, BackHandler, Alert } from "react-native";
 import Pressables from "../../components/pressables";
 import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
@@ -13,11 +13,37 @@ function codigo() {
     do {
     codigo =  Math.random().toString(36).substring(2)   
     } while(codigo.length > 6)
-    console.log(codigo.toUpperCase());
+    //console.log(codigo.toUpperCase());
     return codigo;
 }
 
 export default function MainProf({ navigation }) {
+
+    useEffect(() => {
+        const backAction = () => {
+            Alert.alert("Alerta!", "Deseja mesmo sair do app?", [
+                {
+                    text: "Não",
+                    onPress: () => null,
+                    style: "cancel"
+                },
+                { text: "Sim", onPress: () => {
+                    //navigation.navigate('Login');
+                    BackHandler.exitApp();
+                    }
+                }
+            ]);
+            return true;
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+        );
+    
+        return () => backHandler.remove();
+    }, []);
+
 
     const [modalActive, setModalActive] = useState(false)
     const [modalActive2, setModalActive2] = useState(false)
@@ -34,21 +60,21 @@ export default function MainProf({ navigation }) {
         let response = await AsyncStorage.getItem('userData');
         let json = JSON.parse(response);
         console.log(json.matricula);
-        // if (materia != '' && nomeTurma != ''){
-        //   let reqs = await fetch('http://192.168.0.10:3000/turmac', {
-        //   method: 'POST',
-        //   headers:{
-        //     'Accept': 'application/json',
-        //     'Content-Type': 'application/json',
-        //   },
-        //   body: JSON.stringify({
-        //     id: null,
-        //     materia: materia,
-        //     nomeTurma: nomeTurma,
-        //     professor: json.matricula,
-        //   })
-        // });
-    }
+        if (materia != '' && nomeTurma != ''){
+          let reqs = await fetch('http://192.168.0.11:3000/turmac', {
+          method: 'POST',
+          headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: null,
+            materia: materia,
+            nomeTurma: nomeTurma,
+            professor: json.matricula,
+          })
+        });
+    }}
 
 return (
     <Div> 
