@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Text, View, Modal, StyleSheet, FlatList, Pressable } from "react-native";
 import Pressables from "../../components/pressables";
+import PressablesConf from "../../components/pressablesconf copy";
 import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
 import { LinearGradient } from "expo-linear-gradient";
 import { Div } from "./styled";
 import Inputs from "../../components/inputs";
 import IconX from "react-native-vector-icons/Ionicons";
-import PressablesConf from "../../components/pressablesConf";
 
 export default function MainAlun({ navigation }) {
     const DADOS = [
@@ -112,7 +112,7 @@ export default function MainAlun({ navigation }) {
             style={style.modal2}
           >
             <Text
-              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white" }}
+              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", paddingBottom: 50 }}
             >
               Deseja mesmo sair?
             </Text>
@@ -203,6 +203,8 @@ turma:{
     justifyContent: "space-around",
   },
   alinhamento: {
+    position: 'absolute',
+    bottom: 40,
     flexDirection: "row",
     justifyContent: "space-between",
   },

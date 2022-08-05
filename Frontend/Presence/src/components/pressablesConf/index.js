@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Psb, PsbT } from './styled';
+import { Psb } from './styled';
 import IconLo from 'react-native-vector-icons/MaterialIcons';
 
 export default function PressablesConf(props) {
@@ -8,7 +8,6 @@ export default function PressablesConf(props) {
       <View>
         <Psb onPress={props.click} style={style.button}>
             <IconLo style={style.icone} name={props.iconeLo} size={23}/>    
-            <PsbT style={{fontFamily:'poppinsb', fontSize: 17}}>{props.texto}</PsbT>
         </Psb>
       </View>
     )

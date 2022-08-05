@@ -12,9 +12,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import Pressables from "../../components/pressables";
 import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
-import PressablesConf from "../../components/pressablesConf"; 
 import Inputs from "../../components/inputs";
 import IconX from "react-native-vector-icons/Ionicons";
+import PressablesConf from "../../components/pressablesconf copy";
 
 export default function MainProf({ navigation }) {
   const DADOS = [
@@ -93,7 +93,7 @@ export default function MainProf({ navigation }) {
             colors={["#2C5E7A", "#338995"]}
           >
             <Text
-              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white" }}
+              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", paddingBottom: 50 }}
             >
               Deseja mesmo sair?
             </Text>
@@ -124,17 +124,25 @@ export default function MainProf({ navigation }) {
               size={30}
               onPress={() => setModalActive3(false)}
             />
+            <View style={{alignItems: 'center'}}>
             <Text
-              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white" }}
+              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", marginTop:5}}
             >
               Crie sua turma
             </Text>
-            <Inputs place="Matéria" iconeF="book" />
-            <Inputs place="Turma" iconeO="people" />
-            <PressablesModal
-              texto="Criar"
-              click={() => setModalActive3(false)}
-            />
+            
+              <Inputs place="Matéria" iconeF="book" />
+              <Inputs place="Turma" iconeO="people" />
+              </View>
+              <View style={{marginTop:15}}>
+                <PressablesModal
+                  texto="Criar"
+                  click={() => setModalActive3(false)}
+                />
+              </View>
+            
+            
+            
           </LinearGradient>
         </View>
       </Modal>
@@ -186,17 +194,16 @@ const style = StyleSheet.create({
   },
   modal: {
     borderRadius: 22,
-    padding: 35,
-    width: 335,
-    height: 220,
+    width: 340,
+    height: 265,
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "center",
   },
   close: {
-    color: "#ffffff",
-    position: "absolute",
+    position: 'absolute',
     right: 20,
     top: 20,
+    color: "#ffffff",
   },
   modal2: {
     width: 275,
@@ -206,6 +213,8 @@ const style = StyleSheet.create({
     justifyContent: "space-around",
   },
   alinhamento: {
+    position: 'absolute',
+    bottom: 40,
     flexDirection: "row",
     justifyContent: "space-between",
   },
