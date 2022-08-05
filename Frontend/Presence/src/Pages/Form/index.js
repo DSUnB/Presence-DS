@@ -5,6 +5,7 @@ import { Checkbox } from 'react-native-paper';
 import Inputs from "../../components/inputs";
 import Pressables from "../../components/pressables";
 import InputsS from "../../components/inputsenha";
+import PressableBtnBack from "../../components/PressableBtnBack";
 
 export default function Form({ navigation }) {
 
@@ -39,11 +40,14 @@ export default function Form({ navigation }) {
 
 return (
 <ImageBackground source={require('../../assets/images/VetorCad.png')} resizeMode="cover">
-<Div>
+  <View>
+    <PressableBtnBack click={() => navigation.navigate('Login')}  iconeIo="chevron-back"/>
+  </View>
+  <Div>
   {message && (
     <Text>{message}</Text>
   )}
-  <Text style={{fontFamily:'poppinsr', fontSize:16}}>Ei!</Text>
+  <Text style={{fontFamily:'poppinsr', fontSize:16, marginTop:40}}>Ei!</Text>
   <Text style={{fontFamily:'poppinsb', fontSize:20, marginBottom:20}}>Crie uma conta</Text>
   <Inputs place='Nome' iconeO='person' onChange={(text) => setName(text)}/>
   <Inputs place="Matrícula" iconeMC='smart-card-outline' onChange={(text) => setMatricula(text)}/>
@@ -75,6 +79,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative',
     right: 85,
+  },
+  IconBack:{
+    position: "absolute",
   }
 })
 

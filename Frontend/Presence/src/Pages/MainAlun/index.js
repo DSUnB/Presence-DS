@@ -20,8 +20,7 @@ export default function MainProf({ navigation }) {
     }   
 
 return (
-    <Div> 
-        
+    <Div>
         <View style={style.header}>
             <PressablesConf iconeLo='logout' click={() => setModalActive2(true)}/>
             <Text style={{fontFamily:'poppinsb', fontSize: 18}}> Turmas Inscritas</Text>
