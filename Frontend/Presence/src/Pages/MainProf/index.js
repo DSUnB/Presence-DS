@@ -16,7 +16,7 @@ import PressablesConf from "../../components/pressablesconf";
 import Inputs from "../../components/inputs";
 import IconX from "react-native-vector-icons/Ionicons";
 
-export default function Main({ navigation }) {
+export default function MainProf({ navigation }) {
   const DADOS = [
     { key: "Fisica 1", turm: "A" },
     { key: "Fisica 2", turm: "B" },

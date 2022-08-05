@@ -9,7 +9,7 @@ import Inputs from "../../components/inputs";
 import IconX from "react-native-vector-icons/Ionicons";
 import PressablesConf from "../../components/pressablesconf";
 
-export default function MainProf({ navigation }) {
+export default function MainAlun({ navigation }) {
     const DADOS = [
         { key: "Fisica 1", turm: "A" },
         { key: "Fisica 2", turm: "B" },
