@@ -8,13 +8,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({ navigation }) {
 
-  // Criação das States para serem enviadas ao Banco de Dados:
+  // =========================================================
+  // DECLARAÇÃO DE STATES:
   const [matricula, setMatricula]= useState(null);
   const [senha,setSenha]= useState(null);
   const [message, setMessage]=useState(null);
   const [matToken, setMatToken]=useState(null);
   const [senhaToken, setSenhaToken]=useState(null);
+  // =========================================================
 
+  // =========================================================
+  // FUNÇÃO PARA ENVIAR 'LOGIN' AO BACKEND:
   async function envLogin(){
     let reqs = await fetch('http://192.168.0.10:3000/log', {
       method: 'POST',
@@ -50,9 +54,12 @@ export default function Login({ navigation }) {
       }
     }
   }
+  // =========================================================
 
+  // =========================================================
+  // FUNÇÃO PARA EFETUAR 'LOGIN AUTOMÁTICO' AO BACKEND:
   async function AutoLogin(){
-    let reqs = await fetch('http://192.168.0.10:3000/Autolog', {
+    let reqs = await fetch('http://192.168.0.11:3000/Autolog', {
       method: 'POST',
       headers:{
         Accept: 'application/json',
@@ -82,7 +89,10 @@ export default function Login({ navigation }) {
       }
     }
   }
+  // =========================================================
 
+  // =========================================================
+  // TENTATIVA DE REQUISIÇÃO AUTOMÁTICA AO LOGIN COM O BACKEND:
   useEffect(() => {
     AsyncStorage.getItem('userData').then((userData) => {
       if (userData != null){
@@ -93,7 +103,10 @@ export default function Login({ navigation }) {
       }
     })
   })
+  // =========================================================
 
+// =========================================================
+// ARQUITETURA DA SCREEN DA APLICAÇÃO:
 return (
 <Div>
   <Text style={{fontFamily:'poppinsb', fontSize:20}}>Bem vindo,</Text>
@@ -127,10 +140,14 @@ return (
 </Div>
 );
 }
+// =========================================================
 
+// =========================================================
+// ESTILIZAÇÕES:
 const styles = StyleSheet.create({
   hypertexto: {
     color: '#0D5354',
   }
 })
+// =========================================================
 

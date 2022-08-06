@@ -21,13 +21,13 @@ app.use(bodyParser.json());
 app.post('/cad', async(req,res) => {
     try {
         let reqs = await model.Usuarios.create({
-        'matricula': req.body.matricula,
         'nome': req.body.nome,
+        'matricula': req.body.matricula,
         'emailInstitucional': req.body.emailInstitucional,
         'senha': bcrypt.hashSync(req.body.senha, salt),
         'tipoUsuario': req.body.tipoUsuario,
         'createdAt': new Date(),
-        'updatedAt': new Date()
+        'updatedAt': new Date(),
     });
     if (reqs){
         res.send(JSON.stringify('O usuário foi cadastrado com sucesso! Redirecionando...'));
@@ -88,13 +88,26 @@ app.post('/Autolog', async(req,res) => {
 
 // ====================================================
 // Criação de Turma:
-app.get('/turmac', async (req,res)=>{
-    try{
-        let read=await Professores.findAll({
-            'matricula': req.body.professor,
+app.post('/turmac', async (req,res)=>{
+    try {
+        let reqs = await model.Professores.findAll({
             raw:true,
         });
-        console.log(read);
+        if(reqs === null){
+            res.send(JSON.stringify('error'));
+        }
+        else{
+            let idProfessor = reqs.idProfessor;
+
+            let reqs1 = await model.Turmas.create({
+                'codigoTurma': req.body.codigoTurma,
+                'curso': req.body.materia,
+                'nomeTurma': req.body.nomeTurma,
+                'idProfesor': idProfessor,
+                'createdAt': new Date(),
+                'updatedAt': new Date()
+            })
+        }
     }
     catch {
         res.send(JSON.stringify('error'))

@@ -7,7 +7,10 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Div } from "./styled";
 import Inputs from "../../components/inputs";
 import IconX from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+// =========================================================
+// GERAÇÃO DE CÓDIGO TURMA:
 function codigo() {
     let codigo = '';
     do {
@@ -16,9 +19,13 @@ function codigo() {
     //console.log(codigo.toUpperCase());
     return codigo;
 }
+// =========================================================
+
 
 export default function MainProf({ navigation }) {
 
+    // =========================================================
+    // ALERTA PARA FECHAR APLICATIVO:
     useEffect(() => {
         const backAction = () => {
             Alert.alert("Alerta!", "Deseja mesmo sair do app?", [
@@ -43,25 +50,33 @@ export default function MainProf({ navigation }) {
     
         return () => backHandler.remove();
     }, []);
+    // =========================================================
 
-
+    // =========================================================
+    // DECLARAÇÃO DE STATES:
     const [modalActive, setModalActive] = useState(false)
     const [modalActive2, setModalActive2] = useState(false)
     const [materia, setMateria] = useState(null)
     const [nomeTurma, setNomeTurma] = useState(null)
+    // =========================================================
 
+    // =========================================================
+    // LÓGICA DE LOG-OUT:
     const handleCloseAndRoute = () => {
         setModalActive2(false)
         navigation.navigate('Login')
 
     }
+    // =========================================================
 
+    // =========================================================
+    // FUNÇÃO PARA ENVIO DE DADOS 'CRIAR TURMA' PARA O BACKEND:
     async function CriarTurma(){
         let response = await AsyncStorage.getItem('userData');
         let json = JSON.parse(response);
         console.log(json.matricula);
         if (materia != '' && nomeTurma != ''){
-          let reqs = await fetch('http://192.168.0.11:3000/turmac', {
+          let reqs = await fetch('http://192.168.0.10:3000/turmac', {
           method: 'POST',
           headers:{
             'Accept': 'application/json',
@@ -69,13 +84,17 @@ export default function MainProf({ navigation }) {
           },
           body: JSON.stringify({
             id: null,
+            codigoTurma: codigo(),
             materia: materia,
             nomeTurma: nomeTurma,
             professor: json.matricula,
           })
         });
     }}
+    // =========================================================
 
+// =========================================================
+// ARQUITETURA DA SCREEN DA APLICAÇÃO:
 return (
     <Div> 
         <View style={style.header}> 
@@ -121,7 +140,10 @@ return (
     </Div>
 );
 }
+// =========================================================
 
+// =========================================================
+// ESTILIZAÇÕES:
 const style = StyleSheet.create({
     fundoModal:{
         flex: 1,
@@ -159,3 +181,5 @@ const style = StyleSheet.create({
         justifyContent: 'space-around',
     },
 })
+// =========================================================
+
