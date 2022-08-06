@@ -90,27 +90,33 @@ app.post('/Autolog', async(req,res) => {
 // Criação de Turma:
 app.post('/turmac', async (req,res)=>{
     try {
-        let reqs = await model.Professores.findAll({
-            raw:true,
+        let reqs = await model.Professores.findOne({
+            where: {
+                matricula: req.body.professor,
+            }
         });
         if(reqs === null){
             res.send(JSON.stringify('error'));
         }
         else{
-            let idProfessor = reqs.idProfessor;
-
             let reqs1 = await model.Turmas.create({
                 'codigoTurma': req.body.codigoTurma,
-                'curso': req.body.materia,
+                'curso': req.body.curso,
                 'nomeTurma': req.body.nomeTurma,
-                'idProfesor': idProfessor,
+                'idProfessor': reqs.idProfessor,
                 'createdAt': new Date(),
                 'updatedAt': new Date()
-            })
+            });
+            if (reqs){
+                res.send(reqs);
+            }
+            else{
+                res.send(JSON.stringify('error'));
+            }
         }
     }
     catch {
-        res.send(JSON.stringify('error'))
+        res.send(JSON.stringify('error'));
     }
 });
 

@@ -16,8 +16,8 @@ function codigo() {
     do {
     codigo =  Math.random().toString(36).substring(2)   
     } while(codigo.length > 6)
-    //console.log(codigo.toUpperCase());
-    return codigo;
+    // console.log(codigo.toUpperCase());
+    return codigo.toUpperCase();
 }
 // =========================================================
 
@@ -58,6 +58,7 @@ export default function MainProf({ navigation }) {
     const [modalActive2, setModalActive2] = useState(false)
     const [materia, setMateria] = useState(null)
     const [nomeTurma, setNomeTurma] = useState(null)
+    const [message, setMessage]=useState(null);
     // =========================================================
 
     // =========================================================
@@ -74,23 +75,45 @@ export default function MainProf({ navigation }) {
     async function CriarTurma(){
         let response = await AsyncStorage.getItem('userData');
         let json = JSON.parse(response);
-        console.log(json.matricula);
-        if (materia != '' && nomeTurma != ''){
-          let reqs = await fetch('http://192.168.0.10:3000/turmac', {
-          method: 'POST',
-          headers:{
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            id: null,
-            codigoTurma: codigo(),
-            materia: materia,
-            nomeTurma: nomeTurma,
-            professor: json.matricula,
-          })
-        });
-    }}
+        if (materia != '' || nomeTurma != ''){
+            let reqs = await fetch('http://192.168.0.10:3000/turmac', {
+                method: 'POST',
+                headers:{
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: null,
+                    codigoTurma: codigo(),
+                    curso: materia,
+                    nomeTurma: nomeTurma,
+                    professor: json.matricula,
+                })
+            });
+            let res= await reqs.json();
+            if(res === 'error'){
+                setMessage('Preencha os Campos!');
+                setTimeout(() => {
+                    setMessage(null);
+                }, 2000);
+            }
+            else{
+                setMessage('Turma Criada!');
+                setTimeout(() => {
+                    setMessage(null);
+                    setMateria(null);
+                    setNomeTurma(null);
+                }, 4000);
+                setModalActive(false);
+            }
+        }
+        else{
+            setMessage('Preencha os Campos!');
+                setTimeout(() => {
+                    setMessage(null);
+                }, 2000);
+        }
+    }
     // =========================================================
 
 // =========================================================
@@ -116,6 +139,9 @@ return (
                 >
                     <IconX style={style.close} name='close-circle' size={30} onPress={() => setModalActive(false)}/>
                     <Text style={{fontFamily:'poppinsb', fontSize:15, color:'white' }}>Crie sua turma</Text>
+                    {message && (
+                        <Text>{message}</Text>
+                    )}
                         <Inputs place="Matéria" iconeF='book' onChange={(text) => setMateria(text)}/>
                         <Inputs place="Turma" iconeO='people'onChange={(text) => setNomeTurma(text)}/>
                         <PressablesModal texto='Criar' click={CriarTurma}/>
