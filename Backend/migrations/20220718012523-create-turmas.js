@@ -36,7 +36,12 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
+      UsuarioId: {
+        allowNull: true,
+        type: Sequelize.INTEGER
+      },
+
     });
   },
   async down(queryInterface, Sequelize) {
