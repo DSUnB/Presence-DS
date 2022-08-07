@@ -9,6 +9,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Div } from "./styled";
 import Inputs from "../../components/inputs";
 import IconX from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function MainAlun({ navigation }) {
 
@@ -59,6 +60,7 @@ export default function MainAlun({ navigation }) {
   
   const handleCloseAndRoute = () => {
     setModalActive2(false);
+    AsyncStorage.clear();
     navigation.navigate("Login");
   };
 

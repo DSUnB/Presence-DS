@@ -1,4 +1,4 @@
-import React, { useState, useEffect  } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -91,7 +91,8 @@ export default function MainProf({ navigation }) {
     // =========================================================
     // LÓGICA DE LOG-OUT:
     const handleCloseAndRoute = () => {
-        setModalActive3(false)
+        setModalActive3(false);
+        AsyncStorage.clear();
         navigation.navigate('Login')
 
     }
@@ -130,8 +131,9 @@ export default function MainProf({ navigation }) {
                     setMessage(null);
                     setMateria(null);
                     setNomeTurma(null);
-                }, 4000);
-                setModalActive3(false);
+                    setModalActive3(false);
+                }, 1000);
+                
             }
         }
         else{
