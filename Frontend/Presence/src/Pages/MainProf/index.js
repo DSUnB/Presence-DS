@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect  } from "react";
 import {
   Text,
   View,
@@ -7,17 +7,34 @@ import {
   FlatList,
   SafeAreaView,
   Pressable,
+  BackHandler,
+  Alert,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Pressables from "../../components/pressables";
 import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
+import PressablesConf from "../../components/pressablesConf";
 import Inputs from "../../components/inputs";
-import IconX from "react-native-vector-icons/Ionicons";
-import PressablesConf from "../../components/pressablesconf copy";
+import IconX from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// =========================================================
+// GERAÇÃO DE CÓDIGO TURMA:
+function codigo() {
+    let codigo = '';
+    do {
+    codigo =  Math.random().toString(36).substring(2)   
+    } while(codigo.length > 6)
+    // console.log(codigo.toUpperCase());
+    return codigo.toUpperCase();
+}
+// =========================================================
+
 
 export default function MainProf({ navigation }) {
-  const DADOS = [
+
+    const DADOS = [
     { key: "Fisica 1", turm: "A" },
     { key: "Fisica 2", turm: "B" },
     { key: "Fisica 3", turm: "C" },
@@ -33,27 +50,116 @@ export default function MainProf({ navigation }) {
     { key: "Fisica 13", turm: "M" },
   ];
 
-  const [modalActive2, setModalActive2] = useState(false);
-  const [modalActive3, setModalActive3] = useState(false);
 
-  const handleCloseAndRoute = () => {
-    setModalActive2(false);
-    navigation.navigate("Login");
-  };
+    // =========================================================
+    // ALERTA PARA FECHAR APLICATIVO:
+    useEffect(() => {
+        const backAction = () => {
+            Alert.alert("Alerta!", "Deseja mesmo sair do app?", [
+                {
+                    text: "Não",
+                    onPress: () => null,
+                    style: "cancel"
+                },
+                { text: "Sim", onPress: () => {
+                    //navigation.navigate('Login');
+                    BackHandler.exitApp();
+                    }
+                }
+            ]);
+            return true;
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+        );
+    
+        return () => backHandler.remove();
+    }, []);
+    // =========================================================
 
-  return (
-    <SafeAreaView style={style.container}>
+    // =========================================================
+    // DECLARAÇÃO DE STATES:
+    const [modalActive2, setModalActive2] = useState(false)
+    const [modalActive3, setModalActive3] = useState(false)
+    const [materia, setMateria] = useState(null)
+    const [nomeTurma, setNomeTurma] = useState(null)
+    const [message, setMessage]=useState(null);
+    // =========================================================
 
+    // =========================================================
+    // LÓGICA DE LOG-OUT:
+    const handleCloseAndRoute = () => {
+        setModalActive3(false)
+        navigation.navigate('Login')
+
+    }
+    // =========================================================
+
+    // =========================================================
+    // FUNÇÃO PARA ENVIO DE DADOS 'CRIAR TURMA' PARA O BACKEND:
+    async function CriarTurma(){
+        let response = await AsyncStorage.getItem('userData');
+        let json = JSON.parse(response);
+        if (materia != '' || nomeTurma != ''){
+            let reqs = await fetch('http://192.168.0.10:3000/turmac', {
+                method: 'POST',
+                headers:{
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: null,
+                    codigoTurma: codigo(),
+                    curso: materia,
+                    nomeTurma: nomeTurma,
+                    professor: json.matricula,
+                })
+            });
+            let res= await reqs.json();
+            if(res === 'error'){
+                setMessage('Preencha os Campos!');
+                setTimeout(() => {
+                    setMessage(null);
+                }, 2000);
+            }
+            else{
+                setMessage('Turma Criada!');
+                setTimeout(() => {
+                    setMessage(null);
+                    setMateria(null);
+                    setNomeTurma(null);
+                }, 4000);
+                setModalActive3(false);
+            }
+        }
+        else{
+            setMessage('Preencha os Campos!');
+                setTimeout(() => {
+                    setMessage(null);
+                }, 2000);
+        }
+    }
+    // =========================================================
+
+// =========================================================
+// ARQUITETURA DA SCREEN DA APLICAÇÃO:
+return (
+
+      <SafeAreaView style={style.container}>
+ 
       <View style={style.logout}>
         <PressablesConf iconeLo="logout" click={() => setModalActive2(true)} />
       </View>
-
+ 
       <View style={style.header}>
         <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>
           {" "}
           Turmas Ministradas
         </Text>
       </View>
+
 
       <View style={style.lista}>
         <FlatList
@@ -69,7 +175,7 @@ export default function MainProf({ navigation }) {
                     paddingTop: 18,
                   }}
                 >
-                  {item.key} - {item.turm}
+                 {item.key} - {item.turm}
                 </Text>
               </View>
             </Pressable>
@@ -106,6 +212,7 @@ export default function MainProf({ navigation }) {
                 texto="Não"
                 click={() => setModalActive2(false)}
               />
+
             </View>
           </LinearGradient>
         </View>
@@ -130,14 +237,16 @@ export default function MainProf({ navigation }) {
             >
               Crie sua turma
             </Text>
-            
-              <Inputs place="Matéria" iconeF="book" />
-              <Inputs place="Turma" iconeO="people" />
+            {message && (
+                        <Text>{message}</Text>
+                    )}
+              <Inputs place="Matéria" iconeF="book" onChange={(text) => setMateria(text)} />
+              <Inputs place="Turma" iconeO="people" onChange={(text) => setNomeTurma(text)} />
               </View>
               <View style={{marginTop:15}}>
                 <PressablesModal
                   texto="Criar"
-                  click={() => setModalActive3(false)}
+                 click={CriarTurma}
                 />
               </View>
             
@@ -149,7 +258,10 @@ export default function MainProf({ navigation }) {
     </SafeAreaView>
   );
 }
+// =========================================================
 
+// =========================================================
+// ESTILIZAÇÕES:
 const style = StyleSheet.create({
   container: {
     justifyContent: "center",

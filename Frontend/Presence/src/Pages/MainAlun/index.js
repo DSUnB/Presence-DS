@@ -1,15 +1,42 @@
-import React, { useState } from "react";
-import { Text, View, Modal, StyleSheet, FlatList, Pressable } from "react-native";
+
+import React, { useState, useEffect } from "react";
+import { Text, View, Modal, StyleSheet, BackHandler, Alert, FlatList, Pressable } from "react-native";
 import Pressables from "../../components/pressables";
-import PressablesConf from "../../components/pressablesconf copy";
+import PressablesConf from "../../components/pressablesConf";
 import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
 import { LinearGradient } from "expo-linear-gradient";
 import { Div } from "./styled";
 import Inputs from "../../components/inputs";
-import IconX from "react-native-vector-icons/Ionicons";
+import IconX from 'react-native-vector-icons/Ionicons';
 
 export default function MainAlun({ navigation }) {
+
+    useEffect(() => {
+        const backAction = () => {
+            Alert.alert("Alerta!", "Deseja mesmo sair do app?", [
+                {
+                    text: "Não",
+                    onPress: () => null,
+                    style: "cancel"
+                },
+                { text: "Sim", onPress: () => {
+                    //navigation.navigate('Login');
+                    BackHandler.exitApp();
+                    }
+                }
+            ]);
+            return true;
+        };
+    
+        const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+        );
+    
+        return () => backHandler.remove();
+    }, []);
+    
     const DADOS = [
         { key: "Fisica 1", turm: "A" },
         { key: "Fisica 2", turm: "B" },
@@ -29,11 +56,12 @@ export default function MainAlun({ navigation }) {
 
   const [modalActive2, setModalActive2] = useState(false);
   const [modalActive3, setModalActive3] = useState(false);
-
+  
   const handleCloseAndRoute = () => {
     setModalActive2(false);
     navigation.navigate("Login");
   };
+
 
   return (
     <Div>

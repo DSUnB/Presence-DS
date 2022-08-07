@@ -3,6 +3,10 @@ const express=require('express');
 const cors=require('cors');
 const bodyParser=require('body-parser');
 const model=require('./models');
+const bcrypt=require('bcrypt');
+
+
+let salt = bcrypt.genSaltSync(10)
 
 // Configuração das bibliotecas:
 const app=express();
@@ -11,18 +15,108 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //Rotas:
-app.post('/create', async(req,res) => {
-    let reqs = await model.Usuarios.create({
-        'matricula': req.body.matricula,
+
+// ====================================================
+// Registrar a Conta do usuário:
+app.post('/cad', async(req,res) => {
+    try {
+        let reqs = await model.Usuarios.create({
         'nome': req.body.nome,
+        'matricula': req.body.matricula,
         'emailInstitucional': req.body.emailInstitucional,
-        'senha': req.body.senha,
+        'senha': bcrypt.hashSync(req.body.senha, salt),
         'tipoUsuario': req.body.tipoUsuario,
         'createdAt': new Date(),
-        'updatedAt': new Date()
+        'updatedAt': new Date(),
     });
     if (reqs){
-        res.send(JSON.stringify('O usuário foi cadastrado com sucesso!'));
+        res.send(JSON.stringify('O usuário foi cadastrado com sucesso! Redirecionando...'));
+    }
+    }
+    catch {
+        res.send(JSON.stringify('error'));
+    }
+    
+});
+// ====================================================
+
+// ====================================================
+// Verificação de credenciamento do login:
+app.post('/log', async(req,res) => {
+    try {
+      let reqs = await model.Usuarios.findOne({
+        where:{
+            'matricula': req.body.matricula,
+            'senha': bcrypt.hashSync(req.body.senha, salt),
+        }
+    });
+    if(reqs === null){
+        res.send(JSON.stringify('error'));
+    }
+    else{
+        res.send(reqs);
+    }  
+    }
+    catch {
+        res.send(JSON.stringify('error'))
+    }
+});
+// ====================================================
+
+// ====================================================
+// Verificação de Autologin:
+app.post('/Autolog', async(req,res) => {
+    try {
+      let reqs = await model.Usuarios.findOne({
+        where:{
+            'matricula': req.body.matricula,
+            'senha': req.body.senha,
+        }
+    });
+    if(reqs === null){
+        res.send(JSON.stringify('error'));
+    }
+    else{
+        res.send(reqs);
+    }  
+    }
+    catch {
+        res.send(JSON.stringify('error'))
+    }
+});
+// ====================================================
+
+// ====================================================
+// Criação de Turma:
+app.post('/turmac', async (req,res)=>{
+    try {
+        let reqs = await model.Professores.findOne({
+            where: {
+                matricula: req.body.professor,
+            }
+        });
+        if(reqs === null){
+            res.send(JSON.stringify('error'));
+        }
+        else{
+            let reqs1 = await model.Turmas.create({
+                'codigoTurma': req.body.codigoTurma,
+                'curso': req.body.curso,
+                'nomeTurma': req.body.nomeTurma,
+                'idProfessor': reqs.idProfessor,
+                'createdAt': new Date(),
+                'updatedAt': new Date()
+            });
+            if (reqs){
+                res.send(reqs);
+            }
+            else{
+                res.send(JSON.stringify('error'));
+            }
+        }
+    }
+    catch {
+        res.send(JSON.stringify('error'));
     }
 });
 

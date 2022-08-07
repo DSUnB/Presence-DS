@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Div } from "./styled";
 import { Text, View, StyleSheet, ImageBackground } from "react-native";
 import { Checkbox } from 'react-native-paper';
@@ -7,6 +7,7 @@ import Pressables from "../../components/pressables";
 import InputsS from "../../components/inputsenha";
 import PressableBtnBack from "../../components/PressableBtnBack";
 
+
 export default function Form({ navigation }) {
 
   // Criação das States para serem enviadas ao Banco de Dados:
@@ -14,12 +15,14 @@ export default function Form({ navigation }) {
   const [matricula, setMatricula]=useState(null);
   const [email, setEmail]=useState(null);
   const [password, setPassword]=useState(null);
+  const [passwordConfirm, setPasswordConfirm]=useState(null);
   const [checked, setChecked]=useState(false);
   const [message, setMessage]=useState(null);
 
   // Criação da função para envio para o Backend:
   async function Registro(){
-    let reqs = await fetch('http://192.168.0.10:3000/create', {
+    if (password === passwordConfirm && name != '' && matricula != '' && email != '' && password != ''){
+      let reqs = await fetch('http://192.168.0.10:3000/cad', {
       method: 'POST',
       headers:{
         'Accept': 'application/json',
@@ -35,15 +38,44 @@ export default function Form({ navigation }) {
       })
     });
     let res= await reqs.json();
-    setMessage(res)
+    if (res === 'error'){
+      setMessage('Preencha os Campos corretamente!');
+      setTimeout(() => {
+      setMessage(null);
+    }, 5000);
+    }
+    else{
+      setMessage(res);
+    setTimeout(() => {
+      setMessage(null);
+      navigation.navigate('Login');
+    }, 2000);
+    }
+    
+    }
+    else if (password != passwordConfirm) {
+      setMessage('Senhas Diferentes!');
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    }
+    else{
+      setMessage('Todos os campos são obrigatórios!');
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    }
+
   }
 
 return (
+
 <ImageBackground source={require('../../assets/images/VetorCad.png')} resizeMode="cover">
   <View>
     <PressableBtnBack click={() => navigation.navigate('Login')}  iconeIo="chevron-back"/>
   </View>
   <Div>
+
   {message && (
     <Text>{message}</Text>
   )}
@@ -53,7 +85,7 @@ return (
   <Inputs place="Matrícula" iconeMC='smart-card-outline' onChange={(text) => setMatricula(text)}/>
   <Inputs place="Email" iconeF='mail' onChange={(text) => setEmail(text)}/>
   <InputsS place="Senha" senha={true} iconeMC='lock-outline' onChange={(text) => setPassword(text)}/>
-  <Inputs place="Confirmação de Senha" senha={true} iconeMC='lock-plus-outline'/>
+  <Inputs place="Confirmação de Senha" senha={true} iconeMC='lock-plus-outline' onChange={(text) => setPasswordConfirm(text)}/>
   <View style={styles.container}>
     <Checkbox
       status={checked ? 'checked' : 'unchecked'}
@@ -63,8 +95,12 @@ return (
     />
     <Text style={{fontFamily:'poppinsr', fontSize:16}}>Sou professor</Text>
   </View>
+
+  
   <Text style={{marginTop:30}}></Text>
-    <Pressables texto='Registre-se' click={() => navigation.navigate('MainProf')}>
+
+    <Pressables texto='Registre-se' click={Registro}>
+
       <Text>Registre-se</Text>
     </Pressables>
 </Div>

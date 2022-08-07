@@ -9,7 +9,6 @@ import { useTogglePasswordVisibility } from './useTogglePasswordVisibility';
 export default function InputsS(props) {
   const { passwordVisibility, rightIcon, handlePasswordVisibility } =
     useTogglePasswordVisibility();
-  const [password, setPassword] = useState('');
 
   return (
       <Div>
@@ -21,9 +20,8 @@ export default function InputsS(props) {
           autoCorrect={false}
           textContentType="newPassword"
           secureTextEntry={passwordVisibility}
-          value={password}
           enablesReturnKeyAutomatically
-          onChangeText={text => setPassword(text)}
+          onChangeText={props.onChange}
         />
         <Pressable onPress={handlePasswordVisibility}>
           <IconIo style={style.icone2} name={rightIcon} size={23} />

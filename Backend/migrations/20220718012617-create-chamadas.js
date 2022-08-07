@@ -16,6 +16,16 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      idProfessor: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references:{
+          model: 'professores',
+          key: 'idProfessor'
+        },
+        onUpdate: 'cascade',  
+        onDelete: 'cascade'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

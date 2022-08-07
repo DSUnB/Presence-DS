@@ -10,14 +10,16 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // Turmas.hasMany(models.iniciarTurma);
-      // Turmas.hasMany(models.entrarTurma);
-      // Turmas.hasMany(models.efetuarChamada);
+      Turmas.hasMany(models.EntrarTurma);
+      Turmas.hasMany(models.Chamadas);
+      Turmas.belongsTo(models.Professores);
     }
   }
   Turmas.init({
     codigoTurma: DataTypes.STRING,
-    nomeTurma: DataTypes.STRING
+    curso: DataTypes.STRING,
+    nomeTurma: DataTypes.STRING,
+    idProfessor: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Turmas',
