@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Div } from "./styled";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, ImageBackground } from "react-native";
 import Inputs from "../../components/inputs";
 import Pressables from "../../components/pressables";
-import InputsS from '../../components/inputsenha/index';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import InputsS from "../../components/inputsenha";
+
 
 export default function Login({ navigation }) {
 
@@ -108,9 +109,11 @@ export default function Login({ navigation }) {
 // =========================================================
 // ARQUITETURA DA SCREEN DA APLICAÇÃO:
 return (
+<ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
 <Div>
-  <Text style={{fontFamily:'poppinsb', fontSize:20}}>Bem vindo,</Text>
-  <Text style={{fontFamily:'poppinsr', fontSize:16, marginBottom:40}}>Estudante!</Text>
+
+  <Text style={{fontFamily:'poppinsb', fontSize:20}}>Bem vindo</Text>
+  <Text style={{fontFamily:'poppinsr', fontSize:16, marginBottom:50}}>ao Presence!</Text>
 
   {message && (
     <Text>{message}</Text>
@@ -118,26 +121,29 @@ return (
 
   <Inputs place='Matrícula' iconeF='mail' onChange={(text) => setMatricula(text)}/>
   <InputsS place="Senha" iconeMC='lock-outline' onChange={(text) => setSenha(text)}/>
-  <Text style={{marginTop: 70}}> </Text>
+  <Text style={{marginTop: 90}}> </Text>
   <Pressables iconeM='login' texto='Login' click={envLogin}/>
-  <View style={{flexDirection: 'row', alignItems: 'center', marginTop:18}}>
-    <View style={{flex: 1, height: 1 ,backgroundColor: '#DDDADA'}} />
+  <View style={{flexDirection: 'row', alignItems: 'center', marginTop:30}}>
+    <View style={{flex: 1, height: 1 , marginLeft: 40, backgroundColor: '#DDDADA'}} />
+
       <View>
-        <Text style={{width: 40, fontSize:12, textAlign: 'center', fontFamily:'poppinsr'}}>Ou</Text>
+        <Text style={{width: 40, fontSize:12, textAlign: 'center', fontFamily: 'poppinsr'}}>Ou</Text>
       </View>
-      <View style={{flex: 1, height: 1, backgroundColor: '#DDDADA'}} />
+
+
+      <View style={{ flex:1, height: 1, marginLeft: 40, backgroundColor: '#DDDADA'}} />
+
       </View>
       <View>
       </View>
-      <Text style={{fontFamily:'poppinsr', fontSize:15, marginTop:18}}>Não tem uma conta ainda?
+      <Text style={{fontFamily:'poppinsr', fontSize: 15, marginTop: 18}}>Não tem uma conta ainda?
       <Text style={{color:'white'}}>.  .</Text>                    
         <Text style={styles.hypertexto} onPress={() => navigation.navigate('Form')}> 
-          Registre-se 
+          Registre-se
         </Text> 
       </Text>
-      
-  
 </Div>
+</ImageBackground>
 );
 }
 // =========================================================

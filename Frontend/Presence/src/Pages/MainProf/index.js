@@ -1,10 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { Text, View, Modal, StyleSheet, BackHandler, Alert } from "react-native";
+import React, { useState, useEffect  } from "react";
+import {
+  Text,
+  View,
+  Modal,
+  StyleSheet,
+  FlatList,
+  SafeAreaView,
+  Pressable,
+  BackHandler,
+  Alert,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import Pressables from "../../components/pressables";
 import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
-import { LinearGradient } from 'expo-linear-gradient';
-import { Div } from "./styled";
+import PressablesConf from "../../components/pressablesConf";
 import Inputs from "../../components/inputs";
 import IconX from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -23,6 +33,23 @@ function codigo() {
 
 
 export default function MainProf({ navigation }) {
+
+    const DADOS = [
+    { key: "Fisica 1", turm: "A" },
+    { key: "Fisica 2", turm: "B" },
+    { key: "Fisica 3", turm: "C" },
+    { key: "Fisica 4", turm: "D" },
+    { key: "Fisica 5", turm: "E" },
+    { key: "Fisica 6", turm: "F" },
+    { key: "Fisica 7", turm: "G" },
+    { key: "Fisica 8", turm: "H" },
+    { key: "Fisica 9", turm: "I" },
+    { key: "Fisica 10", turm: "J" },
+    { key: "Fisica 11", turm: "K" },
+    { key: "Fisica 12", turm: "L" },
+    { key: "Fisica 13", turm: "M" },
+  ];
+
 
     // =========================================================
     // ALERTA PARA FECHAR APLICATIVO:
@@ -54,8 +81,8 @@ export default function MainProf({ navigation }) {
 
     // =========================================================
     // DECLARAÇÃO DE STATES:
-    const [modalActive, setModalActive] = useState(false)
     const [modalActive2, setModalActive2] = useState(false)
+    const [modalActive3, setModalActive3] = useState(false)
     const [materia, setMateria] = useState(null)
     const [nomeTurma, setNomeTurma] = useState(null)
     const [message, setMessage]=useState(null);
@@ -64,7 +91,7 @@ export default function MainProf({ navigation }) {
     // =========================================================
     // LÓGICA DE LOG-OUT:
     const handleCloseAndRoute = () => {
-        setModalActive2(false)
+        setModalActive3(false)
         navigation.navigate('Login')
 
     }
@@ -104,7 +131,7 @@ export default function MainProf({ navigation }) {
                     setMateria(null);
                     setNomeTurma(null);
                 }, 4000);
-                setModalActive(false);
+                setModalActive3(false);
             }
         }
         else{
@@ -119,93 +146,198 @@ export default function MainProf({ navigation }) {
 // =========================================================
 // ARQUITETURA DA SCREEN DA APLICAÇÃO:
 return (
-    <Div> 
-        <View style={style.header}> 
-        {/* <PressablesConf iconeLo='logout' click={() => setModalActive2(true)}/>  */}
-        <Text style={{fontFamily:'poppinsb', fontSize: 18}}> Turmas Ministradas</Text>
-        </View>
-        
-        <View style={style.botao}>
-        <Pressables iconeFA5='users' texto='Criar uma turma' click={() => setModalActive(true)}/>
-        </View>
 
-        <Modal visible={modalActive} animationType='fade' transparent={true} >
-            <View style={style.fundoModal}>
-                <LinearGradient
-                    // Button Linear Gradient
-                    colors={['#2C5E7A', '#338995']}
-                    start={[ 1.0, 0.5 ]}
-                    style={style.modal}
+      <SafeAreaView style={style.container}>
+ 
+      <View style={style.logout}>
+        <PressablesConf iconeLo="logout" click={() => setModalActive2(true)} />
+      </View>
+ 
+      <View style={style.header}>
+        <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>
+          {" "}
+          Turmas Ministradas
+        </Text>
+      </View>
+
+
+      <View style={style.lista}>
+        <FlatList
+          data={DADOS}
+          renderItem={({ item }) => (
+            <Pressable>
+              <View style={style.turma}>
+                <Text
+                  style={{
+                    fontFamily: "poppinsm",
+                    fontSize: 14,
+                    paddingLeft: 20,
+                    paddingTop: 18,
+                  }}
                 >
-                    <IconX style={style.close} name='close-circle' size={30} onPress={() => setModalActive(false)}/>
-                    <Text style={{fontFamily:'poppinsb', fontSize:15, color:'white' }}>Crie sua turma</Text>
-                    {message && (
+                 {item.key} - {item.turm}
+                </Text>
+              </View>
+            </Pressable>
+          )}
+        ></FlatList>
+      </View>
+
+      <View style={style.botao}>
+        <Pressables
+          iconeFA5="users"
+          texto="Criar uma turma"
+          click={() => setModalActive3(true)}
+        />
+      </View>
+
+      <Modal visible={modalActive2} animationType="fade" transparent={true}>
+        <View style={style.fundoModal}>
+          <LinearGradient
+            start={[1.0, 0.5]}
+            style={style.modal2}
+            colors={["#2C5E7A", "#338995"]}
+          >
+            <Text
+              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", paddingBottom: 50 }}
+            >
+              Deseja mesmo sair?
+            </Text>
+            <View style={style.alinhamento}>
+              <PressablesModal
+                texto="Sim"
+                click={() => handleCloseAndRoute()}
+              />
+              <PressablesModal2
+                texto="Não"
+                click={() => setModalActive2(false)}
+              />
+
+            </View>
+          </LinearGradient>
+        </View>
+      </Modal>
+
+      <Modal visible={modalActive3} animationType="fade" transparent={true}>
+        <View style={style.fundoModal}>
+          <LinearGradient
+            colors={["#2C5E7A", "#338995"]}
+            start={[1.0, 0.5]}
+            style={style.modal}
+          >
+            <IconX
+              style={style.close}
+              name="close-circle"
+              size={30}
+              onPress={() => setModalActive3(false)}
+            />
+            <View style={{alignItems: 'center'}}>
+            <Text
+              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", marginTop:5}}
+            >
+              Crie sua turma
+            </Text>
+            {message && (
                         <Text>{message}</Text>
                     )}
-                        <Inputs place="Matéria" iconeF='book' onChange={(text) => setMateria(text)}/>
-                        <Inputs place="Turma" iconeO='people'onChange={(text) => setNomeTurma(text)}/>
-                        <PressablesModal texto='Criar' click={CriarTurma}/>
-                </LinearGradient>
-            </View>
-        </Modal>
-        <Modal visible={modalActive2} animationType='fade' transparent={true} >
-            <View style={style.fundoModal}>
-                <LinearGradient
-                  colors={['#2C5E7A', '#338995']}
-                  start={[ 1.0, 0.5 ]}
-                  style={style.modal2}>
-                    
-                    <Text style={{fontFamily:'poppinsb', fontSize:15, color:'white' }}>Deseja mesmo sair?</Text>
-                    <View>
-                    <PressablesModal texto='Sim' click={() =>  handleCloseAndRoute()}/>
-                    <PressablesModal2 texto='Não' click={() => setModalActive2(false)}/>
-                    </View>
-                  </LinearGradient>
-            </View>
-        </Modal>
-    </Div>
-);
+              <Inputs place="Matéria" iconeF="book" onChange={(text) => setMateria(text)} />
+              <Inputs place="Turma" iconeO="people" onChange={(text) => setNomeTurma(text)} />
+              </View>
+              <View style={{marginTop:15}}>
+                <PressablesModal
+                  texto="Criar"
+                 click={CriarTurma}
+                />
+              </View>
+            
+            
+            
+          </LinearGradient>
+        </View>
+      </Modal>
+    </SafeAreaView>
+  );
 }
 // =========================================================
 
 // =========================================================
 // ESTILIZAÇÕES:
 const style = StyleSheet.create({
-    fundoModal:{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.2)'
-    },
-    header:{
-        position:"absolute",
-        top: 26,
-    },    
-    botao:{
-            position:"absolute",
-            bottom: 92,
-    },
-    modal:{
-        borderRadius: 22,
-        padding: 35,
-        width: 335,
-        height: 220,
-        alignItems: 'center',
-        justifyContent: 'space-around',
-    },
-    close:{
-        color:"#ffffff",
-        position: "absolute",
-        right: 20,
-        top: 20,
-    },
-    modal2:{
-        width:275,
-        height:173,
-        borderRadius:22,
-        alignItems: 'center',
-        justifyContent: 'space-around',
-    },
-})
-// =========================================================
-
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#fff",
+  },
+  fundoModal: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.2)",
+  },
+  header: {
+    zIndex: 1,
+    position: "absolute",
+    top: 0,
+    flexDirection: "row",
+    width: "100%",
+    height: 110,
+    paddingTop: 30,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  botao: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    height: 110,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  turma: {
+    height: 57,
+    borderRadius: 16,
+    width: 315,
+    backgroundColor: "#D5E9E1",
+    marginBottom: 15,
+  },
+  modal: {
+    borderRadius: 22,
+    width: 340,
+    height: 265,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  close: {
+    position: 'absolute',
+    right: 20,
+    top: 20,
+    color: "#ffffff",
+  },
+  modal2: {
+    width: 275,
+    height: 173,
+    borderRadius: 22,
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
+  alinhamento: {
+    position: 'absolute',
+    bottom: 40,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  lista: {
+    marginTop: 110,
+    marginBottom: 110,
+  },
+  logout:{
+    position:"absolute",
+      zIndex: 2,
+      top: 55,
+      right: 20,
+  }
+});

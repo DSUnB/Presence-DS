@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { Psb, PsbT } from './styled';
 import IconM from 'react-native-vector-icons/MaterialIcons';
 import IconFA5 from 'react-native-vector-icons/FontAwesome5';
