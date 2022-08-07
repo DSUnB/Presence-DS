@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Div } from "./styled";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, ImageBackground } from "react-native";
 import { Checkbox } from 'react-native-paper';
 import Inputs from "../../components/inputs";
 import Pressables from "../../components/pressables";
 import InputsS from "../../components/inputsenha";
+import PressableBtnBack from "../../components/PressableBtnBack";
 
 export default function Form({ navigation }) {
 
@@ -38,12 +39,15 @@ export default function Form({ navigation }) {
   }
 
 return (
-<Div>
+<ImageBackground source={require('../../assets/images/VetorCad.png')} resizeMode="cover">
+  <View>
+    <PressableBtnBack click={() => navigation.navigate('Login')}  iconeIo="chevron-back"/>
+  </View>
+  <Div>
   {message && (
     <Text>{message}</Text>
   )}
-  
-  <Text style={{fontFamily:'poppinsr', fontSize:16}}>Ei!</Text>
+  <Text style={{fontFamily:'poppinsr', fontSize:16, marginTop:40}}>Ei!</Text>
   <Text style={{fontFamily:'poppinsb', fontSize:20, marginBottom:20}}>Crie uma conta</Text>
   <Inputs place='Nome' iconeO='person' onChange={(text) => setName(text)}/>
   <Inputs place="Matrícula" iconeMC='smart-card-outline' onChange={(text) => setMatricula(text)}/>
@@ -60,10 +64,11 @@ return (
     <Text style={{fontFamily:'poppinsr', fontSize:16}}>Sou professor</Text>
   </View>
   <Text style={{marginTop:30}}></Text>
-    <Pressables texto='Registre-se' click={() => navigation.navigate('Main')}>
+    <Pressables texto='Registre-se' click={() => navigation.navigate('MainProf')}>
       <Text>Registre-se</Text>
     </Pressables>
 </Div>
+</ImageBackground>
 );
 }
 
@@ -74,6 +79,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative',
     right: 85,
+  },
+  IconBack:{
+    position: "absolute",
   }
 })
 

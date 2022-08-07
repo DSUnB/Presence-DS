@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { Text, View, Modal, StyleSheet, FlatList, Pressable } from "react-native";
 import Pressables from "../../components/pressables";
+import PressablesConf from "../../components/pressablesconf copy";
 import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
 import { LinearGradient } from "expo-linear-gradient";
 import { Div } from "./styled";
 import Inputs from "../../components/inputs";
 import IconX from "react-native-vector-icons/Ionicons";
-import PressablesConf from "../../components/pressablesconf";
 
-export default function MainProf({ navigation }) {
+export default function MainAlun({ navigation }) {
     const DADOS = [
         { key: "Fisica 1", turm: "A" },
         { key: "Fisica 2", turm: "B" },
@@ -37,11 +37,14 @@ export default function MainProf({ navigation }) {
 
   return (
     <Div>
+      <View style={style.logout}>
+        <PressablesConf iconeLo="logout" click={() => setModalActive2(true)} />
+      </View>
+
       <View style={style.header}>
         <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>
           Turmas Inscritas
         </Text>
-        <PressablesConf iconeLo="logout" click={() => setModalActive2(true)} />
       </View>
 
       <View style={style.lista}>
@@ -109,7 +112,7 @@ export default function MainProf({ navigation }) {
             style={style.modal2}
           >
             <Text
-              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white" }}
+              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", paddingBottom: 50 }}
             >
               Deseja mesmo sair?
             </Text>
@@ -200,11 +203,19 @@ turma:{
     justifyContent: "space-around",
   },
   alinhamento: {
+    position: 'absolute',
+    bottom: 40,
     flexDirection: "row",
     justifyContent: "space-between",
   },
   lista: {
     marginTop: 110,
     marginBottom: 110,
+  },
+  logout:{
+    position:"absolute",
+      zIndex: 2,
+      top: 55,
+      right: 20,
   }
 });
