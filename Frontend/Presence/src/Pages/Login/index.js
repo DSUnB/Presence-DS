@@ -131,7 +131,7 @@ return (
       </View>
 
 
-      <View style={{ flex:1, height: 1, marginLeft: 40, backgroundColor: '#DDDADA'}} />
+      <View style={{ flex:1, height: 1, marginRight: 40, backgroundColor: '#DDDADA'}} />
 
       </View>
       <View>
