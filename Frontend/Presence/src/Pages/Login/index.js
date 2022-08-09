@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Div } from "./styled";
+import config from "../../config/config.json";
 import { Text, View, StyleSheet, ImageBackground } from "react-native";
 import Inputs from "../../components/inputs";
 import Pressables from "../../components/pressables";
@@ -21,7 +22,7 @@ export default function Login({ navigation }) {
   // =========================================================
   // FUNÇÃO PARA ENVIAR 'LOGIN' AO BACKEND:
   async function envLogin(){
-    let reqs = await fetch('http://192.168.0.10:3000/log', {
+    let reqs = await fetch(config.urlRootNode+'log', {
       method: 'POST',
       headers:{
         Accept: 'application/json',
@@ -67,7 +68,7 @@ export default function Login({ navigation }) {
   // =========================================================
   // FUNÇÃO PARA EFETUAR 'LOGIN AUTOMÁTICO' AO BACKEND:
   async function AutoLogin(){
-    let reqs = await fetch('http://192.168.0.10:3000/Autolog', {
+    let reqs = await fetch(config.urlRootNode+'Autolog', {
       method: 'POST',
       headers:{
         Accept: 'application/json',

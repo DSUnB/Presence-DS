@@ -51,11 +51,11 @@ app.post('/cad', async(req,res) => {
         'updatedAt': new Date(),
     });
     if (reqs){
-        res.send(JSON.stringify('202'));
+        res.status(200).send(JSON.stringify('202'));
     }
     }
     catch {
-        res.send(JSON.stringify('403'));
+        res.status(403).send(JSON.stringify('403'));
     }
     
 });
@@ -72,14 +72,14 @@ app.post('/log', async(req,res) => {
         }
     });
     if(reqs === null){
-        res.send(JSON.stringify('404'));
+        res.status(404).send(JSON.stringify('404'));
     }
     else{
-        res.send(reqs);
+        res.status(202).send(reqs);
     }  
     }
     catch {
-        res.send(JSON.stringify('403'))
+        res.status(403).send(JSON.stringify('403'))
     }
 });
 // ====================================================
@@ -95,14 +95,14 @@ app.post('/Autolog', async(req,res) => {
         }
     });
     if(reqs === null){
-        res.send(JSON.stringify('404'));
+        res.status(404).send(JSON.stringify('404'));
     }
     else{
-        res.send(reqs);
+        res.status(202).send(reqs);
     }  
     }
     catch {
-        res.send(JSON.stringify('204'))
+        res.status(204).send(JSON.stringify('204'))
     }
 });
 // ====================================================
@@ -117,7 +117,7 @@ app.post('/turmac', async (req,res)=>{
             }
         });
         if(reqs === null){
-            res.send(JSON.stringify('404'));
+            res.status(404).send(JSON.stringify('404'));
         }
         else{
             let reqs1 = await model.Turmas.create({
@@ -129,15 +129,15 @@ app.post('/turmac', async (req,res)=>{
                 'updatedAt': new Date()
             });
             if (reqs1){
-                res.send(reqs1);
+                res.status(202).send(reqs1);
             }
             else{
-                res.send(JSON.stringify('403'));
+                res.status(403).send(JSON.stringify('403'));
             }
         }
     }
     catch {
-        res.send(JSON.stringify('403'));
+        res.status(403).send(JSON.stringify('403'));
     }
 });
 // ====================================================

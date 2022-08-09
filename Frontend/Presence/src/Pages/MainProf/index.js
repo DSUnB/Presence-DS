@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Pressables from "../../components/pressables";
+import config from "../../config/config.json";
 import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
 import PressablesConf from "../../components/pressablesConf";
@@ -107,7 +108,7 @@ export default function MainProf({ navigation }) {
         let response = await AsyncStorage.getItem('userData');
         let json = JSON.parse(response);
         if (materia != '' && nomeTurma != ''){
-            let reqs = await fetch('http://192.168.0.10:3000/turmac', {
+            let reqs = await fetch(config.urlRootNode+'turmac', {
                 method: 'POST',
                 headers:{
                     'Accept': 'application/json',
