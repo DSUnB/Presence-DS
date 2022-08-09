@@ -33,8 +33,15 @@ export default function Login({ navigation }) {
       })
     });
     let res= await reqs.json();
-    if(res === 'error'){
+    if(res === '404'){
       setMessage('Matrícula ou Senha incorreta!');
+      setTimeout(() => {
+      setMessage(null);
+    }, 5000);
+      await AsyncStorage.clear();
+    }
+    else if(res === '403'){
+      setMessage('Campo Incorreto');
       setTimeout(() => {
       setMessage(null);
     }, 5000);
@@ -72,7 +79,7 @@ export default function Login({ navigation }) {
       })
     });
     let res= await reqs.json();
-    if(res === 'error'){
+    if(res === '404' || res === '204'){
       AsyncStorage.clear();
     }
     else{
@@ -109,6 +116,7 @@ export default function Login({ navigation }) {
 // =========================================================
 // ARQUITETURA DA SCREEN DA APLICAÇÃO:
 return (
+
 <ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
 <Div>
 

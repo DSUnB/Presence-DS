@@ -9,6 +9,7 @@ import {
   Pressable,
   BackHandler,
   Alert,
+  Image,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Pressables from "../../components/pressables";
@@ -55,7 +56,7 @@ export default function MainProf({ navigation }) {
     // ALERTA PARA FECHAR APLICATIVO:
     useEffect(() => {
         const backAction = () => {
-            Alert.alert("Alerta!", "Deseja mesmo sair do app?", [
+            Alert.alert("", "Deseja mesmo sair do app?", [
                 {
                     text: "Não",
                     onPress: () => null,
@@ -86,6 +87,7 @@ export default function MainProf({ navigation }) {
     const [materia, setMateria] = useState(null)
     const [nomeTurma, setNomeTurma] = useState(null)
     const [message, setMessage]=useState(null);
+    const [isLoading, setIsLoading]=useState(false);
     // =========================================================
 
     // =========================================================
@@ -101,9 +103,10 @@ export default function MainProf({ navigation }) {
     // =========================================================
     // FUNÇÃO PARA ENVIO DE DADOS 'CRIAR TURMA' PARA O BACKEND:
     async function CriarTurma(){
+        setIsLoading(true);
         let response = await AsyncStorage.getItem('userData');
         let json = JSON.parse(response);
-        if (materia != '' || nomeTurma != ''){
+        if (materia != '' && nomeTurma != ''){
             let reqs = await fetch('http://192.168.0.10:3000/turmac', {
                 method: 'POST',
                 headers:{
@@ -119,14 +122,25 @@ export default function MainProf({ navigation }) {
                 })
             });
             let res= await reqs.json();
-            if(res === 'error'){
+            if(res === '403'){
                 setMessage('Preencha os Campos!');
+                setIsLoading(false);
                 setTimeout(() => {
                     setMessage(null);
                 }, 2000);
             }
+            else if(res === '404'){
+              setMessage('Erro de Autenticação!');
+              setIsLoading(false);
+              setTimeout(() => {
+                  setMessage(null);
+                  AsyncStorage.clear();
+                  navigation.navigate('Login')
+              }, 2000);
+            }
             else{
                 setMessage('Turma Criada!');
+                setIsLoading(false);
                 setTimeout(() => {
                     setMessage(null);
                     setMateria(null);
@@ -246,10 +260,19 @@ return (
               <Inputs place="Turma" iconeO="people" onChange={(text) => setNomeTurma(text)} />
               </View>
               <View style={{marginTop:15}}>
-                <PressablesModal
-                  texto="Criar"
-                 click={CriarTurma}
-                />
+                
+                {isLoading && (
+                  <Image style={style.loading} source={require('../../assets/videos/LoadingApp.gif')}/>
+                )}
+
+                {!isLoading && (
+                  <PressablesModal
+                    texto="Criar"
+                    click={CriarTurma}
+                  />
+                )}
+                
+
               </View>
             
             
@@ -341,5 +364,9 @@ const style = StyleSheet.create({
       zIndex: 2,
       top: 55,
       right: 20,
+  },
+  loading:{
+    height: 30,
+    width: 140,
   }
 });

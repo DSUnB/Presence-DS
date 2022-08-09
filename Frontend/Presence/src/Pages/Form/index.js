@@ -10,7 +10,8 @@ import PressableBtnBack from "../../components/PressableBtnBack";
 
 export default function Form({ navigation }) {
 
-  // Criação das States para serem enviadas ao Banco de Dados:
+  // ==================================================================
+  // CRIAÇÃO DE STATES:
   const [name, setName]=useState(null);
   const [matricula, setMatricula]=useState(null);
   const [email, setEmail]=useState(null);
@@ -18,10 +19,12 @@ export default function Form({ navigation }) {
   const [passwordConfirm, setPasswordConfirm]=useState(null);
   const [checked, setChecked]=useState(false);
   const [message, setMessage]=useState(null);
+  // ==================================================================
 
-  // Criação da função para envio para o Backend:
+  // ==================================================================
+  // FUNÇÃO PARA ENVIO DE CADASTRO AO BACKEND:
   async function Registro(){
-    if (password === passwordConfirm && name != '' && matricula != '' && email != '' && password != ''){
+    if (password === passwordConfirm && name != '' && matricula != '' && email != '' && password != '' && name != null && matricula != null && email != null && password != null){
       let reqs = await fetch('http://192.168.0.10:3000/cad', {
       method: 'POST',
       headers:{
@@ -38,14 +41,14 @@ export default function Form({ navigation }) {
       })
     });
     let res= await reqs.json();
-    if (res === 'error'){
-      setMessage('Preencha os Campos corretamente!');
+    if (res === '403'){
+      setMessage('Matrícula já existe!');
       setTimeout(() => {
       setMessage(null);
     }, 5000);
     }
     else{
-      setMessage(res);
+      setMessage("Usuário Criado com Sucesso!");
     setTimeout(() => {
       setMessage(null);
       navigation.navigate('Login');
@@ -59,15 +62,24 @@ export default function Form({ navigation }) {
         setMessage(null);
       }, 5000);
     }
+    else if (name === null && matricula === null && email === null && password === null) {
+      setMessage('Preencha todos os Campos!');
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    }
     else{
-      setMessage('Todos os campos são obrigatórios!');
+      setMessage('Preencha todos os Campos!');
       setTimeout(() => {
         setMessage(null);
       }, 5000);
     }
 
   }
+  // ==================================================================
 
+  // ==================================================================
+  // ARQUITETURA DA SCREEN FORM DA APLICAÇÃO:
 return (
 
 <ImageBackground source={require('../../assets/images/VetorCad.png')} resizeMode="cover">
@@ -107,7 +119,10 @@ return (
 </ImageBackground>
 );
 }
+// ==================================================================
 
+// ==================================================================
+// ESTILIZAÇÕES:
 const styles = StyleSheet.create({
   container: {
     marginTop: 2,
@@ -120,4 +135,4 @@ const styles = StyleSheet.create({
     position: "absolute",
   }
 })
-
+// ==================================================================
