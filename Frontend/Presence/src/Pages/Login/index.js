@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Div } from "./styled";
 import config from "../../config/config.json";
-import { Text, View, StyleSheet, ImageBackground } from "react-native";
+import { Text, View, StyleSheet, ImageBackground, Keyboard } from "react-native";
 import Inputs from "../../components/inputs";
 import Pressables from "../../components/pressables";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -22,6 +22,7 @@ export default function Login({ navigation }) {
   // =========================================================
   // FUNÇÃO PARA ENVIAR 'LOGIN' AO BACKEND:
   async function envLogin(){
+    Keyboard.dismiss();
     let reqs = await fetch(config.urlRootNode+'log', {
       method: 'POST',
       headers:{
@@ -68,6 +69,7 @@ export default function Login({ navigation }) {
   // =========================================================
   // FUNÇÃO PARA EFETUAR 'LOGIN AUTOMÁTICO' AO BACKEND:
   async function AutoLogin(){
+    Keyboard.dismiss();
     let reqs = await fetch(config.urlRootNode+'Autolog', {
       method: 'POST',
       headers:{

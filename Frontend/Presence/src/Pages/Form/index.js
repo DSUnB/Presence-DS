@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Div } from "./styled";
-import { Text, View, StyleSheet, ImageBackground } from "react-native";
+import { Text, View, StyleSheet, ImageBackground, Keyboard } from "react-native";
 import config from "../../config/config.json";
 import { Checkbox } from 'react-native-paper';
 import Inputs from "../../components/inputs";
@@ -25,6 +25,7 @@ export default function Form({ navigation }) {
   // ==================================================================
   // FUNÇÃO PARA ENVIO DE CADASTRO AO BACKEND:
   async function Registro(){
+    Keyboard.dismiss();
     if (password === passwordConfirm && name != '' && matricula != '' && email != '' && password != '' && name != null && matricula != null && email != null && password != null){
       let reqs = await fetch(config.urlRootNode+'cad', {
       method: 'POST',

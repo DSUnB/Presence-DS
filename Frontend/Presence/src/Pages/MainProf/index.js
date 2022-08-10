@@ -10,6 +10,7 @@ import {
   BackHandler,
   Alert,
   Image,
+  Keyboard,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Pressables from "../../components/pressables";
@@ -104,6 +105,7 @@ export default function MainProf({ navigation }) {
     // =========================================================
     // FUNÇÃO PARA ENVIO DE DADOS 'CRIAR TURMA' PARA O BACKEND:
     async function CriarTurma(){
+      Keyboard.dismiss();
         setIsLoading(true);
         let response = await AsyncStorage.getItem('userData');
         let json = JSON.parse(response);
@@ -152,6 +154,7 @@ export default function MainProf({ navigation }) {
             }
         }
         else{
+            setIsLoading(false);
             setMessage('Preencha os Campos!');
                 setTimeout(() => {
                     setMessage(null);
