@@ -90,11 +90,13 @@ return (
   </View>
   <Div>
 
-  {message && (
-    <Text>{message}</Text>
-  )}
   <Text style={{fontFamily:'poppinsr', fontSize:16, marginTop:40}}>Ei!</Text>
   <Text style={{fontFamily:'poppinsb', fontSize:20, marginBottom:20}}>Crie uma conta</Text>
+  
+  {message && (
+    <Text style={{fontFamily:'poppinsr', fontSize:17, color:'#900020'}}>{message}</Text>
+  )}
+  
   <Inputs place='Nome' iconeO='person' onChange={(text) => setName(text)}/>
   <Inputs place="Matrícula" iconeMC='smart-card-outline' onChange={(text) => setMatricula(text)}/>
   <Inputs place="Email" iconeF='mail' onChange={(text) => setEmail(text)}/>
