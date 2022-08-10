@@ -21,7 +21,7 @@ export default function Login({ navigation }) {
   // =========================================================
   // FUNÇÃO PARA ENVIAR 'LOGIN' AO BACKEND:
   async function envLogin(){
-    let reqs = await fetch('http://192.168.0.10:3000/log', {
+    let reqs = await fetch('http://192.168.1.8:3000/log', {
       method: 'POST',
       headers:{
         Accept: 'application/json',
@@ -60,7 +60,7 @@ export default function Login({ navigation }) {
   // =========================================================
   // FUNÇÃO PARA EFETUAR 'LOGIN AUTOMÁTICO' AO BACKEND:
   async function AutoLogin(){
-    let reqs = await fetch('http://192.168.0.10:3000/Autolog', {
+    let reqs = await fetch('http://192.168.1.8:3000/Autolog', {
       method: 'POST',
       headers:{
         Accept: 'application/json',

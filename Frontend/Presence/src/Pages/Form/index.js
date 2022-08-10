@@ -22,7 +22,7 @@ export default function Form({ navigation }) {
   // Criação da função para envio para o Backend:
   async function Registro(){
     if (password === passwordConfirm && name != '' && matricula != '' && email != '' && password != ''){
-      let reqs = await fetch('http://192.168.0.10:3000/cad', {
+      let reqs = await fetch('http://192.168.1.8:3000/cad', {
       method: 'POST',
       headers:{
         'Accept': 'application/json',

@@ -104,7 +104,7 @@ export default function MainProf({ navigation }) {
         let response = await AsyncStorage.getItem('userData');
         let json = JSON.parse(response);
         if (materia != '' || nomeTurma != ''){
-            let reqs = await fetch('http://192.168.0.10:3000/turmac', {
+            let reqs = await fetch('http://192.168.1.8:3000/turmac', {
                 method: 'POST',
                 headers:{
                     'Accept': 'application/json',
