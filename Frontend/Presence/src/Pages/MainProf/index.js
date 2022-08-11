@@ -38,19 +38,9 @@ function codigo() {
 export default function MainProf({ navigation }) {
 
     const DADOS = [
-    { key: "Fisica 1", turm: "A" },
-    { key: "Fisica 2", turm: "B" },
-    { key: "Fisica 3", turm: "C" },
-    { key: "Fisica 4", turm: "D" },
-    { key: "Fisica 5", turm: "E" },
-    { key: "Fisica 6", turm: "F" },
-    { key: "Fisica 7", turm: "G" },
-    { key: "Fisica 8", turm: "H" },
-    { key: "Fisica 9", turm: "I" },
-    { key: "Fisica 10", turm: "J" },
-    { key: "Fisica 11", turm: "K" },
-    { key: "Fisica 12", turm: "L" },
-    { key: "Fisica 13", turm: "M" },
+    { key: "Cálculo 1", turm: "A" },
+    { key: "Cálculo 2", turm: "B" },
+    { key: "Introdução à Algebra Linear", turm: "A" },
   ];
 
 
