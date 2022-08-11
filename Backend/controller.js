@@ -1,23 +1,44 @@
-// Declaração de bibliotecas:
+// DECLARAÇÃO DE BIBLIOTECAS:
 const express=require('express');
 const cors=require('cors');
 const bodyParser=require('body-parser');
 const model=require('./models');
 const bcrypt=require('bcrypt');
 
-
+// =====================================================
+// DEFINIÇÃO DE CRIPTOGRAFIA:
 let salt = bcrypt.genSaltSync(10)
+// ==================================================================
 
-// Configuração das bibliotecas:
+
+// ================================
+// DICIONÁRIO DE ERROS:
+
+// 202 - Aceito;
+// 204 - Aceito, contudo sem necessidade de reposta;
+// 403 - Erro por quebra de servidor;
+// 404 - Erro por não existência de dado;
+// 412 - Pré-Requisitos de requisição ausente.
+
+// ================================
+
+// CONFIGURAÇÃO DAS BIBLIOTECAS:
 const app=express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+// ================================
 
-//Rotas:
+
+// ==================================================================
+// ==================================================================
+// ==================================================================
+// ==================================================================
+
+//  ROTEAMENTO:
 
 // ====================================================
-// Registrar a Conta do usuário:
+// REGISTRAR CONTA DE USUÁRIO: (FORM)
 app.post('/cad', async(req,res) => {
     try {
         let reqs = await model.Usuarios.create({
@@ -30,18 +51,18 @@ app.post('/cad', async(req,res) => {
         'updatedAt': new Date(),
     });
     if (reqs){
-        res.send(JSON.stringify('O usuário foi cadastrado com sucesso! Redirecionando...'));
+        res.status(200).send(JSON.stringify('202'));
     }
     }
     catch {
-        res.send(JSON.stringify('error'));
+        res.status(403).send(JSON.stringify('403'));
     }
     
 });
 // ====================================================
 
 // ====================================================
-// Verificação de credenciamento do login:
+// VERIFICAÇÃO DO CREDENCIAMENTO DO USUÁRIO: (LOGIN)
 app.post('/log', async(req,res) => {
     try {
       let reqs = await model.Usuarios.findOne({
@@ -51,20 +72,20 @@ app.post('/log', async(req,res) => {
         }
     });
     if(reqs === null){
-        res.send(JSON.stringify('error'));
+        res.status(404).send(JSON.stringify('404'));
     }
     else{
-        res.send(reqs);
+        res.status(202).send(reqs);
     }  
     }
     catch {
-        res.send(JSON.stringify('error'))
+        res.status(403).send(JSON.stringify('403'))
     }
 });
 // ====================================================
 
 // ====================================================
-// Verificação de Autologin:
+// AUTO VERIFICAÇÃO DE CREDENCIAMENTO DO USUÁRIO: (LOGIN)
 app.post('/Autolog', async(req,res) => {
     try {
       let reqs = await model.Usuarios.findOne({
@@ -74,20 +95,20 @@ app.post('/Autolog', async(req,res) => {
         }
     });
     if(reqs === null){
-        res.send(JSON.stringify('error'));
+        res.status(404).send(JSON.stringify('404'));
     }
     else{
-        res.send(reqs);
+        res.status(202).send(reqs);
     }  
     }
     catch {
-        res.send(JSON.stringify('error'))
+        res.status(204).send(JSON.stringify('204'))
     }
 });
 // ====================================================
 
 // ====================================================
-// Criação de Turma:
+// CRIAÇÃO DE TURMA: (MAINPROF)
 app.post('/turmac', async (req,res)=>{
     try {
         let reqs = await model.Professores.findOne({
@@ -96,7 +117,7 @@ app.post('/turmac', async (req,res)=>{
             }
         });
         if(reqs === null){
-            res.send(JSON.stringify('error'));
+            res.status(404).send(JSON.stringify('404'));
         }
         else{
             let reqs1 = await model.Turmas.create({
@@ -107,19 +128,26 @@ app.post('/turmac', async (req,res)=>{
                 'createdAt': new Date(),
                 'updatedAt': new Date()
             });
-            if (reqs){
-                res.send(reqs);
+            if (reqs1){
+                res.status(202).send(reqs1);
             }
             else{
-                res.send(JSON.stringify('error'));
+                res.status(403).send(JSON.stringify('403'));
             }
         }
     }
     catch {
-        res.send(JSON.stringify('error'));
+        res.status(403).send(JSON.stringify('403'));
     }
 });
+// ====================================================
 
+// ==================================================================
+// ==================================================================
+// ==================================================================
+// ==================================================================
+
+// ====================================================
 // Inciciar o servidor fazendo a variável 'port' ouvir o localHost:
 let port=process.env.PORT || 3000;
 app.listen(port,(req,res)=>{

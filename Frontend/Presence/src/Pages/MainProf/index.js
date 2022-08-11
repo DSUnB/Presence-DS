@@ -9,9 +9,12 @@ import {
   Pressable,
   BackHandler,
   Alert,
+  Image,
+  Keyboard,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Pressables from "../../components/pressables";
+import config from "../../config/config.json";
 import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
 import PressablesConf from "../../components/pressablesConf";
@@ -55,7 +58,7 @@ export default function MainProf({ navigation }) {
     // ALERTA PARA FECHAR APLICATIVO:
     useEffect(() => {
         const backAction = () => {
-            Alert.alert("Alerta!", "Deseja mesmo sair do app?", [
+            Alert.alert("", "Deseja mesmo sair do app?", [
                 {
                     text: "Não",
                     onPress: () => null,
@@ -86,6 +89,7 @@ export default function MainProf({ navigation }) {
     const [materia, setMateria] = useState(null)
     const [nomeTurma, setNomeTurma] = useState(null)
     const [message, setMessage]=useState(null);
+    const [isLoading, setIsLoading]=useState(false);
     // =========================================================
 
     // =========================================================
@@ -101,10 +105,12 @@ export default function MainProf({ navigation }) {
     // =========================================================
     // FUNÇÃO PARA ENVIO DE DADOS 'CRIAR TURMA' PARA O BACKEND:
     async function CriarTurma(){
+      Keyboard.dismiss();
+        setIsLoading(true);
         let response = await AsyncStorage.getItem('userData');
         let json = JSON.parse(response);
-        if (materia != '' || nomeTurma != ''){
-            let reqs = await fetch('http://192.168.1.8:3000/turmac', {
+        if (materia != '' && nomeTurma != ''){
+            let reqs = await fetch(config.urlRootNode+'turmac', {
                 method: 'POST',
                 headers:{
                     'Accept': 'application/json',
@@ -119,14 +125,25 @@ export default function MainProf({ navigation }) {
                 })
             });
             let res= await reqs.json();
-            if(res === 'error'){
+            if(res === '403'){
                 setMessage('Preencha os Campos!');
+                setIsLoading(false);
                 setTimeout(() => {
                     setMessage(null);
                 }, 2000);
             }
+            else if(res === '404'){
+              setMessage('Erro de Autenticação!');
+              setIsLoading(false);
+              setTimeout(() => {
+                  setMessage(null);
+                  AsyncStorage.clear();
+                  navigation.navigate('Login')
+              }, 2000);
+            }
             else{
                 setMessage('Turma Criada!');
+                setIsLoading(false);
                 setTimeout(() => {
                     setMessage(null);
                     setMateria(null);
@@ -137,6 +154,7 @@ export default function MainProf({ navigation }) {
             }
         }
         else{
+            setIsLoading(false);
             setMessage('Preencha os Campos!');
                 setTimeout(() => {
                     setMessage(null);
@@ -246,10 +264,19 @@ return (
               <Inputs place="Turma" iconeO="people" onChange={(text) => setNomeTurma(text)} />
               </View>
               <View style={{marginTop:15}}>
-                <PressablesModal
-                  texto="Criar"
-                 click={CriarTurma}
-                />
+                
+                {isLoading && (
+                  <Image style={style.loading} source={require('../../assets/videos/LoadingApp.gif')}/>
+                )}
+
+                {!isLoading && (
+                  <PressablesModal
+                    texto="Criar"
+                    click={CriarTurma}
+                  />
+                )}
+                
+
               </View>
             
             
@@ -341,5 +368,9 @@ const style = StyleSheet.create({
       zIndex: 2,
       top: 55,
       right: 20,
+  },
+  loading:{
+    height: 30,
+    width: 140,
   }
 });
