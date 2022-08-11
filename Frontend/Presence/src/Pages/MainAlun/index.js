@@ -71,7 +71,7 @@ export default function MainAlun({ navigation }) {
         <FlatList
           data={DADOS}
           renderItem={({ item }) => (
-            <Pressable>
+            <Pressable onPress={() => navigation.navigate('ValidarChamada')}>
               <View style={style.turma}>
                 <Text
                   style={{

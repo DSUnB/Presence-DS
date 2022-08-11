@@ -4,50 +4,45 @@ import PressablesConf from "../../components/pressablesConf";
 import PressableBtnBack from "../../components/PressableBtnBack";
 import PressableCircle from "../../components/pressableCircle";
 import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
-import IconF from 'react-native-vector-icons/Feather';
+import IconO from 'react-native-vector-icons/Octicons';
+import IconLo from 'react-native-vector-icons/MaterialIcons';
 
 
-export default function CriarChamada({ navigation }) {
+export default function ValidarChamada({ navigation }) {
   return (
     <SafeAreaView style={style.container}>
         <View style={style.header}>
             <View>
-                <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>Cálculo 2 - B</Text>
+                <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>Física 1 - A</Text>
             </View>
             <View style={style.voltar}>
                 <PressableBtnBack
-                    click={() => navigation.navigate("MainProf")}
+                    click={() => navigation.navigate("MainAlun")}
                     iconeIo="chevron-back"
                 />
             </View>
             <View style={style.opcoes}>    
                 <PressablesConf
                     iconeSLI="options"
-                    click={() => navigation.navigate("MainAlun")}
+                    click={() => navigation.navigate("MainProf")}
                 />
             </View>
         </View>
 
-        <View style={style.code}>
-          <View style={{width: 55,height: 55, borderRadius: 100, backgroundColor: 'white', position: 'absolute', top: 6, left: 6}}>
-            
-          </View>
-          <Text style={{ fontFamily: "poppinsb", fontSize: 24, textAlign: 'center', paddingLeft: 15, marginTop: 14 }}>AU42ZY</Text>
-        </View>
 
         <View style={style.footer}>
           <View style={{width: 24, height: 24,}}>
-            <IconF style={{alignSelf: 'center', color: 'black'}} name='edit' size={23.5}/>
+            <IconO style={{alignSelf: 'center', color: 'black'}} name='megaphone' size={23.5}/>
           </View>
           <View style={{paddingBottom: 20}}>
             <PressableCircle
               click={() => navigation.navigate("MainProf")}
-              iconeFA5="users"
+              iconeMCI="calendar-multiple-check"
             >
             </PressableCircle>
           </View>
-          <View style={{width: 24, height: 24}}>
-            <IconMCI style={{alignSelf: 'center', color: '#DB4E4E'}} name='delete' size={27}/>
+          <View style={{width: 27, height: 27}}>
+            <IconLo style={{alignSelf: 'center', color: '#DB4E4E'}} name='logout' size={27}/>
           </View>
         </View>
     </SafeAreaView>
