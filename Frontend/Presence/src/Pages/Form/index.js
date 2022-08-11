@@ -85,7 +85,7 @@ export default function Form({ navigation }) {
 return (
 
 <ImageBackground source={require('../../assets/images/VetorCad.png')} resizeMode="cover">
-  <View>
+  <View style={{top: 45, left: 15}}>
     <PressableBtnBack click={() => navigation.navigate('Login')}  iconeIo="chevron-back"/>
   </View>
   <Div>

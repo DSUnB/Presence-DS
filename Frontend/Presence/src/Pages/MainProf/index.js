@@ -185,7 +185,7 @@ return (
         <FlatList
           data={DADOS}
           renderItem={({ item }) => (
-            <Pressable>
+            <Pressable onPress={() => navigation.navigate('CriarChamada')}>
               <View style={style.turma}>
                 <Text
                   style={{

@@ -17,8 +17,9 @@ const style = StyleSheet.create({
 
     icone:{
         color:"black",
-        marginLeft:5,
-        marginTop:4,
+        position: 'absolute',
+        left:5,
+        top:4,
     },
 
     button:{
@@ -27,8 +28,6 @@ const style = StyleSheet.create({
       borderRadius: 8,
       position:"absolute",
       zIndex: 2,
-      top: 45,
-      left: 15,
       backgroundColor:'rgba(247, 248, 248, 1)',
     }
   })

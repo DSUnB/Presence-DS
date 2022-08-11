@@ -8,6 +8,7 @@ import Form from './src/Pages/Form';
 import AppLoading from 'expo-app-loading';
 import MainAlun from './src/Pages/MainAlun';
 import MainProf from './src/Pages/MainProf';
+import CriarChamada from './src/Pages/CriarChamada';
 
 
 const Stack = createNativeStackNavigator();
@@ -35,7 +36,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName="Login" 
+        initialRouteName="CriarChamada" 
         screenOptions={{
           headerShown: false
         }}
@@ -43,6 +44,7 @@ export default function App() {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Form" component={Form} />
         <Stack.Screen name="MainProf" component={MainProf} />
+        <Stack.Screen name="CriarChamada" component={CriarChamada} />
         <Stack.Screen name="MainAlun" component={MainAlun} />
       </Stack.Navigator>
     </NavigationContainer>
