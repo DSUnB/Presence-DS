@@ -83,6 +83,13 @@ export default function MainProf({ navigation }) {
     // =========================================================
 
     // =========================================================
+    // EFEITO PARA BUSCAR AUTOMATICAMENTE AS TURMAS RELACIONADO AO USUÁRIO:
+    useEffect(() => {
+      MostrarTurma()
+    })
+    // =========================================================
+
+    // =========================================================
     // DECLARAÇÃO DE STATES:
     const [modalActive2, setModalActive2] = useState(false)
     const [modalActive3, setModalActive3] = useState(false)
@@ -160,6 +167,24 @@ export default function MainProf({ navigation }) {
                     setMessage(null);
                 }, 2000);
         }
+    }
+    // =========================================================
+
+    // =========================================================
+    // FUNÇÃO PARA REQUISITAR 'MOSTRAR TURMA' AO BACKEND:
+    async function MostrarTurma(){
+        let response = await AsyncStorage.getItem('userData');
+        let json = JSON.parse(response);
+        let reqs = await fetch(config.urlRootNode+'turmam', {
+          method: 'POST',
+          headers:{
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              professor: json.matricula,
+          })
+      });
     }
     // =========================================================
 

@@ -7,7 +7,7 @@ const bcrypt=require('bcrypt');
 
 // =====================================================
 // DEFINIÇÃO DE CRIPTOGRAFIA:
-let salt = bcrypt.genSaltSync(10)
+var salt = '$2b$10$oGNYbTMTWMhrxSxxiKWu8.';
 // ==================================================================
 
 
@@ -140,6 +140,36 @@ app.post('/turmac', async (req,res)=>{
         res.status(403).send(JSON.stringify('403'));
     }
 });
+// ====================================================
+
+// ====================================================
+// PESQUISA DE TURMAS: (MAINPROF)
+
+app.get('/turmam', async (req,res) => {
+    try{
+        let reqs = await model.Professores.findOne({
+            where: {
+                matricula: req.body.professor,
+            }
+        });
+        if(reqs === null){
+            res.status(404).send(JSON.stringify('404'));
+        }
+        else{
+            let reqs1 = await model.Turmas.findAll({
+                where: {
+                    idProfessor: reqs.matricula
+                },
+                raw: true,
+            });
+            console.log(reqs1)
+        }
+    }
+    catch{
+
+    }
+})
+
 // ====================================================
 
 // ==================================================================
