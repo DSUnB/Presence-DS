@@ -7,6 +7,7 @@ import Inputs from "../../components/inputs";
 import Pressables from "../../components/pressables";
 import InputsS from "../../components/inputsenha";
 import PressableBtnBack from "../../components/PressableBtnBack";
+import IconA from 'react-native-vector-icons/Feather';
 
 
 export default function Form({ navigation }) {
@@ -94,7 +95,11 @@ return (
   <Text style={{fontFamily:'poppinsb', fontSize:20, marginBottom:20}}>Crie uma conta</Text>
   
   {message && (
-    <Text style={{fontFamily:'poppinsr', fontSize:17, color:'#900020'}}>{message}</Text>
+    <View style={{display:'flex' , flexDirection:'row'}}  >
+    <IconA name='alert-triangle' size={25} style={{marginRight:10}}/>
+    <Text style={{fontFamily:'poppinsr', fontSize:17, color:'#900020'}}>{message}</Text> 
+    </View>
+    
   )}
   
   <Inputs place='Nome' iconeO='person' onChange={(text) => setName(text)}/>
