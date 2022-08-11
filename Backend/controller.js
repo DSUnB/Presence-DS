@@ -162,11 +162,17 @@ app.post('/turmam', async (req,res) => {
                 },
                 raw: true,
             });
-            console.log(reqs1)
+           if (reqs1){
+            console.log(reqs1);
+            res.status(202).send(reqs1);
+           }
+           else{
+            res.status(204).send(JSON.stringify('204'));
+           }
         }
     }
-    catch{
-
+    catch {
+        res.status(403).send(JSON.stringify('403'));
     }
 })
 

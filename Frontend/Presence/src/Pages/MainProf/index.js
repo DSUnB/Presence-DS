@@ -37,23 +37,14 @@ function codigo() {
 
 export default function MainProf({ navigation }) {
 
+    const CLASSLIST = MostrarTurma()
+
+    
+
     const DADOS = [
-    { key: "Fisica 1", turm: "A" },
-    { key: "Fisica 2", turm: "B" },
-    { key: "Fisica 3", turm: "C" },
-    { key: "Fisica 4", turm: "D" },
-    { key: "Fisica 5", turm: "E" },
-    { key: "Fisica 6", turm: "F" },
-    { key: "Fisica 7", turm: "G" },
-    { key: "Fisica 8", turm: "H" },
-    { key: "Fisica 9", turm: "I" },
-    { key: "Fisica 10", turm: "J" },
-    { key: "Fisica 11", turm: "K" },
-    { key: "Fisica 12", turm: "L" },
-    { key: "Fisica 13", turm: "M" },
-  ];
-
-
+      
+    ]
+    
     // =========================================================
     // ALERTA PARA FECHAR APLICATIVO:
     useEffect(() => {
@@ -84,9 +75,9 @@ export default function MainProf({ navigation }) {
 
     // =========================================================
     // EFEITO PARA BUSCAR AUTOMATICAMENTE AS TURMAS RELACIONADO AO USUÁRIO:
-    useEffect(() => {
-      MostrarTurma()
-    })
+    // useEffect(() => {
+    //   MostrarTurma()
+    // })
     // =========================================================
 
     // =========================================================
@@ -150,6 +141,7 @@ export default function MainProf({ navigation }) {
             }
             else{
                 setMessage('Turma Criada!');
+                MostrarTurma();
                 setIsLoading(false);
                 setTimeout(() => {
                     setMessage(null);
@@ -185,6 +177,25 @@ export default function MainProf({ navigation }) {
               professor: json.matricula,
           })
       });
+      let res= await reqs.json();
+      if (res === '204'){
+        setMessage('Sem turmas');
+        setTimeout(() => {
+          setMessage(null);
+      }, 2000);
+      }
+      else if (res === '403'){
+        setMessage('Erro de Autenticação!');
+        setTimeout(() => {
+          setMessage(null);
+          AsyncStorage.clear();
+          navigation.navigate('Login')
+      }, 2000);
+      }
+      else {
+        console.log(res);
+        return res[1];
+      }
     }
     // =========================================================
 
@@ -203,6 +214,9 @@ return (
           {" "}
           Turmas Ministradas
         </Text>
+        {message && (
+                        <Text>{message}</Text>
+                    )}
       </View>
 
 
@@ -220,7 +234,7 @@ return (
                     paddingTop: 18,
                   }}
                 >
-                 {item.key} - {item.turm}
+                 {item.curso} - {item.nomeTurma}
                 </Text>
               </View>
             </Pressable>
