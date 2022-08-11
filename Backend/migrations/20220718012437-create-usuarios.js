@@ -36,7 +36,7 @@ module.exports = {
         type: Sequelize.DATE
       }
     }),
-    queryInterface.sequelize.query('CREATE TRIGGER `usuarios_AFTER_INSERT` AFTER INSERT ON `usuarios` FOR EACH ROW BEGIN if new.tipoUsuario = 0 then insert into alunos values(null, 0, new.matricula,now(), now(), null); else  insert into professores values(null, 0, new.matricula,now(), now(), null); end if; END');
+    queryInterface.sequelize.query('CREATE TRIGGER `usuarios_AFTER_INSERT` AFTER INSERT ON `usuarios` FOR EACH ROW BEGIN if new.tipoUsuario = 0 then insert into alunos values(null, 0, new.matricula,now(), now()); else  insert into professores values(null, 0, new.matricula,now(), now()); end if; END');
   },
   
   async down(queryInterface, Sequelize) {

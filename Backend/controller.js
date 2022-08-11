@@ -145,7 +145,7 @@ app.post('/turmac', async (req,res)=>{
 // ====================================================
 // PESQUISA DE TURMAS: (MAINPROF)
 
-app.get('/turmam', async (req,res) => {
+app.post('/turmam', async (req,res) => {
     try{
         let reqs = await model.Professores.findOne({
             where: {
@@ -158,7 +158,7 @@ app.get('/turmam', async (req,res) => {
         else{
             let reqs1 = await model.Turmas.findAll({
                 where: {
-                    idProfessor: reqs.matricula
+                    idProfessor: reqs.idProfessor
                 },
                 raw: true,
             });

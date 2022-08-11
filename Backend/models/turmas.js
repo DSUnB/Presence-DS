@@ -10,9 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Turmas.hasMany(models.EntrarTurma);
-      Turmas.hasMany(models.Chamadas);
-      Turmas.belongsTo(models.Professores);
+      // Turmas.hasMany(models.EntrarTurma);
+      // Turmas.hasMany(models.Chamadas);
+      // Turmas.belongsTo(models.Professores);
     }
   }
   Turmas.init({
