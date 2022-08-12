@@ -24,8 +24,8 @@ export default function PressablesConf(props) {
     },
     iconeSLI:{
       color:"black",
-      postion: 'absolute',
-      top: -24,
+      position: 'absolute',
+      top: 8,
       left: 9.5
   },
     button:{
