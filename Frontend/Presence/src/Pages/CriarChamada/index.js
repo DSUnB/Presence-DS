@@ -12,9 +12,9 @@ import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
 import { LinearGradient } from "expo-linear-gradient";
 import Inputs from "../../components/inputs";
+import CalendarStrip from 'react-native-calendar-strip';
 
 export default function CriarChamada({ navigation }) {
-
   const [modalActive1, setModalActive1] = useState(false)
   const [modalActive2, setModalActive2] = useState(false);
 
@@ -22,6 +22,20 @@ export default function CriarChamada({ navigation }) {
     setModalActive2(false);
     navigation.navigate('MainProf')
   }
+
+  const Example = () => (
+    <View style={style.calendar}>
+    <CalendarStrip
+      scrollable
+      style={{height: 100, width: 395, paddingTop: 30, paddingBottom: 10, paddingLeft: 10, paddingRight: 10}}
+      calendarColor={'rgba(0,0,0,0)'}
+      calendarHeaderStyle={{color: 'black'}}
+      dateNumberStyle={{color: 'black'}}
+      dateNameStyle={{color: 'black'}}
+      iconContainer={{flex: 0.1}}
+    />
+  </View>
+);
 
   return (
     <SafeAreaView style={style.container}>
@@ -50,7 +64,11 @@ export default function CriarChamada({ navigation }) {
           <Text style={{ fontFamily: "poppinsb", fontSize: 24, textAlign: 'center', paddingLeft: 15, marginTop: 14 }}>AU42ZY</Text>
         </View>
 
-        <View>
+        <View style={style.calendario}>
+          <Example></Example>
+        </View>
+
+        <View style={{position:"relative", zIndex: 4, top:-200, }}>
           <Pressables
             texto='Criar Chamada'
             click={() => navigation.navigate("Chamada")}
@@ -139,7 +157,7 @@ const style = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     height: "100%",
-    backgroundColor: "#fff",
+    backgroundColor: "#F9F9F9",
   },
   header: {
     zIndex: 2,
@@ -215,4 +233,11 @@ const style = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  calendar: {
+    flex: 1,
+  },
+  calendario: {
+    postion: 'absolute',
+    top: 230,
+  }
 });
