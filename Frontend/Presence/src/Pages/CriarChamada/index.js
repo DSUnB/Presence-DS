@@ -79,7 +79,7 @@ export default function CriarChamada({ navigation }) {
           <View style={{width: 24, height: 24,}}>
             <IconF style={{alignSelf: 'center', color: 'black'}} name='edit' size={23.5} onPress={() => setModalActive1(true)}/>
           </View>
-          <View style={{paddingBottom: 20}}>
+          <View style={{paddingBottom: 35}}>
             <PressableCircle
               click={() => navigation.navigate("Turma")}
               iconeFA5="users"
@@ -157,7 +157,7 @@ const style = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     height: "100%",
-    backgroundColor: "#F9F9F9",
+    backgroundColor: "#FFF",
   },
   header: {
     zIndex: 2,
@@ -196,11 +196,24 @@ const style = StyleSheet.create({
     flexDirection: "row",
     bottom: 0,
     width: "100%",
-    height: 80,
+    height: 70,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "space-around",
+    borderWidth: 1,
+    borderRadius: 2,
+    borderColor: '#ddd',
+    borderBottomWidth: 0,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 1,
+    marginLeft: 5,
+    marginRight: 5,
+    marginTop: 10,
   },
+
   fundoModal: {
     flex: 1,
     justifyContent: "center",
