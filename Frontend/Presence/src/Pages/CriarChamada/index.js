@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, View, Text, StyleSheet, Modal } from "react-native";
+import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable } from "react-native";
 import PressablesConf from "../../components/pressablesConf";
 import PressableBtnBack from "../../components/PressableBtnBack";
 import PressableCircle from "../../components/pressableCircle";
@@ -13,9 +13,10 @@ import PressablesModal2 from "../../components/pressableModalN";
 import { LinearGradient } from "expo-linear-gradient";
 import Inputs from "../../components/inputs";
 import CalendarStrip from 'react-native-calendar-strip';
+import IconLu from 'react-native-vector-icons/SimpleLineIcons'
 
 export default function CriarChamada({ navigation }) {
-  const [modalActive1, setModalActive1] = useState(false)
+  const [modalActive1, setModalActive1] = useState(false);
   const [modalActive2, setModalActive2] = useState(false);
 
   const handleCloseAndRoute = () => {
@@ -27,12 +28,13 @@ export default function CriarChamada({ navigation }) {
     <View style={style.calendar}>
     <CalendarStrip
       scrollable
-      style={{height: 100, width: 395, paddingTop: 30, paddingBottom: 10, paddingLeft: 10, paddingRight: 10}}
+      style={{height: 150, width: 400, paddingTop: 30, paddingBottom: 10, paddingLeft: 10, paddingRight: 10}}
       calendarColor={'rgba(0,0,0,0)'}
-      calendarHeaderStyle={{color: 'black'}}
-      dateNumberStyle={{color: 'black'}}
-      dateNameStyle={{color: 'black'}}
+      calendarHeaderStyle={{color: 'black', fontFamily:"poppinsr", fontSize:18, }}
+      dateNumberStyle={{color: 'black', fontFamily:"poppinsr" , fontSize:15}}
+      dateNameStyle={{color: 'black', fontFamily:"poppinsr" , fontSize:12}}
       iconContainer={{flex: 0.1}}
+      daySelectionAnimation={{type:"border", duration:2, borderWidth:1.5, borderHighlightColor:"#338995"}}
     />
   </View>
 );
@@ -64,6 +66,13 @@ export default function CriarChamada({ navigation }) {
           <Text style={{ fontFamily: "poppinsb", fontSize: 24, textAlign: 'center', paddingLeft: 15, marginTop: 14 }}>AU42ZY</Text>
         </View>
 
+          <Pressable>
+            <View style={style.search}>
+              <IconLu style={{alignSelf:'flex-start'}}name='magnifier' size={20}/>
+              <Text style={{fontFamily:'poppinsr' , fontSize:12, textAlign:'center' , marginTop:16, marginBottom:16, color:"#DDDADA" }}> Procure uma data </Text>
+            </View>
+          </Pressable>
+
         <View style={style.calendario}>
           <Example></Example>
         </View>
@@ -77,7 +86,7 @@ export default function CriarChamada({ navigation }) {
 
         <View style={style.footer}>
           <View style={{width: 24, height: 24,}}>
-            <IconF style={{alignSelf: 'center', color: 'black'}} name='edit' size={23.5} onPress={() => setModalActive1(true)}/>
+            <IconF style={{alignSelf: 'center', color: '#ADA4A5'}} name='edit' size={23.5} onPress={() => setModalActive1(true)}/>
           </View>
           <View style={{paddingBottom: 35}}>
             <PressableCircle
@@ -195,23 +204,20 @@ const style = StyleSheet.create({
     position: "absolute",
     flexDirection: "row",
     bottom: 0,
-    width: "100%",
+    width: 450,
     height: 70,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "space-around",
-    borderWidth: 1,
+    borderWidth: 11,
     borderRadius: 2,
-    borderColor: '#ddd',
-    borderBottomWidth: 0,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    borderColor: 'rgba(221,221,221)',
+    borderTopWidth: 0.2,
+    shadowColor: 'rgb(221,221,221)',
     shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
-    marginLeft: 5,
-    marginRight: 5,
-    marginTop: 10,
+    shadowRadius: 5,
+    elevation: 0.3,
+
   },
 
   fundoModal: {
@@ -251,6 +257,20 @@ const style = StyleSheet.create({
   },
   calendario: {
     postion: 'absolute',
-    top: 230,
-  }
+    top: 300,
+  }, 
+
+  search:{
+    height:50,
+    borderRadius:16,
+    width:315,
+    backgroundColor:'white',
+    position:"absolute",
+    zIndex:4,
+    top:250,
+    left:-160,
+    borderBottomColor:"#2C5E7A",
+    borderWidth:1,
+  },
+
 });
