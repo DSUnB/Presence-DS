@@ -4,7 +4,23 @@ import { SafeAreaView, Text, StyleSheet } from 'react-native';
 export default function Chamada() {
   return (
     <SafeAreaView style={style.container}>
-        <Text>Nao tem botao de voltar kkkkkkkkkkkkkkkjkkkkkk</Text>
+        <View style={style.header}>
+            <View>
+                <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}> Lista de chamada</Text>
+            </View>
+            <View style={style.voltar}>
+                <PressableBtnBack
+                    click={() => navigation.navigate("MainProf")}
+                    iconeIo="chevron-back"
+                />
+            </View>
+            <View style={style.opcoes}>    
+                <PressablesConf
+                    iconeSLI="options"
+                    click={() => navigation.navigate("MainAlun")}
+                />
+            </View>
+        </View>
     </SafeAreaView>
   )
 }

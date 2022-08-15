@@ -13,11 +13,13 @@ import PressablesModal2 from "../../components/pressableModalN";
 import { LinearGradient } from "expo-linear-gradient";
 import Inputs from "../../components/inputs";
 import CalendarStrip from 'react-native-calendar-strip';
-import IconLu from 'react-native-vector-icons/SimpleLineIcons'
+import IconLu from 'react-native-vector-icons/SimpleLineIcons';
+import CalendarPicker from 'react-native-calendar-picker';
 
 export default function CriarChamada({ navigation }) {
   const [modalActive1, setModalActive1] = useState(false);
   const [modalActive2, setModalActive2] = useState(false);
+  const [modalActive3, setModalActive3] = useState(false);
 
   const handleCloseAndRoute = () => {
     setModalActive2(false);
@@ -66,11 +68,11 @@ export default function CriarChamada({ navigation }) {
           <Text style={{ fontFamily: "poppinsb", fontSize: 24, textAlign: 'center', paddingLeft: 15, marginTop: 14 }}>AU42ZY</Text>
         </View>
 
-          <Pressable>
-            <View style={style.search}>
-              <IconLu style={{alignSelf:'flex-start'}}name='magnifier' size={20}/>
-              <Text style={{fontFamily:'poppinsr' , fontSize:12, textAlign:'center' , marginTop:16, marginBottom:16, color:"#DDDADA" }}> Procure uma data </Text>
-            </View>
+          <Pressable onPress={() => setModalActive3(true)} >
+              <View style={style.search}>
+                <IconLu style={{marginTop:15, marginBottom:15, marginLeft:15, color:'#ADA4A5'}}name='magnifier' size={20}/>
+                <Text style={{fontFamily:'poppinsr' , fontSize:16, textAlign:'center', color:"#ADA4A5" , marginTop:13,}}> Procure uma data </Text>
+              </View>
           </Pressable>
 
         <View style={style.calendario}>
@@ -257,7 +259,7 @@ const style = StyleSheet.create({
   },
   calendario: {
     postion: 'absolute',
-    top: 300,
+    top: 320,
   }, 
 
   search:{
@@ -267,10 +269,12 @@ const style = StyleSheet.create({
     backgroundColor:'white',
     position:"absolute",
     zIndex:4,
-    top:250,
+    top:230,
     left:-160,
-    borderBottomColor:"#2C5E7A",
+    borderBottomColor:"#2F7286",
     borderWidth:1,
+    flexDirection: "row",
+    marginTop:52,
   },
-
+  
 });
