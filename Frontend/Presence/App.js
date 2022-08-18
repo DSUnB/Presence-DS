@@ -8,6 +8,7 @@ import Form from './src/Pages/Form';
 import AppLoading from 'expo-app-loading';
 import MainAlun from './src/Pages/MainAlun';
 import MainProf from './src/Pages/MainProf';
+import Provider from './src/context/Provider';
 
 
 const Stack = createNativeStackNavigator();
@@ -33,18 +34,20 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator 
-        initialRouteName="Login" 
-        screenOptions={{
-          headerShown: false
-        }}
-      >
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Form" component={Form} />
-        <Stack.Screen name="MainProf" component={MainProf} />
-        <Stack.Screen name="MainAlun" component={MainAlun} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider>
+      <NavigationContainer>
+        <Stack.Navigator 
+          initialRouteName="Login" 
+          screenOptions={{
+            headerShown: false
+          }}
+        >
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Form" component={Form} />
+          <Stack.Screen name="MainProf" component={MainProf} />
+          <Stack.Screen name="MainAlun" component={MainAlun} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }

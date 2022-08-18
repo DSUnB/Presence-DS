@@ -39,7 +39,7 @@ app.use(bodyParser.json());
 
 // ====================================================
 // REGISTRAR CONTA DE USUÁRIO: (FORM)
-app.post('/cad', async(req,res) => {
+app.post('/usuario/cadastrar', async(req,res) => {
     try {
         let reqs = await model.Usuarios.create({
         'nome': req.body.nome,
@@ -63,7 +63,7 @@ app.post('/cad', async(req,res) => {
 
 // ====================================================
 // VERIFICAÇÃO DO CREDENCIAMENTO DO USUÁRIO: (LOGIN)
-app.post('/log', async(req,res) => {
+app.post('/usuario/logar', async(req,res) => {
     try {
       let reqs = await model.Usuarios.findOne({
         where:{
@@ -86,7 +86,7 @@ app.post('/log', async(req,res) => {
 
 // ====================================================
 // AUTO VERIFICAÇÃO DE CREDENCIAMENTO DO USUÁRIO: (LOGIN)
-app.post('/Autolog', async(req,res) => {
+app.post('/usuario/autologar', async(req,res) => {
     try {
       let reqs = await model.Usuarios.findOne({
         where:{
@@ -109,7 +109,7 @@ app.post('/Autolog', async(req,res) => {
 
 // ====================================================
 // CRIAÇÃO DE TURMA: (MAINPROF)
-app.post('/turmac', async (req,res)=>{
+app.post('/professor/turma/criar', async (req,res)=>{
     try {
         let reqs = await model.Professores.findOne({
             where: {
@@ -143,9 +143,9 @@ app.post('/turmac', async (req,res)=>{
 // ====================================================
 
 // ====================================================
-// PESQUISA DE TURMAS: (MAINPROF)
+// PESQUISA DE TURMAS: (LOGIN)
 
-app.post('/turmam', async (req,res) => {
+app.post('/professor/turma/obter', async (req,res) => {
     try{
         let reqs = await model.Professores.findOne({
             where: {
@@ -163,7 +163,6 @@ app.post('/turmam', async (req,res) => {
                 raw: true,
             });
            if (reqs1){
-            console.log(reqs1);
             res.status(202).send(reqs1);
            }
            else{

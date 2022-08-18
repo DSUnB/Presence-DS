@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Div } from "./styled";
 import config from "../../config/config.json";
 import { Text, View, StyleSheet, ImageBackground, Keyboard } from "react-native";
@@ -6,6 +6,7 @@ import Inputs from "../../components/inputs";
 import Pressables from "../../components/pressables";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import InputsS from "../../components/inputsenha";
+import { Context } from "../../context/Provider";
 
 
 export default function Login({ navigation }) {
@@ -17,13 +18,14 @@ export default function Login({ navigation }) {
   const [message, setMessage]=useState(null);
   const [matToken, setMatToken]=useState(null);
   const [senhaToken, setSenhaToken]=useState(null);
+  const {setDADOS} = useContext(Context);
   // =========================================================
 
   // =========================================================
   // FUNÇÃO PARA ENVIAR 'LOGIN' AO BACKEND:
   async function envLogin(){
     Keyboard.dismiss();
-    let reqs = await fetch(config.urlRootNode+'log', {
+    let reqs = await fetch(config.urlRootNode+'usuario/logar', {
       method: 'POST',
       headers:{
         Accept: 'application/json',
@@ -51,17 +53,7 @@ export default function Login({ navigation }) {
     }
     else{
       await AsyncStorage.setItem('userData', JSON.stringify(res));
-      let response = await AsyncStorage.getItem('userData');
-      let json = JSON.parse(response);
-
-      if (json.tipoUsuario === false){
-        await AsyncStorage.setItem('userData', JSON.stringify(res));
-        navigation.navigate('MainAlun');
-      }
-      else {
-        await AsyncStorage.setItem('userData', JSON.stringify(res));
-        navigation.navigate('MainProf');
-      }
+      ObterTurma();
     }
   }
   // =========================================================
@@ -69,8 +61,7 @@ export default function Login({ navigation }) {
   // =========================================================
   // FUNÇÃO PARA EFETUAR 'LOGIN AUTOMÁTICO' AO BACKEND:
   async function AutoLogin(){
-    Keyboard.dismiss();
-    let reqs = await fetch(config.urlRootNode+'Autolog', {
+    let reqs = await fetch(config.urlRootNode+'usuario/autologar', {
       method: 'POST',
       headers:{
         Accept: 'application/json',
@@ -91,10 +82,12 @@ export default function Login({ navigation }) {
       let json = JSON.parse(response);
 
       if (json.tipoUsuario === false){
+        Keyboard.dismiss();
         await AsyncStorage.setItem('userData', JSON.stringify(res));
         navigation.navigate('MainAlun');
       }
       else {
+        Keyboard.dismiss();
         await AsyncStorage.setItem('userData', JSON.stringify(res));
         navigation.navigate('MainProf');
       }
@@ -104,17 +97,59 @@ export default function Login({ navigation }) {
 
   // =========================================================
   // TENTATIVA DE REQUISIÇÃO AUTOMÁTICA AO LOGIN COM O BACKEND:
-  useEffect(() => {
-    AsyncStorage.getItem('userData').then((userData) => {
-      if (userData != null){
-        let json = JSON.parse(userData);
-        setMatToken(json.matricula);
-        setSenhaToken(json.senha);
-        AutoLogin();
-      }
-    })
-  })
+  // useEffect(() => {
+  //   AsyncStorage.getItem('userData').then((userData) => {
+  //     if (userData != null){
+  //       let json = JSON.parse(userData);
+  //       setMatToken(json.matricula);
+  //       setSenhaToken(json.senha);
+  //       AutoLogin();
+  //     }
+  //     else {null}
+  //   })
+  // })
   // =========================================================
+
+  // =========================================================
+    // FUNÇÃO PARA REQUISITAR 'MOSTRAR TURMA' AO BACKEND:
+    async function ObterTurma(){
+        let response = await AsyncStorage.getItem('userData');
+        let json = JSON.parse(response);
+        let reqs = await fetch(config.urlRootNode+'professor/turma/obter', {
+          method: 'POST',
+          headers:{
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              professor: json.matricula,
+          })
+      });
+      let res= await reqs.json();
+      if (res === '403'){
+        setMessage('Erro de Autenticação!');
+        setTimeout(() => {
+          setMessage(null);
+          AsyncStorage.clear();
+      }, 2000);
+      }
+      else if (res){
+        setDADOS(res)
+        
+        let response = await AsyncStorage.getItem('userData');
+        let json = JSON.parse(response);
+
+        if (json.tipoUsuario === false){
+          Keyboard.dismiss();
+          navigation.navigate('MainAlun');
+        }
+        else {
+          Keyboard.dismiss();
+          navigation.navigate('MainProf');
+        }
+      }
+    };
+    // =========================================================
 
 // =========================================================
 // ARQUITETURA DA SCREEN DA APLICAÇÃO:
