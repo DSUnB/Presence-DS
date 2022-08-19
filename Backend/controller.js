@@ -7,7 +7,7 @@ const bcrypt=require('bcrypt');
 
 // =====================================================
 // DEFINIÇÃO DE CRIPTOGRAFIA:
-let salt = bcrypt.genSaltSync(10)
+var salt = '$2b$10$oGNYbTMTWMhrxSxxiKWu8.';
 // ==================================================================
 
 
@@ -39,7 +39,7 @@ app.use(bodyParser.json());
 
 // ====================================================
 // REGISTRAR CONTA DE USUÁRIO: (FORM)
-app.post('/cad', async(req,res) => {
+app.post('/usuario/cadastrar', async(req,res) => {
     try {
         let reqs = await model.Usuarios.create({
         'nome': req.body.nome,
@@ -63,7 +63,7 @@ app.post('/cad', async(req,res) => {
 
 // ====================================================
 // VERIFICAÇÃO DO CREDENCIAMENTO DO USUÁRIO: (LOGIN)
-app.post('/log', async(req,res) => {
+app.post('/usuario/logar', async(req,res) => {
     try {
       let reqs = await model.Usuarios.findOne({
         where:{
@@ -86,7 +86,7 @@ app.post('/log', async(req,res) => {
 
 // ====================================================
 // AUTO VERIFICAÇÃO DE CREDENCIAMENTO DO USUÁRIO: (LOGIN)
-app.post('/Autolog', async(req,res) => {
+app.post('/usuario/autologar', async(req,res) => {
     try {
       let reqs = await model.Usuarios.findOne({
         where:{
@@ -109,7 +109,7 @@ app.post('/Autolog', async(req,res) => {
 
 // ====================================================
 // CRIAÇÃO DE TURMA: (MAINPROF)
-app.post('/turmac', async (req,res)=>{
+app.post('/professor/turma/criar', async (req,res)=>{
     try {
         let reqs = await model.Professores.findOne({
             where: {
@@ -140,6 +140,41 @@ app.post('/turmac', async (req,res)=>{
         res.status(403).send(JSON.stringify('403'));
     }
 });
+// ====================================================
+
+// ====================================================
+// PESQUISA DE TURMAS: (LOGIN)
+
+app.post('/professor/turma/obter', async (req,res) => {
+    try{
+        let reqs = await model.Professores.findOne({
+            where: {
+                matricula: req.body.professor,
+            }
+        });
+        if(reqs === null){
+            res.status(404).send(JSON.stringify('404'));
+        }
+        else{
+            let reqs1 = await model.Turmas.findAll({
+                where: {
+                    idProfessor: reqs.idProfessor
+                },
+                raw: true,
+            });
+           if (reqs1){
+            res.status(202).send(reqs1);
+           }
+           else{
+            res.status(204).send(JSON.stringify('204'));
+           }
+        }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+})
+
 // ====================================================
 
 // ==================================================================

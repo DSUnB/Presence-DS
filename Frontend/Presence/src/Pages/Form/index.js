@@ -7,7 +7,8 @@ import Inputs from "../../components/inputs";
 import Pressables from "../../components/pressables";
 import InputsS from "../../components/inputsenha";
 import PressableBtnBack from "../../components/PressableBtnBack";
-import IconA from "react-native-vector-icons/Feather";
+import IconA from 'react-native-vector-icons/Feather';
+import { Context } from "../../context/Provider";
 
 
 export default function Form({ navigation }) {
@@ -28,7 +29,7 @@ export default function Form({ navigation }) {
   async function Registro(){
     Keyboard.dismiss();
     if (password === passwordConfirm && name != '' && matricula != '' && email != '' && password != '' && name != null && matricula != null && email != null && password != null){
-      let reqs = await fetch(config.urlRootNode+'cad', {
+      let reqs = await fetch(config.urlRootNode+'usuario/cadastrar', {
       method: 'POST',
       headers:{
         'Accept': 'application/json',
@@ -92,7 +93,6 @@ return (
 
   <Text style={{fontFamily:'poppinsr', fontSize:16, marginTop:40}}>Ei!</Text>
   <Text style={{fontFamily:'poppinsb', fontSize:20, marginBottom:20}}>Crie uma conta</Text>
-  
   {message && (
     <View style={{ display:"flex", flexDirection:"row"}}>
       <IconA name="alert-triangle" size={25} style={{marginRight:10}}/>

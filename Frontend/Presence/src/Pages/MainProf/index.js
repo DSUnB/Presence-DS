@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Text,
   View,
@@ -20,6 +20,7 @@ import PressablesModal2 from "../../components/pressableModalN";
 import PressablesConf from "../../components/pressablesConf";
 import Inputs from "../../components/inputs";
 import IconX from 'react-native-vector-icons/Ionicons';
+import { Context } from '../../context/Provider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // =========================================================
@@ -36,13 +37,6 @@ function codigo() {
 
 
 export default function MainProf({ navigation }) {
-
-    const DADOS = [
-    { key: "Cálculo 1", turm: "A" },
-    { key: "Cálculo 2", turm: "B" },
-    { key: "Introdução à Algebra Linear", turm: "A" },
-  ];
-
 
     // =========================================================
     // ALERTA PARA FECHAR APLICATIVO:
@@ -73,13 +67,16 @@ export default function MainProf({ navigation }) {
     // =========================================================
 
     // =========================================================
+
+    // =========================================================
     // DECLARAÇÃO DE STATES:
-    const [modalActive2, setModalActive2] = useState(false)
-    const [modalActive3, setModalActive3] = useState(false)
-    const [materia, setMateria] = useState(null)
-    const [nomeTurma, setNomeTurma] = useState(null)
+    const [modalActive2, setModalActive2] = useState(false);
+    const [modalActive3, setModalActive3] = useState(false);
+    const [materia, setMateria] = useState(null);
+    const [nomeTurma, setNomeTurma] = useState(null);
     const [message, setMessage]=useState(null);
     const [isLoading, setIsLoading]=useState(false);
+    const {DADOS, setDADOS} = useContext(Context);
     // =========================================================
 
     // =========================================================
@@ -100,7 +97,7 @@ export default function MainProf({ navigation }) {
         let response = await AsyncStorage.getItem('userData');
         let json = JSON.parse(response);
         if (materia != '' && nomeTurma != ''){
-            let reqs = await fetch(config.urlRootNode+'turmac', {
+            let reqs = await fetch(config.urlRootNode+'professor/turma/criar', {
                 method: 'POST',
                 headers:{
                     'Accept': 'application/json',
@@ -132,6 +129,7 @@ export default function MainProf({ navigation }) {
               }, 2000);
             }
             else{
+                AtualizarTurma()
                 setMessage('Turma Criada!');
                 setIsLoading(false);
                 setTimeout(() => {
@@ -151,6 +149,32 @@ export default function MainProf({ navigation }) {
                 }, 2000);
         }
     }
+    // =========================================================
+
+    // =========================================================
+    // FUNÇÃO PARA ATUALIZAR A LISTA DE TURMAS:
+    async function AtualizarTurma(){
+      let response = await AsyncStorage.getItem('userData');
+      let json = JSON.parse(response);
+      let reqs = await fetch(config.urlRootNode+'professor/turma/obter', {
+        method: 'POST',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          professor: json.matricula,
+        })
+      });
+      let res= await reqs.json();
+      if(res === '403'){
+        null
+      }
+      else{
+        setDADOS(res)
+      }
+    }
+
     // =========================================================
 
 // =========================================================
@@ -185,7 +209,7 @@ return (
                     paddingTop: 18,
                   }}
                 >
-                 {item.key} - {item.turm}
+                 {item.curso} - {item.nomeTurma}
                 </Text>
               </View>
             </Pressable>
