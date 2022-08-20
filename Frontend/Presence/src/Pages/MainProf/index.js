@@ -1,16 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  Text,
-  View,
-  Modal,
-  StyleSheet,
-  FlatList,
-  SafeAreaView,
-  Pressable,
-  BackHandler,
-  Alert,
-  Image,
-  Keyboard,
+import { Text, View, Modal, StyleSheet, FlatList, SafeAreaView, Pressable, BackHandler, Alert, Image, Keyboard,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Pressables from "../../components/pressables";
@@ -34,7 +23,6 @@ function codigo() {
     return codigo.toUpperCase();
 }
 // =========================================================
-
 
 export default function MainProf({ navigation }) {
     
@@ -292,8 +280,6 @@ return (
                 
 
               </View>
-            
-            
             
           </LinearGradient>
         </View>

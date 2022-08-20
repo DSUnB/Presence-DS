@@ -177,6 +177,38 @@ app.post('/professor/turma/obter', async (req,res) => {
 
 // ====================================================
 
+// ====================================================
+// ENTRAR TURMA: (MAINALUN)
+app.post('/aluno/turma/entrar', async (req,res)=>{
+    try {
+        let reqs = await model.Alunos.findOne({
+            where: {
+                matricula: req.body.aluno,
+            }
+        });
+        if(reqs === null){
+            res.status(404).send(JSON.stringify('404'));
+        }
+        else{
+            let reqs1 = await model.EntrarTurmas.create({
+                'idAluno': reqs.idAluno,
+                'codigoTurma': req.body.codigoTurma,
+                'createdAt': new Date(),
+                'updatedAt': new Date()
+            });
+            if (reqs1){
+                res.status(202).send(reqs1);
+            }
+            else{
+                res.status(403).send(JSON.stringify('403'));
+            }
+        }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+});
+// ====================================================
 // ==================================================================
 // ==================================================================
 // ==================================================================

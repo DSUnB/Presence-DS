@@ -51,9 +51,18 @@ export default function Login({ navigation }) {
     }, 5000);
       await AsyncStorage.clear();
     }
-    else{
+    else {
       await AsyncStorage.setItem('userData', JSON.stringify(res));
-      ObterTurma();
+      let response = await AsyncStorage.getItem('userData');
+      let json = JSON.parse(response);
+
+        if (json.tipoUsuario === false){
+          Keyboard.dismiss();
+          navigation.navigate('MainAlun');
+        }
+        else{
+          ObterTurma();
+      }
     }
   }
   // =========================================================
@@ -135,19 +144,9 @@ export default function Login({ navigation }) {
       }
       else if (res){
         setDADOS(res)
-        
-        let response = await AsyncStorage.getItem('userData');
-        let json = JSON.parse(response);
-
-        if (json.tipoUsuario === false){
-          Keyboard.dismiss();
-          navigation.navigate('MainAlun');
+        Keyboard.dismiss();
+        navigation.navigate('MainProf');
         }
-        else {
-          Keyboard.dismiss();
-          navigation.navigate('MainProf');
-        }
-      }
     };
     // =========================================================
 

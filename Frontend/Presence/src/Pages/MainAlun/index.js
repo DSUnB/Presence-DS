@@ -1,7 +1,8 @@
-
 import React, { useState, useEffect } from "react";
-import { Text, View, Modal, StyleSheet, BackHandler, Alert, FlatList, Pressable } from "react-native";
+import { Text, View, Modal, StyleSheet, FlatList, SafeAreaView, Pressable, BackHandler, Alert, Image, Keyboard,
+} from "react-native";
 import Pressables from "../../components/pressables";
+import config from "../../config/config.json";
 import PressablesConf from "../../components/pressablesConf";
 import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
@@ -13,6 +14,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function MainAlun({ navigation }) {
 
+    // =========================================================
+    // ALERTA PARA FECHAR APLICATIVO:
     useEffect(() => {
         const backAction = () => {
             Alert.alert("Alerta!", "Deseja mesmo sair do app?", [
@@ -37,34 +40,95 @@ export default function MainAlun({ navigation }) {
     
         return () => backHandler.remove();
     }, []);
-    
+    // =========================================================
+
+    // =========================================================
     const DADOS = [
         { key: "Fisica 1", turm: "A" },
         { key: "Fisica 2", turm: "B" },
         { key: "Fisica 3", turm: "C" },
         { key: "Fisica 4", turm: "D" },
-        { key: "Fisica 5", turm: "E" },
-        { key: "Fisica 6", turm: "F" },
-        { key: "Fisica 7", turm: "G" },
-        { key: "Fisica 8", turm: "H" },
-        { key: "Fisica 9", turm: "I" },
-        { key: "Fisica 10", turm: "J" },
-        { key: "Fisica 11", turm: "K" },
-        { key: "Fisica 12", turm: "L" },
-        { key: "Fisica 13", turm: "M" },
       ];
 
+  // =========================================================
 
+  // =========================================================
+
+  // =========================================================
+  // DECLARAÇÃO DE STATES:
   const [modalActive2, setModalActive2] = useState(false);
   const [modalActive3, setModalActive3] = useState(false);
-  
+  const [codigo, setCodigo] = useState(null);
+  const [message, setMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  // =========================================================
+
+  // =========================================================
+  // LÓGICA DE LOG-OUT:
   const handleCloseAndRoute = () => {
     setModalActive2(false);
     AsyncStorage.clear();
     navigation.navigate("Login");
   };
+  // =========================================================
 
-
+  // =========================================================
+  // FUNÇÃO PARA ENVIO DE DADOS 'ENTRAR TURMA' PARA O BACKEND:
+  async function EntrarTurmas(){
+    Keyboard.dismiss();
+      setIsLoading(true);
+        let response = await AsyncStorage.getItem('userData');
+        let json = JSON.parse(response);
+        if (codigo != '' ){
+          let reqs = await fetch(config.urlRootNode+'aluno/turma/entrar', {
+              method: 'POST',
+              headers:{
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  id: null,
+                  aluno: json.matricula,
+                  codigoTurma: codigo.toUpperCase(),
+              })                 
+          });
+          let res= await reqs.json();
+          if(res === '403'){
+              setMessage('Preencha o Campo!');
+              setIsLoading(false);
+              setTimeout(() => {
+                  setMessage(null);
+              }, 2000);
+          }
+          else if(res === '404'){
+            setMessage('Erro de Autenticação!');
+            setIsLoading(false);
+            setTimeout(() => {
+                setMessage(null);
+                AsyncStorage.clear();
+                navigation.navigate('Login')
+            }, 2000);
+          }
+          else{
+              setMessage('Turma Encontrada!');
+              setIsLoading(false);
+              setTimeout(() => {
+                  setMessage(null);
+                  setModalActive3(false);
+              }, 1000);
+              
+          }
+        }
+        else{
+            setIsLoading(false);
+            setMessage('Preencha o Campo!');
+                setTimeout(() => {
+                    setMessage(null);
+                }, 2000);
+        }
+  }
+  // =========================================================
+  
   return (
     <Div>
       <View style={style.logout}>
@@ -125,12 +189,21 @@ export default function MainAlun({ navigation }) {
             >
               Insira o código da turma
             </Text>
-            <Inputs place="Código" iconeF="book" />
+            {message && (
+                        <Text>{message}</Text>
+                    )}
+            <Inputs place="Código" iconeF="book" onChange={(text) => setCodigo(text)}/>
+            
+            {isLoading && (
+              <Image style={style.loading} source={require('../../assets/videos/LoadingApp.gif')}/>
+            )}
 
-            <PressablesModal
-              texto="Entrar"
-              click={() => setModalActive3(false)}
-            />
+            {!isLoading && (
+              <PressablesModal
+                texto="Entrar"
+                click={EntrarTurmas}
+              />
+            )}  
           </LinearGradient>
         </View>
       </Modal>
@@ -247,5 +320,9 @@ turma:{
       zIndex: 2,
       top: 55,
       right: 20,
+  },
+  loading:{
+    height: 30,
+    width: 140,
   }
 });
