@@ -94,7 +94,7 @@ export default function MainAlun({ navigation }) {
           });
           let res= await reqs.json();
           if(res === '403'){
-              setMessage('Preencha o Campo!');
+              setMessage('Turma já existente!');
               setIsLoading(false);
               setTimeout(() => {
                   setMessage(null);

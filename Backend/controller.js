@@ -143,7 +143,7 @@ app.post('/professor/turma/criar', async (req,res)=>{
 // ====================================================
 
 // ====================================================
-// PESQUISA DE TURMAS: (LOGIN)
+// PESQUISA DE TURMAS: (LOGIN - for professor)
 
 app.post('/professor/turma/obter', async (req,res) => {
     try{
@@ -168,6 +168,30 @@ app.post('/professor/turma/obter', async (req,res) => {
            else{
             res.status(204).send(JSON.stringify('204'));
            }
+        }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+})
+
+// ====================================================
+
+// ====================================================
+// PESQUISA DE TURMAS: (LOGIN - for aluno)
+
+app.post('/aluno/turma/obter', async (req,res) => {
+    try{
+        let reqs = await model.Alunos.findOne({
+            where: {
+                matricula: req.body.aluno,
+            }
+        });
+        if(reqs === null){
+            res.status(404).send(JSON.stringify('404'));
+        }
+        else{
+            console.log('deu certo!')
         }
     }
     catch {
