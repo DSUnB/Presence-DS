@@ -26,6 +26,8 @@ export default function CriarChamada({ navigation }) {
     navigation.navigate('MainProf')
   }
 
+  const [codigo, setCodigo] = useState('Dani123');
+
   const Example = () => (
     <View style={style.calendar}>
     <CalendarStrip
@@ -65,7 +67,7 @@ export default function CriarChamada({ navigation }) {
           <View style={{width: 55,height: 55, borderRadius: 100, backgroundColor: 'white', position: 'absolute', top: 6, left: 6}}>
             <IconO style={{alignSelf:'center', marginTop: 10}} name='key' size={30}/>
           </View>
-          <Text style={{ fontFamily: "poppinsb", fontSize: 24, textAlign: 'center', paddingLeft: 15, marginTop: 14 }}>AU42ZY</Text>
+          <Text style={{ fontFamily: "poppinsb", fontSize: 24, textAlign: 'center', paddingLeft: 15, marginTop: 14 }}>{codigo}</Text>
         </View>
 
           <Pressable onPress={() => setModalActive3(true)} >

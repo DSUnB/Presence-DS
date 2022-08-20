@@ -37,24 +37,24 @@ export default function App() {
   }
 
   return (
-
-    <Provider>
-      <NavigationContainer>
-        <Stack.Navigator 
-          initialRouteName="CriarChamada" 
-          screenOptions={{
-            headerShown: false
-          }}
-        >
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Form" component={Form} />
-          <Stack.Screen name="MainProf" component={MainProf} />
-          <Stack.Screen name="CriarChamada" component={CriarChamada} />
-          <Stack.Screen name="Chamada" component={Chamada} />
-          <Stack.Screen name="Turma" component={Turma} />
-          <Stack.Screen name="MainAlun" component={MainAlun} />
-          <Stack.Screen name="ValidarChamada" component={ValidarChamada} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </Provider>
-  )}
+  <Provider>
+    <NavigationContainer>
+      <Stack.Navigator 
+        initialRouteName="Chamada" 
+        screenOptions={{
+          headerShown: false
+        }}
+      >
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Form" component={Form} />
+        <Stack.Screen name="MainProf" component={MainProf} />
+        <Stack.Screen name="CriarChamada" component={CriarChamada} />
+        <Stack.Screen name="Chamada" component={Chamada} />
+        <Stack.Screen name="Turma" component={Turma} />
+        <Stack.Screen name="MainAlun" component={MainAlun} />
+        <Stack.Screen name="ValidarChamada" component={ValidarChamada} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  </Provider>
+  );
+}
