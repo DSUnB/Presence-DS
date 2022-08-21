@@ -1,8 +1,8 @@
 import React from 'react';
-import { SafeAreaView, Text, StyleSheet, View, Animated } from 'react-native';
+import { Text, View, Animated } from 'react-native';
 
 
-const Progress = ({step, steps, height}) => {
+const Progress = ({Alunosp, Alunosi, height}) => {
     const [width, setWidth] = React.useState(0);
     const animatedValue = React.useRef(new Animated.Value(-1000)).current;
     const reactive = React.useRef(new Animated.Value(-1000)).current;
@@ -17,8 +17,8 @@ const Progress = ({step, steps, height}) => {
   }, []);
   
     React.useEffect(() => {
-      reactive.setValue(-width + (width * step) / steps);
-    },[step, width]);
+      reactive.setValue(-width + (width * Alunosp) / Alunosi);
+    },[Alunosp, width]);
   
   
   
@@ -59,9 +59,24 @@ const Progress = ({step, steps, height}) => {
     );
   };
   
+function Porcent(Alunosp,Alunosi){
+  return (Alunosp/Alunosi)*100;
+}
+
+let P = Math.round(Porcent (30,100))
+
 export default function ProgressBar(){
     return( 
         <View>
-            <Progress step={1} steps={10} height={20}/>
+          <View style={{flexDirection:'row', justifyContent:'space-between', marginBottom:2}}>
+            <Text style={{fontFamily:'poppinsm', fontSize: 12}}> Presença Geral </Text>
+            <Text style={{fontFamily:'poppinsm', fontSize: 12 , color:'#4CB69A'}}>{P}%</Text>
+          </View>
+            <Progress Alunosp={100} Alunosi={100} height={20}/>
         </View>
     )}
+
+    // Alunosp = Alunos presentes no dia 
+    // Alunosi = Alunos inscritos na turma
+
+    // P = Alunosp/Alunosi . 100

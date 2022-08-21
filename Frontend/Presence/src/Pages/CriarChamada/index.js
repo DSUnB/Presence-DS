@@ -273,7 +273,7 @@ const style = StyleSheet.create({
     zIndex:4,
     top:230,
     left:-160,
-    borderBottomColor:"#2F7286",
+    borderColor:"#2F7286",
     borderWidth:1,
     flexDirection: "row",
     marginTop:52,
