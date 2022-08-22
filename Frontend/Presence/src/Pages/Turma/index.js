@@ -1,10 +1,65 @@
 import React from 'react';
-import { SafeAreaView, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, Text, StyleSheet, View, FlatList, Pressable } from 'react-native';
+import PressableBtnBack from '../../components/PressableBtnBack';
+import IconP from 'react-native-vector-icons/Ionicons';
 
 export default function Turma() {
+
+
+  const DADOS = [
+    {AlunoP: 'Leandro Almeida'},
+    {AlunoP: 'Alana Gabriele'},
+    {AlunoP: 'Rafaela Lopes'},
+    {AlunoP: 'Doan FIlho'},
+    {AlunoP: 'Harleny Angelica'},
+    {AlunoP: 'Daniel Rodrigues'},
+    {AlunoP: 'Danielle Rodrigues'},
+    {AlunoP: 'Davi Rodrigues'},
+    {AlunoP: 'Renan Araújo'},
+    {AlunoP: 'Felipe de Sousa'},
+    {AlunoP: 'Dara Cristina'},
+    {AlunoP: 'Rafaela Lopes'},
+
+  ];
+
+
   return (
     <SafeAreaView style={style.container}>
-        <Text>KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKJJKK nao tem botao</Text>
+      <View style={style.header}>
+            <View>
+                <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>Alunos</Text>
+            </View>
+            <View style={style.voltar}>
+                <PressableBtnBack
+                    click={() => navigation.navigate("MainProf")}
+                    iconeIo="chevron-back"
+                />
+            </View>
+        </View>
+        <View style={style.lista}>
+        <FlatList
+          data={DADOS}
+          renderItem={({ item }) => (
+            <Pressable onPress={() => navigation.navigate('CriarChamada')}>
+              <View style={style.alunos}>
+                <View style={{flexDirection: "row", justifyContent:'space-between'}}>
+                <IconP style={{position:'absolute', alignSelf:'center', marginLeft:14, paddingTop:12, color:'#7B6F72'}} name='person-outline' size={18}/>
+                <Text
+                  style={{
+                    fontFamily: "poppinsm",
+                    fontSize: 14,
+                    paddingLeft: 38,
+                    paddingTop: 18,
+                  }}
+                >
+                 {item.AlunoP}
+                </Text>
+                </View>
+              </View>
+            </Pressable>
+          )}
+        ></FlatList>
+      </View>   
     </SafeAreaView>
   )
 }
@@ -17,4 +72,40 @@ const style = StyleSheet.create({
       height: "100%",
       backgroundColor: "#fff",
     },
+    header: {
+      zIndex: 1,
+      position: "absolute",
+      top: 0,
+      flexDirection: "row",
+      width: "100%",
+      height: 110,
+      paddingTop: 30,
+      backgroundColor: "#fff",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    voltar: {
+      position:"absolute",
+      zIndex: 2,
+      top: 55,
+      left: 20,
+    },
+    lista: {
+      marginTop: 110,
+      marginBottom: 15,
+    },
+
+    alunos: {
+      height: 57,
+      borderRadius: 16,
+      width: 315,
+      backgroundColor: "#D5E9E1",
+      marginBottom: 10,
+      shadowColor: 'rgb(221,221,221)',
+      shadowOpacity: 0.5,
+      shadowRadius: 5,
+      elevation: 3.5,
+      
+    },
+
 })

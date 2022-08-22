@@ -59,24 +59,20 @@ const Progress = ({Alunosp, Alunosi, height}) => {
     );
   };
   
-function Porcent(Alunosp,Alunosi){
-  return (Alunosp/Alunosi)*100;
-}
 
-let P = Math.round(Porcent (30,100))
 
-export default function ProgressBar(){
+export default function ProgressBar(props){
     return( 
         <View>
           <View style={{flexDirection:'row', justifyContent:'space-between', marginBottom:2}}>
-            <Text style={{fontFamily:'poppinsm', fontSize: 12}}> Presença Geral </Text>
-            <Text style={{fontFamily:'poppinsm', fontSize: 12 , color:'#4CB69A'}}>{P}%</Text>
+            <Text style={{fontFamily:'poppinsm', fontSize: 12}}> {props.titulo} </Text>
+            <Text style={{fontFamily:'poppinsm', fontSize: 12 , color:'#4CB69A'}}>{props.texto}%</Text>
           </View>
             <Progress Alunosp={100} Alunosi={100} height={20}/>
         </View>
     )}
 
+
+    // Para presença geral 
     // Alunosp = Alunos presentes no dia 
     // Alunosi = Alunos inscritos na turma
-
-    // P = Alunosp/Alunosi . 100

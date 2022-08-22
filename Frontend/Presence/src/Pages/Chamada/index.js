@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { SafeAreaView, Text, StyleSheet, View, Animated, Modal } from 'react-native';
+import { SafeAreaView, Text, StyleSheet, View, Animated, Modal, FlatList, Pressable } from 'react-native';
 import PressableBtnBack from '../../components/PressableBtnBack';
-import PressablesConf from '../../components/pressablesConf';
 import ProgressBar from '../../components/ProgressBar';
 import IconO from 'react-native-vector-icons/Octicons';
 import Pressablesee from '../../components/pressablesee';
 import { LinearGradient } from "expo-linear-gradient";
 import IconX from 'react-native-vector-icons/Ionicons';
+import IconP from 'react-native-vector-icons/Ionicons';
 
 
 export default function Chamada({navigation}){
@@ -15,6 +15,31 @@ export default function Chamada({navigation}){
 
   const [codigoc, setCodigoc] = useState('AU427');
   const [dia, setdia] = useState('14 Julho');
+
+
+  const DADOS = [
+    {AlunoP: 'Leandro Almeida'},
+    {AlunoP: 'Alana Gabriele'},
+    {AlunoP: 'Rafaela Lopes'},
+    {AlunoP: 'Doan FIlho'},
+    {AlunoP: 'Harleny Angelica'},
+    {AlunoP: 'Daniel Rodrigues'},
+    {AlunoP: 'Danielle Rodrigues'},
+    {AlunoP: 'Davi Rodrigues'},
+    {AlunoP: 'Renan Araújo'},
+    {AlunoP: 'Felipe de Sousa'},
+    {AlunoP: 'Dara Cristina'},
+    {AlunoP: 'Rafaela Lopes'},
+
+  ];
+
+
+  function Porcent(Alunosp,Alunosi){
+    return (Alunosp/Alunosi)*100;
+  }
+  
+  let P = Math.round(Porcent (100,100))
+
 
   return (
     <SafeAreaView style={style.container}>
@@ -29,13 +54,32 @@ export default function Chamada({navigation}){
                     iconeIo="chevron-back"
                 />
             </View>
-            <View style={style.opcoes}>    
-                <PressablesConf
-                    iconeSLI="options"
-                    click={() => navigation.navigate("MainAlun")}
-                />
-            </View>
         </View>
+        <View style={style.lista}>
+        <FlatList
+          data={DADOS}
+          renderItem={({ item }) => (
+            <Pressable onPress={() => navigation.navigate('CriarChamada')}>
+              <View style={style.alunos}>
+                <View style={{flexDirection: "row", justifyContent:'space-between'}}>
+                <IconP style={{position:'absolute', alignSelf:'center', marginLeft:14, paddingTop:12, color:'#7B6F72'}} name='person-outline' size={18}/>
+                <Text
+                  style={{
+                    fontFamily: "poppinsm",
+                    fontSize: 14,
+                    paddingLeft: 38,
+                    paddingTop: 18,
+                  }}
+                >
+                 {item.AlunoP}
+                </Text>
+                </View>
+              </View>
+            </Pressable>
+          )}
+        ></FlatList>
+      </View>
+
       <View style={style.seecode}>
         <View style={style.circulo}>
           <IconO style={{alignSelf:'center', marginTop: 10}} name='key' size={30}/>
@@ -44,7 +88,7 @@ export default function Chamada({navigation}){
       <Pressablesee click={() => setModalActive1(true)}></Pressablesee>
       </View>  
       <View style={style.progress}>
-        <ProgressBar/>
+        <ProgressBar texto={P} titulo='Presença Geral'/>
       </View>
 
       <Modal visible={modalActive1} animationType="fade" transparent={true}>
@@ -137,7 +181,7 @@ const style = StyleSheet.create({
         backgroundColor:'#fff', 
         padding:15, 
         position:'absolute', 
-        bottom:101,
+        bottom:80,
         shadowColor: 'rgb(221,221,221)',
         shadowOpacity: 0.5,
         shadowRadius: 5,
@@ -150,7 +194,7 @@ const style = StyleSheet.create({
         borderRadius:20,
         backgroundColor:'#C5E2D6',
         position:'absolute',
-        bottom:197,
+        bottom:176,
 
       },
 
@@ -163,4 +207,23 @@ const style = StyleSheet.create({
         borderRadius:100,
 
       },
+
+      lista: {
+        marginTop: 123,
+        marginBottom: 345,
+      },
+
+      alunos: {
+        height: 57,
+        borderRadius: 16,
+        width: 315,
+        backgroundColor: "#D5E9E1",
+        marginBottom: 10,
+        shadowColor: 'rgb(221,221,221)',
+        shadowOpacity: 0.5,
+        shadowRadius: 5,
+        elevation: 3.5,
+        
+      },
+
 })

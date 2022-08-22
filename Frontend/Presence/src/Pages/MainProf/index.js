@@ -1,17 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  Text,
-  View,
-  Modal,
-  StyleSheet,
-  FlatList,
-  SafeAreaView,
-  Pressable,
-  BackHandler,
-  Alert,
-  Image,
-  Keyboard,
-} from "react-native";
+import { Text, View, Modal, StyleSheet, FlatList, SafeAreaView, Pressable, BackHandler, Alert, Image, Keyboard,} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Pressables from "../../components/pressables";
 import config from "../../config/config.json";
