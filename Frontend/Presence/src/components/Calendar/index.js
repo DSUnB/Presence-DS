@@ -6,7 +6,7 @@ export default function Calendar(){
     return(
         <DatePicker
           options={{
-            backgroundColor: 'rgba(44,94,122,1)',
+            backgroundColor: 'rgba(44,94,122,0)',
             textHeaderColor: 'white',
             textDefaultColor: 'white',
             selectedTextColor: 'black',
@@ -16,11 +16,9 @@ export default function Calendar(){
             defaultFont: 'poppinsr',
             headerFont: 'poppinsb',
           }}
-          selected="2022-08-20"
-          mode="calendar"
-          minuteInterval={30}
+          mode="monthYear"
+          selectorStartingYear={2000}
           style={{ borderRadius: 10, marginTop: 30 }}
-
         />
     );
 }

@@ -3,7 +3,7 @@ import { SafeAreaView, Text, StyleSheet, View, FlatList, Pressable } from 'react
 import PressableBtnBack from '../../components/PressableBtnBack';
 import IconP from 'react-native-vector-icons/Ionicons';
 
-export default function Turma() {
+export default function Turma({ navigation }) {
 
 
   const DADOS = [
@@ -31,7 +31,7 @@ export default function Turma() {
             </View>
             <View style={style.voltar}>
                 <PressableBtnBack
-                    click={() => navigation.navigate("MainProf")}
+                    click={() => navigation.navigate("CriarChamada")}
                     iconeIo="chevron-back"
                 />
             </View>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable } from "react-native";
+import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable, FlatList, TouchableOpacity } from "react-native";
 import PressablesConf from "../../components/pressablesConf";
 import PressableBtnBack from "../../components/PressableBtnBack";
 import PressableCircle from "../../components/pressableCircle";
@@ -16,6 +16,36 @@ import IconLu from 'react-native-vector-icons/SimpleLineIcons';
 import Calendar from '../../components/Calendar';
 
 export default function CriarChamada({ navigation }) {
+
+  const DATA = [
+    {
+      dia: 'Ter',
+      data: '12',
+    },
+    {
+      dia: 'Qua',
+      data: '13',
+    },
+    {
+      dia: 'Qui',
+      data: '14',
+    },
+    {
+      dia: 'Sex',
+      data: '15',
+    },
+    {
+      dia: 'Sab',
+      data: '16',
+    },
+    {
+      dia: 'Dom',
+      data: '17',
+    },
+  ]
+
+  const [selected, setSelected] = useState(false);
+
   //Const's criados para o aparecimento e desaparecimento dos modais
 
   const [modalActive1, setModalActive1] = useState(false);
@@ -31,7 +61,7 @@ export default function CriarChamada({ navigation }) {
 
   // Const's criados para a mudança do título e código da turma
 
-  const [codigo, setCodigo] = useState('Dani123');
+  const [codigo, setCodigo] = useState('83H5RY');
   const [turma, setTurma] = useState('Cálculo 2 - B');
 
   // Início da criação da página
@@ -63,19 +93,43 @@ export default function CriarChamada({ navigation }) {
           <Text style={{ fontFamily: "poppinsb", fontSize: 24, textAlign: 'center', paddingLeft: 15, marginTop: 14 }}>{codigo}</Text>
         </View>
 
-          <Pressable onPress={() => setModalActive3(true)}>
-              <View style={style.search}>
-                <IconLu style={{marginTop:15, marginBottom:15, marginLeft:15, color:'#ADA4A5'}}name='magnifier' size={20}/>
-                <Text style={{fontFamily:'poppinsr' , fontSize:16, textAlign:'center', color:"#ADA4A5" , marginTop:13,}}> Procure uma data </Text>
-              </View>
-          </Pressable>
+      <View style={{height: 500, justifyContent: "space-around", alignItems: 'center'}}>
+        <Pressable onPress={() => setModalActive3(true)}>
+            <View style={style.search}>
+              <IconLu style={{marginTop:15, marginBottom:15, marginLeft:15, color:'#ADA4A5'}}name='magnifier' size={20}/>
+              <Text style={{fontFamily:'poppinsr' , fontSize:16, textAlign:'center', color:"#ADA4A5" , marginTop:13,}}> Mês/ano </Text>
+            </View>
+        </Pressable>
 
-        <View style={{position:"relative", zIndex: 4, top: 250, }}>
+        <View style={{height: 130}}>
+          <Text style={{ fontFamily: "poppinsr", color: '#ADA4A5', textAlign:'center', fontSize: 17}}>Julho, 2022</Text>
+            <FlatList
+              showsHorizontalScrollIndicator={false}
+              horizontal
+              data={DATA}
+              renderItem={({ item }) => (
+                <TouchableOpacity style={style.chamada} underlayColor="#46B297" onPress={() => setSelected(!selected)}
+                >
+                  
+                    <View style={{alignSelf: 'center',  justifyContent: 'center', top: '25%'}}>
+                      <Text style={{ fontFamily: "poppinsr", fontSize: 15, textAlign: 'center', marginBottom: 3 }}>{item.dia}</Text>
+                      <Text style={{ fontFamily: "poppinsr", fontSize: 17, textAlign: 'center', marginTop: 3 }}>{item.data}</Text>
+                    </View>
+                  
+                </TouchableOpacity>
+              )}
+            >
+            </FlatList>
+        </View>
+
+
+        <View style={{zIndex: 4}}>
           <Pressables
             texto='Criar Chamada'
             click={() => navigation.navigate("Chamada")}
           />
         </View>
+      </View>
 
         <View style={style.footer}>
           <View style={{width: 24, height: 24,}}>
@@ -278,13 +332,21 @@ const style = StyleSheet.create({
     borderRadius:16,
     width:315,
     backgroundColor:'white',
-    position:"absolute",
+    
     zIndex:4,
-    top:-200,
-    left:-160,
+    
     borderBottomColor:"#2F7286",
     borderWidth:1,
     flexDirection: "row",
     marginTop:52,
+  },
+  chamada:{
+    width: 73,
+    height: 98,
+    borderRadius: 12,
+    backgroundColor: '#F7F8F8',
+    marginLeft: 2,
+    marginRight: 2,
+    borderColor: 'black',
   },
 });
