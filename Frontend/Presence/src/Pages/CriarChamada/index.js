@@ -12,42 +12,35 @@ import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
 import { LinearGradient } from "expo-linear-gradient";
 import Inputs from "../../components/inputs";
-import CalendarStrip from 'react-native-calendar-strip';
 import IconLu from 'react-native-vector-icons/SimpleLineIcons';
-import CalendarPicker from 'react-native-calendar-picker';
+import Calendar from '../../components/Calendar';
 
 export default function CriarChamada({ navigation }) {
+  //Const's criados para o aparecimento e desaparecimento dos modais
+
   const [modalActive1, setModalActive1] = useState(false);
   const [modalActive2, setModalActive2] = useState(false);
   const [modalActive3, setModalActive3] = useState(false);
 
+
+  //Const para fechar modal e mudar de página
   const handleCloseAndRoute = () => {
     setModalActive2(false);
     navigation.navigate('MainProf')
   }
 
-  const [codigo, setCodigo] = useState('Dani123');
+  // Const's criados para a mudança do título e código da turma
 
-  const Example = () => (
-    <View style={style.calendar}>
-    <CalendarStrip
-      scrollable
-      style={{height: 150, width: 400, paddingTop: 30, paddingBottom: 10, paddingLeft: 10, paddingRight: 10}}
-      calendarColor={'rgba(0,0,0,0)'}
-      calendarHeaderStyle={{color: 'black', fontFamily:"poppinsr", fontSize:18, }}
-      dateNumberStyle={{color: 'black', fontFamily:"poppinsr" , fontSize:15}}
-      dateNameStyle={{color: 'black', fontFamily:"poppinsr" , fontSize:12}}
-      iconContainer={{flex: 0.1}}
-      daySelectionAnimation={{type:"border", duration:2, borderWidth:1.5, borderHighlightColor:"#338995"}}
-    />
-  </View>
-);
+  const [codigo, setCodigo] = useState('Dani123');
+  const [turma, setTurma] = useState('Cálculo 2 - B');
+
+  // Início da criação da página
 
   return (
     <SafeAreaView style={style.container}>
         <View style={style.header}>
             <View>
-                <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>Cálculo 2 - B</Text>
+                <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>{turma}</Text>
             </View>
             <View style={style.voltar}>
                 <PressableBtnBack
@@ -70,18 +63,14 @@ export default function CriarChamada({ navigation }) {
           <Text style={{ fontFamily: "poppinsb", fontSize: 24, textAlign: 'center', paddingLeft: 15, marginTop: 14 }}>{codigo}</Text>
         </View>
 
-          <Pressable onPress={() => setModalActive3(true)} >
+          <Pressable onPress={() => setModalActive3(true)}>
               <View style={style.search}>
                 <IconLu style={{marginTop:15, marginBottom:15, marginLeft:15, color:'#ADA4A5'}}name='magnifier' size={20}/>
                 <Text style={{fontFamily:'poppinsr' , fontSize:16, textAlign:'center', color:"#ADA4A5" , marginTop:13,}}> Procure uma data </Text>
               </View>
           </Pressable>
 
-        <View style={style.calendario}>
-          <Example></Example>
-        </View>
-
-        <View style={{position:"relative", zIndex: 4, top:-200, }}>
+        <View style={{position:"relative", zIndex: 4, top: 250, }}>
           <Pressables
             texto='Criar Chamada'
             click={() => navigation.navigate("Chamada")}
@@ -104,8 +93,10 @@ export default function CriarChamada({ navigation }) {
           </View>
         </View>
 
-        
-        
+
+
+        {/* Modais */}
+        {/* Modal Edit */}
         <Modal visible={modalActive1} animationType="fade" transparent={true}>
           <View style={style.fundoModal}>
             <LinearGradient
@@ -134,6 +125,7 @@ export default function CriarChamada({ navigation }) {
           </View>
         </Modal>
 
+        {/* Modal Delete */}
         <Modal visible={modalActive2} animationType="fade" transparent={true}>
         <View style={style.fundoModal}>
           <LinearGradient
@@ -159,6 +151,25 @@ export default function CriarChamada({ navigation }) {
           </LinearGradient>
         </View>
       </Modal>
+
+      {/* Modal Calendário */}
+      <Modal visible={modalActive3} animationType="fade" transparent={true}>
+          <View style={style.fundoModal}>
+            <LinearGradient
+              colors={["rgba(44,94,122,1)", "rgba(44,94,122,1)"]}
+              start={[1.0, 0.5]}
+              style={style.modal3}
+            >
+              <IconX
+                style={style.close}
+                name="close-circle"
+                size={30}
+                onPress={() => setModalActive3(false)}
+              />
+              <Calendar />
+            </LinearGradient>
+          </View>
+        </Modal>
 
     </SafeAreaView>
   );
@@ -209,11 +220,11 @@ const style = StyleSheet.create({
     flexDirection: "row",
     bottom: 0,
     width: 450,
-    height: 70,
+    height: 75,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "space-around",
-    borderWidth: 11,
+    borderWidth: 0,
     borderRadius: 2,
     borderColor: 'rgba(221,221,221)',
     borderTopWidth: 0.2,
@@ -221,9 +232,7 @@ const style = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 5,
     elevation: 0.3,
-
   },
-
   fundoModal: {
     flex: 1,
     justifyContent: "center",
@@ -237,11 +246,19 @@ const style = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  modal3: {
+    borderRadius: 22,
+    width: 340,
+    height: 420,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   close: {
     position: 'absolute',
     right: 20,
     top: 20,
     color: "#ffffff",
+    zIndex: 2,
   },
   modal2: {
     width: 275,
@@ -256,14 +273,6 @@ const style = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  calendar: {
-    flex: 1,
-  },
-  calendario: {
-    postion: 'absolute',
-    top: 320,
-  }, 
-
   search:{
     height:50,
     borderRadius:16,
@@ -271,12 +280,11 @@ const style = StyleSheet.create({
     backgroundColor:'white',
     position:"absolute",
     zIndex:4,
-    top:230,
+    top:-200,
     left:-160,
-    borderColor:"#2F7286",
+    borderBottomColor:"#2F7286",
     borderWidth:1,
     flexDirection: "row",
     marginTop:52,
   },
-  
 });
