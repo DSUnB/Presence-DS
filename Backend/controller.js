@@ -4,6 +4,7 @@ const cors=require('cors');
 const bodyParser=require('body-parser');
 const model=require('./models');
 const bcrypt=require('bcrypt');
+const { sequelize } = require('./models');
 
 // =====================================================
 // DEFINIÇÃO DE CRIPTOGRAFIA:
@@ -121,6 +122,7 @@ app.post('/professor/turma/criar', async (req,res)=>{
         }
         else{
             let reqs1 = await model.Turmas.create({
+                'id': req.body.codigoTurma,
                 'codigoTurma': req.body.codigoTurma,
                 'curso': req.body.curso,
                 'nomeTurma': req.body.nomeTurma,
@@ -186,12 +188,35 @@ app.post('/aluno/turma/obter', async (req,res) => {
             where: {
                 matricula: req.body.aluno,
             }
-        });
+        }); 
+        let reqs1 = await model.EntrarTurmas.findAll({
+            where: {
+                idAluno: reqs.idAluno,
+            },
+            raw: true
+        }); 
+        //console.log(reqs1)
+        
         if(reqs === null){
             res.status(404).send(JSON.stringify('404'));
         }
         else{
-            console.log('deu certo!')
+            for(var i=0; i < reqs1.length; i++){
+                let reqs2 = await model.EntrarTurmas.findAll({
+                    where: {
+                        idAluno: reqs.idAluno
+                    },
+                    raw: true,
+                    include: [{
+                        model:model.Turmas,
+                        where: {
+                            codigoTurma: reqs1[i].codigoTurma
+                        },
+                    }]  
+                })
+                console.log(reqs2)
+                res.status(202).send(reqs2);
+            }    
         }
     }
     catch {

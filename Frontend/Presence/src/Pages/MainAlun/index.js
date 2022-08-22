@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Text, View, Modal, StyleSheet, FlatList, SafeAreaView, Pressable, BackHandler, Alert, Image, Keyboard,
 } from "react-native";
 import Pressables from "../../components/pressables";
@@ -10,6 +10,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Div } from "./styled";
 import Inputs from "../../components/inputs";
 import IconX from 'react-native-vector-icons/Ionicons';
+import { Context } from '../../context/Provider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function MainAlun({ navigation }) {
@@ -42,18 +43,6 @@ export default function MainAlun({ navigation }) {
     }, []);
     // =========================================================
 
-    // =========================================================
-    const DADOS = [
-        { key: "Fisica 1", turm: "A" },
-        { key: "Fisica 2", turm: "B" },
-        { key: "Fisica 3", turm: "C" },
-        { key: "Fisica 4", turm: "D" },
-      ];
-
-  // =========================================================
-
-  // =========================================================
-
   // =========================================================
   // DECLARAÇÃO DE STATES:
   const [modalActive2, setModalActive2] = useState(false);
@@ -61,6 +50,8 @@ export default function MainAlun({ navigation }) {
   const [codigo, setCodigo] = useState(null);
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const {DADOS, setDADOS} = useContext(Context);
+
   // =========================================================
 
   // =========================================================
@@ -87,7 +78,6 @@ export default function MainAlun({ navigation }) {
                   'Content-Type': 'application/json',
               },
               body: JSON.stringify({
-                  id: null,
                   aluno: json.matricula,
                   codigoTurma: codigo.toUpperCase(),
               })                 
@@ -110,12 +100,13 @@ export default function MainAlun({ navigation }) {
             }, 2000);
           }
           else{
-              setMessage('Turma Encontrada!');
-              setIsLoading(false);
-              setTimeout(() => {
-                  setMessage(null);
-                  setModalActive3(false);
-              }, 1000);
+            AtualizarTurma()
+            setMessage('Turma Encontrada!');
+            setIsLoading(false);
+            setTimeout(() => {
+                setMessage(null);
+                setModalActive3(false);
+            }, 1000);
               
           }
         }
@@ -129,6 +120,33 @@ export default function MainAlun({ navigation }) {
   }
   // =========================================================
   
+  // =========================================================
+    // FUNÇÃO PARA ATUALIZAR A LISTA DE TURMAS:
+    async function AtualizarTurma(){
+      let response = await AsyncStorage.getItem('userData');
+      let json = JSON.parse(response);
+      let reqs = await fetch(config.urlRootNode+'aluno/turma/obter', {
+        method: 'POST',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          aluno: json.matricula,
+        })
+      });
+      let res= await reqs.json();
+      if(res === '403'){
+        null
+      }
+      else{
+        setDADOS(res)
+      }
+    }
+  // =========================================================
+    console.log(DADOS)
+// =========================================================
+// ARQUITETURA DA SCREEN DA APLICAÇÃO:
   return (
     <Div>
       <View style={style.logout}>
@@ -144,7 +162,7 @@ export default function MainAlun({ navigation }) {
       <View style={style.lista}>
         <FlatList
           data={DADOS}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <Pressable>
               <View style={style.turma}>
                 <Text
@@ -155,7 +173,7 @@ export default function MainAlun({ navigation }) {
                     paddingTop: 18,
                   }}
                 >
-                  {item.key} - {item.turm}
+                  {item.codigoTurma} - {item.idAluno}
                 </Text>
               </View>
             </Pressable>

@@ -11,7 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // Alunos.belongsTo(models.Usuarios);
-      // Alunos.hasMany(models.EntrarTurma);
+      Alunos.hasMany(models.EntrarTurmas, {
+        foreignKey: 'idAluno'
+      });
       // Alunos.hasMany(models.ResponderChamada);
     }
   }
