@@ -40,7 +40,6 @@ export default function Chamada({navigation}){
   
   let P = Math.round(Porcent (100,100))
 
-
   return (
     <SafeAreaView style={style.container}>
         <View style={style.header}>

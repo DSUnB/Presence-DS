@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View, Animated } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 const Progress = ({Alunosp, Alunosi, height}) => {
@@ -39,28 +40,31 @@ const Progress = ({Alunosp, Alunosi, height}) => {
         >
         <Animated.View
           style={{
-            height:10,
-            width: '100%',
-            borderRadius: height,
-            backgroundColor: '#4CB69A',
-            position:'absolute',
-            left:0,
-            top:0,
             transform: [
               {
               translateX: animatedValue,
               },
             ],
           }}
-        
-        />
+        >
+          <LinearGradient
+          // Button Linear Gradient
+          colors={['#46B297', '#9DCEFF']}
+          start={[ 0.9, 0.5 ]}
+          style={{
+            height:10,
+            width: '100%',
+            borderRadius: height,
+            position:'absolute',
+            left:0,
+            top:0,}}
+          />
+        </Animated.View>
         </View>
         </>
     );
   };
   
-
-
 export default function ProgressBar(props){
     return( 
         <View>
@@ -72,7 +76,7 @@ export default function ProgressBar(props){
         </View>
     )}
 
-
-    // Para presença geral 
-    // Alunosp = Alunos presentes no dia 
-    // Alunosi = Alunos inscritos na turma
+    /* Para presença geral:
+     - Alunosp = Alunos presentes no dia;
+     - Alunosi = Alunos inscritos na turma;
+    */

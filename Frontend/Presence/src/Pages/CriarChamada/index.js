@@ -171,10 +171,12 @@ export default function CriarChamada({ navigation }) {
                 <Inputs place="Nova Matéria" iconeF="book"/>
                 <Inputs place="Nova Turma" iconeO="people"/>
               </View>
-              <PressablesModal
-                texto="Editar"
-                onPress={() => setModalActive1(false)}
-              />
+              <View style={{marginTop:15}}>
+                <PressablesModal
+                  texto="Editar"
+                  click={() => setModalActive1(false)}
+                />
+              </View>
             </LinearGradient>
           </View>
         </Modal>
@@ -210,8 +212,8 @@ export default function CriarChamada({ navigation }) {
       <Modal visible={modalActive3} animationType="fade" transparent={true}>
           <View style={style.fundoModal}>
             <LinearGradient
-              colors={["rgba(44,94,122,1)", "rgba(44,94,122,1)"]}
-              start={[1.0, 0.5]}
+              colors={["#2C5E7A", "#338995"]}
+              start={[1.0, 1.0]}
               style={style.modal3}
             >
               <IconX
@@ -274,7 +276,7 @@ const style = StyleSheet.create({
     flexDirection: "row",
     bottom: 0,
     width: 450,
-    height: 75,
+    height: 65,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "space-around",
@@ -303,7 +305,7 @@ const style = StyleSheet.create({
   modal3: {
     borderRadius: 22,
     width: 340,
-    height: 420,
+    height: 360,
     alignItems: "center",
     justifyContent: "center",
   },
