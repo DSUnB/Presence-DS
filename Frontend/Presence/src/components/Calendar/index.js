@@ -1,6 +1,8 @@
 import React from "react";
 import DatePicker from 'react-native-modern-datepicker';
 
+const MonthYearExample = () => {
+  const [date, setDate] = useState('');}
 
 export default function Calendar(){
     return(
@@ -18,7 +20,8 @@ export default function Calendar(){
           }}
           mode="monthYear"
           selectorStartingYear={2000}
-          style={{ borderRadius: 10, marginTop: 30 }}
+          onMonthYearChange={selectedDate => setDate(selectedDate)}
+          style={{ borderRadius: 10, marginTop: 5 }}
         />
     );
 }

@@ -14,7 +14,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Inputs from "../../components/inputs";
 import IconLu from 'react-native-vector-icons/SimpleLineIcons';
 import Calendar from '../../components/Calendar';
-import Pressablesee from '../../components/pressablesee';
+import DatePicker from 'react-native-modern-datepicker';
 
 export default function CriarChamada({ navigation }) {
 
@@ -45,7 +45,10 @@ export default function CriarChamada({ navigation }) {
     },
   ]
 
-  const [selected, setSelected] = useState(false);
+ 
+  const [date, setDate] = useState('');
+
+
 
   //Const's criados para o aparecimento e desaparecimento dos modais
 
@@ -99,18 +102,18 @@ export default function CriarChamada({ navigation }) {
         <Pressable onPress={() => setModalActive3(true)}>
             <View style={style.search}>
               <IconLu style={{marginTop:15, marginBottom:15, marginLeft:15, color:'#ADA4A5'}}name='magnifier' size={20}/>
-              <Text style={{fontFamily:'poppinsr' , fontSize:16, textAlign:'center', color:"#ADA4A5" , marginTop:13,}}> Mês/ano </Text>
+              <Text style={{fontFamily:'poppinsr' , fontSize:16, textAlign:'center', color:"#ADA4A5" , marginTop:13,}}> Procure por um mês </Text>
             </View>
         </Pressable>
 
         <View style={{height: 130}}>
-          <Text style={{ fontFamily: "poppinsr", color: '#ADA4A5', textAlign:'center', fontSize: 17}}>Julho, 2022</Text>
+          <Text style={{ fontFamily: "poppinsr", color: '#ADA4A5', textAlign:'center', fontSize: 17}}>{date}</Text>
             <FlatList
               showsHorizontalScrollIndicator={false}
               horizontal
               data={DATA}
               renderItem={({ item }) => (
-                <TouchableOpacity style={style.chamada} underlayColor="#46B297" onPress={() => setSelected(!selected)}
+                <TouchableOpacity style={style.chamada} underlayColor="#46B297" onPress={() => navigation.navigate('Chamada')}
                 >
                   
                     <View style={{alignSelf: 'center',  justifyContent: 'center', top: '25%'}}>
@@ -224,8 +227,29 @@ export default function CriarChamada({ navigation }) {
                 size={30}
                 onPress={() => setModalActive3(false)}
               />
-              <Calendar/>
-              <Pressablesee texto='Ok'/>
+              <DatePicker
+                options={{
+                  backgroundColor: 'rgba(44,94,122,0)',
+                  textHeaderColor: 'white',
+                  textDefaultColor: 'white',
+                  selectedTextColor: 'black',
+                  mainColor: '#69D498',
+                  textSecondaryColor: '#9DCEFF',
+                  borderColor: 'rgba(122, 146, 165, 0.6)',
+                  defaultFont: 'poppinsr',
+                  headerFont: 'poppinsb',
+                }}
+                mode="monthYear"
+
+                onMonthYearChange={selectedDate => setDate(selectedDate)}
+                style={{ borderRadius: 10, marginTop: 5 }}
+              />
+              <View style={{height: 36, width: 91, position: 'absolute', bottom: 38}}>
+                <PressablesModal
+                    texto="Ok"
+                    click={() => setModalActive3(false)}
+                  />
+              </View>
             </LinearGradient>
           </View>
         </Modal>
@@ -306,7 +330,7 @@ const style = StyleSheet.create({
   modal3: {
     borderRadius: 22,
     width: 340,
-    height: 480,
+    height: 460,
     alignItems: "center",
     justifyContent: "center",
   },

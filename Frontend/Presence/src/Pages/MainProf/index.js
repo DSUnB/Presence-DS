@@ -11,6 +11,18 @@ import IconX from 'react-native-vector-icons/Ionicons';
 import { Context } from '../../context/Provider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
+const EmptyListMessage = ({item}) => {
+  return (
+    // Flat List Item
+    <Text
+      
+      onPress={() => getItem(item)}>
+      No Data Found
+    </Text>
+  );
+};
+
 // =========================================================
 // GERAÇÃO DE CÓDIGO TURMA:
 function codigo() {
@@ -186,6 +198,7 @@ return (
       <View style={style.lista}>
         <FlatList
           data={DADOS}
+          ListEmptyComponent={EmptyListMessage}
           renderItem={({ item }) => (
             <Pressable onPress={() => navigation.navigate('CriarChamada')}>
               <View style={style.turma}>

@@ -49,7 +49,7 @@ export default function Chamada({navigation}){
             </View>
             <View style={style.voltar}>
                 <PressableBtnBack
-                    click={() => navigation.navigate("MainProf")}
+                    click={() => navigation.navigate("CriarChamada")}
                     iconeIo="chevron-back"
                 />
             </View>
