@@ -13,6 +13,7 @@ import Turma from './src/Pages/Turma';
 import MainAlun from './src/Pages/MainAlun';
 import ValidarChamada from './src/Pages/ValidarChamada';
 import Provider from './src/context/Provider';
+import Creditos from './src/Pages/Creditos';
 
 const Stack = createNativeStackNavigator();
 
@@ -40,7 +41,7 @@ export default function App() {
   <Provider>
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName="CriarChamada" 
+        initialRouteName="Login" 
         screenOptions={{
           headerShown: false
         }}
@@ -53,6 +54,7 @@ export default function App() {
         <Stack.Screen name="Turma" component={Turma} />
         <Stack.Screen name="MainAlun" component={MainAlun} />
         <Stack.Screen name="ValidarChamada" component={ValidarChamada} />
+        <Stack.Screen name="Creditos" component={Creditos} />
       </Stack.Navigator>
     </NavigationContainer>
   </Provider>
