@@ -8,6 +8,7 @@ import Pressables from "../../components/pressables";
 import InputsS from "../../components/inputsenha";
 import PressableBtnBack from "../../components/PressableBtnBack";
 import IconA from 'react-native-vector-icons/Feather';
+import IconC from 'react-native-vector-icons/FontAwesome';
 import { Context } from "../../context/Provider";
 
 
@@ -22,6 +23,7 @@ export default function Form({ navigation }) {
   const [passwordConfirm, setPasswordConfirm]=useState(null);
   const [checked, setChecked]=useState(false);
   const [message, setMessage]=useState(null);
+  const [message2, setMessage2]=useState(null);
   // ==================================================================
 
   // ==================================================================
@@ -52,9 +54,9 @@ export default function Form({ navigation }) {
     }, 5000);
     }
     else{
-      setMessage("Usuário Criado com Sucesso!");
+      setMessage2("Usuário Criado com Sucesso!");
     setTimeout(() => {
-      setMessage(null);
+      setMessage2(null);
       navigation.navigate('Login');
     }, 2000);
     }
@@ -96,10 +98,17 @@ return (
   <Text style={{fontFamily:'poppinsb', fontSize:20, marginBottom:20}}>Crie uma conta</Text>
   {message && (
     <View style={{display:'flex' , flexDirection:'row'}}  >
-    <IconA name='alert-triangle' size={25} style={{marginRight:10}}/>
+    <IconA name='alert-triangle' size={25} style={{marginRight:10, color:'#900020'}}/>
     <Text style={{fontFamily:'poppinsr', fontSize:17, color:'#900020'}}>{message}</Text> 
     </View>
     
+  )}
+
+  {message2 && (
+    <View style={{display:'flex' , flexDirection:'row'}}  >
+    <IconC name='check-circle-o' size={25} style={{marginRight:10, color:'#42D742'}}/>
+    <Text style={{fontFamily:'poppinsr', fontSize:17, color:'#42D742'}}>{message2}</Text> 
+    </View>
   )}
   
   <Inputs place='Nome' iconeO='person' onChange={(text) => setName(text)}/>

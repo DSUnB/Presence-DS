@@ -7,6 +7,7 @@ import Pressables from "../../components/pressables";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import InputsS from "../../components/inputsenha";
 import { Context } from "../../context/Provider";
+import IconA from 'react-native-vector-icons/Feather';
 
 
 export default function Login({ navigation }) {
@@ -45,7 +46,7 @@ export default function Login({ navigation }) {
       await AsyncStorage.clear();
     }
     else if(res === '403'){
-      setMessage('Campo Incorreto');
+      setMessage('Preencha Todos os Campos!');
       setTimeout(() => {
       setMessage(null);
     }, 5000);
@@ -191,7 +192,10 @@ return (
   <Text style={{fontFamily:'poppinsr', fontSize:16, marginBottom:50}}>ao Presence!</Text>
 
   {message && (
-    <Text>{message}</Text>
+    <View style={{display:'flex' , flexDirection:'row'}}  >
+    <IconA name='alert-triangle' size={25} style={{marginRight:10, color:'#900020'}}/>
+    <Text style={{fontFamily:'poppinsr', fontSize:17, color:'#900020'}}>{message}</Text>
+    </View>
   )}
 
   <Inputs place='Matrícula' iconeF='mail' onChange={(text) => setMatricula(text)}/>

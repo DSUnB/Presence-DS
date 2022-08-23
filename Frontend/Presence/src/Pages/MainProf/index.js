@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Text, View, Modal, StyleSheet, FlatList, SafeAreaView, Pressable, BackHandler, Alert, Image, Keyboard,
-} from "react-native";
+import { Text, View, Modal, StyleSheet, FlatList, SafeAreaView, Pressable, BackHandler, Alert, Image, Keyboard,} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Pressables from "../../components/pressables";
 import config from "../../config/config.json";
@@ -11,6 +10,8 @@ import Inputs from "../../components/inputs";
 import IconX from 'react-native-vector-icons/Ionicons';
 import { Context } from '../../context/Provider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import IconC from 'react-native-vector-icons/FontAwesome';
+import IconA from 'react-native-vector-icons/Feather';
 
 // =========================================================
 // GERAÇÃO DE CÓDIGO TURMA:
@@ -63,6 +64,7 @@ export default function MainProf({ navigation }) {
     const [materia, setMateria] = useState(null);
     const [nomeTurma, setNomeTurma] = useState(null);
     const [message, setMessage]=useState(null);
+    const [message2, setMessage2]=useState(null);
     const [isLoading, setIsLoading]=useState(false);
     const {DADOS, setDADOS} = useContext(Context);
     // =========================================================
@@ -118,7 +120,7 @@ export default function MainProf({ navigation }) {
             }
             else{
                 AtualizarTurma()
-                setMessage('Turma Criada!');
+                setMessage2('Turma Criada!');
                 setIsLoading(false);
                 setTimeout(() => {
                     setMessage(null);
@@ -258,9 +260,25 @@ return (
             >
               Crie sua turma
             </Text>
+
             {message && (
-                        <Text>{message}</Text>
+                <>
+                       <View style={{display:'flex' , flexDirection:'row'}}>
+                        <IconA name='alert-triangle' size={20} style={{marginRight:10, color:'#fff'}}/>
+                        <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message}</Text>
+                        </View>
+                </>
                     )}
+            
+            {message2 && (
+              <>
+                <View style={{display:'flex' , flexDirection:'row'}}>
+                <IconC name='check-circle-o' size={20} style={{marginRight:10, color:'#fff'}}/>
+                <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message2}</Text>
+                </View>
+              </>
+                    )}
+                    
               <Inputs place="Matéria" iconeF="book" onChange={(text) => setMateria(text)} />
               <Inputs place="Turma" iconeO="people" onChange={(text) => setNomeTurma(text)} />
               </View>
