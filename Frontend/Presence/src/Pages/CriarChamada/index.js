@@ -371,8 +371,7 @@ const style = StyleSheet.create({
     height: 98,
     borderRadius: 12,
     backgroundColor: '#F7F8F8',
-    marginLeft: 2,
-    marginRight: 2,
+    marginLeft: 12,
     borderColor: 'black',
   },
 });

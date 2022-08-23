@@ -15,10 +15,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const EmptyListMessage = ({item}) => {
   return (
     // Flat List Item
-    <Text
-      
-      onPress={() => getItem(item)}>
-      No Data Found
+    <Text style={{ fontFamily: "poppinsr", fontSize: 18 }}>
+      Para começar, crie uma turma!
     </Text>
   );
 };
