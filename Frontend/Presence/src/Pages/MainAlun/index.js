@@ -144,9 +144,8 @@ export default function MainAlun({ navigation }) {
       }
     }
   // =========================================================
-    console.log(DADOS)
-// =========================================================
-// ARQUITETURA DA SCREEN DA APLICAÇÃO:
+  // =========================================================
+  // ARQUITETURA DA SCREEN DA APLICAÇÃO:
   return (
     <Div>
       <View style={style.logout}>
@@ -173,7 +172,7 @@ export default function MainAlun({ navigation }) {
                     paddingTop: 18,
                   }}
                 >
-                  {item.codigoTurma} - {item.idAluno}
+                  {item.curso} - {item.nomeTurma}
                 </Text>
               </View>
             </Pressable>

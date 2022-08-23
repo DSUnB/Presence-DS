@@ -189,34 +189,23 @@ app.post('/aluno/turma/obter', async (req,res) => {
                 matricula: req.body.aluno,
             }
         }); 
-        let reqs1 = await model.EntrarTurmas.findAll({
-            where: {
-                idAluno: reqs.idAluno,
-            },
-            raw: true
-        }); 
-        //console.log(reqs1)
         
         if(reqs === null){
             res.status(404).send(JSON.stringify('404'));
         }
         else{
-            for(var i=0; i < reqs1.length; i++){
-                let reqs2 = await model.EntrarTurmas.findAll({
-                    where: {
-                        idAluno: reqs.idAluno
-                    },
-                    raw: true,
-                    include: [{
-                        model:model.Turmas,
-                        where: {
-                            codigoTurma: reqs1[i].codigoTurma
-                        },
-                    }]  
-                })
-                console.log(reqs2)
-                res.status(202).send(reqs2);
-            }    
+            let reqs1 = await model.EntrarTurmas.findAll({
+                where: {
+                    idAluno: reqs.idAluno
+                },
+                raw: true,
+            });
+            if (reqs1){
+                res.status(202).send(reqs1);
+               }
+               else{
+                res.status(204).send(JSON.stringify('204'));
+               }
         }
     }
     catch {
@@ -227,26 +216,36 @@ app.post('/aluno/turma/obter', async (req,res) => {
 // ====================================================
 
 // ====================================================
-// ENTRAR TURMA: (MAINALUN)
+// CRIAR DADO EM ENTRAR TURMA: (MAINALUN)
 app.post('/aluno/turma/entrar', async (req,res)=>{
-    try {
+    try {        
+
         let reqs = await model.Alunos.findOne({
             where: {
                 matricula: req.body.aluno,
-            }
-        });
+            } 
+        }); 
+        let reqs1 = await model.Turmas.findOne({
+            where: {
+                codigoTurma: req.body.codigoTurma,
+            } 
+        });console.log(req.body.codigoTurma)
         if(reqs === null){
             res.status(404).send(JSON.stringify('404'));
         }
         else{
-            let reqs1 = await model.EntrarTurmas.create({
+            console.log(reqs1.curso)
+            console.log(reqs1.nomeTurma)
+            let reqs2 = await model.EntrarTurmas.create({
                 'idAluno': reqs.idAluno,
                 'codigoTurma': req.body.codigoTurma,
+                'curso': reqs1.curso,
+                "nomeTurma": reqs1.nomeTurma,
                 'createdAt': new Date(),
                 'updatedAt': new Date()
             });
-            if (reqs1){
-                res.status(202).send(reqs1);
+            if (reqs2){
+                res.status(202).send(reqs2);
             }
             else{
                 res.status(403).send(JSON.stringify('403'));

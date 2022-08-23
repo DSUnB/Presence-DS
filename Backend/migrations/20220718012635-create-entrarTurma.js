@@ -28,6 +28,14 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
+      curso: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
+      nomeTurma: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
