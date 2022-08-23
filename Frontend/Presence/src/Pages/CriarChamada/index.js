@@ -14,6 +14,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Inputs from "../../components/inputs";
 import IconLu from 'react-native-vector-icons/SimpleLineIcons';
 import Calendar from '../../components/Calendar';
+import Pressablesee from '../../components/pressablesee';
 
 export default function CriarChamada({ navigation }) {
 
@@ -86,6 +87,7 @@ export default function CriarChamada({ navigation }) {
             </View>
         </View>
 
+      <View style={{marginTop: 90, marginBottom: 75, height:'70%', justifyContent: "space-around", alignItems: 'center',}}>
         <View style={style.code}>
           <View style={{width: 55,height: 55, borderRadius: 100, backgroundColor: 'white', position: 'absolute', top: 6, left: 6}}>
             <IconO style={{alignSelf:'center', marginTop: 10}} name='key' size={30}/>
@@ -93,7 +95,7 @@ export default function CriarChamada({ navigation }) {
           <Text style={{ fontFamily: "poppinsb", fontSize: 24, textAlign: 'center', paddingLeft: 15, marginTop: 14 }}>{codigo}</Text>
         </View>
 
-      <View style={{height: 500, justifyContent: "space-around", alignItems: 'center'}}>
+      
         <Pressable onPress={() => setModalActive3(true)}>
             <View style={style.search}>
               <IconLu style={{marginTop:15, marginBottom:15, marginLeft:15, color:'#ADA4A5'}}name='magnifier' size={20}/>
@@ -222,7 +224,8 @@ export default function CriarChamada({ navigation }) {
                 size={30}
                 onPress={() => setModalActive3(false)}
               />
-              <Calendar />
+              <Calendar/>
+              <Pressablesee texto='Ok'/>
             </LinearGradient>
           </View>
         </Modal>
@@ -267,8 +270,6 @@ const style = StyleSheet.create({
     height: 68,
     borderRadius: 20,
     backgroundColor: '#DFF5EB',
-    position: 'absolute',
-    top: 130,
   },
   footer:{
     zIndex: 2,
@@ -305,7 +306,7 @@ const style = StyleSheet.create({
   modal3: {
     borderRadius: 22,
     width: 340,
-    height: 360,
+    height: 480,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -340,7 +341,6 @@ const style = StyleSheet.create({
     borderBottomColor:"#2F7286",
     borderWidth:1,
     flexDirection: "row",
-    marginTop:52,
   },
   chamada:{
     width: 73,

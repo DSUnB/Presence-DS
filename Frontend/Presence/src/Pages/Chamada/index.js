@@ -193,7 +193,7 @@ const style = StyleSheet.create({
         borderRadius:20,
         backgroundColor:'#C5E2D6',
         position:'absolute',
-        bottom:176,
+        bottom:165,
 
       },
 
