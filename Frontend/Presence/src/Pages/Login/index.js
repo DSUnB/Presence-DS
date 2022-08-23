@@ -7,6 +7,7 @@ import Pressables from "../../components/pressables";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import InputsS from "../../components/inputsenha";
 import { Context } from "../../context/Provider";
+import IconA from 'react-native-vector-icons/Feather';
 
 
 export default function Login({ navigation }) {
@@ -45,21 +46,90 @@ export default function Login({ navigation }) {
       await AsyncStorage.clear();
     }
     else if(res === '403'){
-      setMessage('Campo Incorreto');
+      setMessage('Preencha Todos os Campos!');
       setTimeout(() => {
       setMessage(null);
     }, 5000);
       await AsyncStorage.clear();
     }
-    else{
+    else {
       await AsyncStorage.setItem('userData', JSON.stringify(res));
-      ObterTurma();
+      let response = await AsyncStorage.getItem('userData');
+      let json = JSON.parse(response);
+
+        if (json.tipoUsuario === false){
+          ObterTurmaAlun();
+        }
+        else{
+          ObterTurma();
+      }
     }
   }
+    // =========================================================
+    // FUNÇÃO PARA REQUISITAR 'MOSTRAR TURMA' DO ALUNO AO BACKEND:
+    async function ObterTurmaAlun(){
+      let response = await AsyncStorage.getItem('userData');
+      let json = JSON.parse(response);
+      let reqs = await fetch(config.urlRootNode+'aluno/turma/obter', {
+        method: 'POST',
+        headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            aluno: json.matricula,
+        })
+      });
+      let res= await reqs.json();
+      if (res === '403'){
+        setMessage('Erro de Autenticação!');
+        setTimeout(() => {
+          setMessage(null);
+          AsyncStorage.clear();
+      }, 2000);
+      }
+      else if (res){
+        setDADOS(res)
+        Keyboard.dismiss();
+        navigation.navigate('MainAlun');
+        }
+    };
+  // =========================================================
+  // =========================================================
+  // FUNÇÃO PARA REQUISITAR 'MOSTRAR TURMA' DO PROFESSOR AO BACKEND:
+  async function ObterTurma(){
+      let response = await AsyncStorage.getItem('userData');
+      let json = JSON.parse(response);
+      let reqs = await fetch(config.urlRootNode+'professor/turma/obter', {
+        method: 'POST',
+        headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            professor: json.matricula,
+        })
+    });
+    let res= await reqs.json();
+    if (res === '403'){
+      setMessage('Erro de Autenticação!');
+      setTimeout(() => {
+        setMessage(null);
+        AsyncStorage.clear();
+    }, 2000);
+    }
+    else if (res){
+      setDADOS(res)
+      Keyboard.dismiss();
+      navigation.navigate('MainProf');
+      }
+  };
   // =========================================================
 
   // =========================================================
-  // FUNÇÃO PARA EFETUAR 'LOGIN AUTOMÁTICO' AO BACKEND:
+  
+  // =========================================================
+  // FUNÇÃO PARA EFETUAR 'LOGIN AUTOMÁTICO' AO BACKEND: (DESATIVADO)
   async function AutoLogin(){
     let reqs = await fetch(config.urlRootNode+'usuario/autologar', {
       method: 'POST',
@@ -110,46 +180,6 @@ export default function Login({ navigation }) {
   // })
   // =========================================================
 
-  // =========================================================
-    // FUNÇÃO PARA REQUISITAR 'MOSTRAR TURMA' AO BACKEND:
-    async function ObterTurma(){
-        let response = await AsyncStorage.getItem('userData');
-        let json = JSON.parse(response);
-        let reqs = await fetch(config.urlRootNode+'professor/turma/obter', {
-          method: 'POST',
-          headers:{
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-              professor: json.matricula,
-          })
-      });
-      let res= await reqs.json();
-      if (res === '403'){
-        setMessage('Erro de Autenticação!');
-        setTimeout(() => {
-          setMessage(null);
-          AsyncStorage.clear();
-      }, 2000);
-      }
-      else if (res){
-        setDADOS(res)
-        
-        let response = await AsyncStorage.getItem('userData');
-        let json = JSON.parse(response);
-
-        if (json.tipoUsuario === false){
-          Keyboard.dismiss();
-          navigation.navigate('MainAlun');
-        }
-        else {
-          Keyboard.dismiss();
-          navigation.navigate('MainProf');
-        }
-      }
-    };
-    // =========================================================
 
 // =========================================================
 // ARQUITETURA DA SCREEN DA APLICAÇÃO:
@@ -162,7 +192,10 @@ return (
   <Text style={{fontFamily:'poppinsr', fontSize:16, marginBottom:50}}>ao Presence!</Text>
 
   {message && (
-    <Text>{message}</Text>
+    <View style={{display:'flex' , flexDirection:'row'}}  >
+    <IconA name='alert-triangle' size={25} style={{marginRight:10, color:'#900020'}}/>
+    <Text style={{fontFamily:'poppinsr', fontSize:17, color:'#900020'}}>{message}</Text>
+    </View>
   )}
 
   <Inputs place='Matrícula' iconeF='mail' onChange={(text) => setMatricula(text)}/>

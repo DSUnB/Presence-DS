@@ -4,6 +4,7 @@ const cors=require('cors');
 const bodyParser=require('body-parser');
 const model=require('./models');
 const bcrypt=require('bcrypt');
+const { sequelize } = require('./models');
 
 // =====================================================
 // DEFINIÇÃO DE CRIPTOGRAFIA:
@@ -121,6 +122,7 @@ app.post('/professor/turma/criar', async (req,res)=>{
         }
         else{
             let reqs1 = await model.Turmas.create({
+                'id': req.body.codigoTurma,
                 'codigoTurma': req.body.codigoTurma,
                 'curso': req.body.curso,
                 'nomeTurma': req.body.nomeTurma,
@@ -143,7 +145,7 @@ app.post('/professor/turma/criar', async (req,res)=>{
 // ====================================================
 
 // ====================================================
-// PESQUISA DE TURMAS: (LOGIN)
+// PESQUISA DE TURMAS: (LOGIN - for professor)
 
 app.post('/professor/turma/obter', async (req,res) => {
     try{
@@ -177,6 +179,84 @@ app.post('/professor/turma/obter', async (req,res) => {
 
 // ====================================================
 
+// ====================================================
+// PESQUISA DE TURMAS: (LOGIN - for aluno)
+
+app.post('/aluno/turma/obter', async (req,res) => {
+    try{
+        let reqs = await model.Alunos.findOne({
+            where: {
+                matricula: req.body.aluno,
+            }
+        }); 
+        
+        if(reqs === null){
+            res.status(404).send(JSON.stringify('404'));
+        }
+        else{
+            let reqs1 = await model.EntrarTurmas.findAll({
+                where: {
+                    idAluno: reqs.idAluno
+                },
+                raw: true,
+            });
+            if (reqs1){
+                res.status(202).send(reqs1);
+               }
+               else{
+                res.status(204).send(JSON.stringify('204'));
+               }
+        }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+})
+
+// ====================================================
+
+// ====================================================
+// CRIAR DADO EM ENTRAR TURMA: (MAINALUN)
+app.post('/aluno/turma/entrar', async (req,res)=>{
+    try {        
+
+        let reqs = await model.Alunos.findOne({
+            where: {
+                matricula: req.body.aluno,
+            } 
+        }); 
+        let reqs1 = await model.Turmas.findOne({
+            where: {
+                codigoTurma: req.body.codigoTurma,
+            } 
+        });console.log(req.body.codigoTurma)
+        if(reqs === null){
+            res.status(404).send(JSON.stringify('404'));
+        }
+        else{
+            console.log(reqs1.curso)
+            console.log(reqs1.nomeTurma)
+            let reqs2 = await model.EntrarTurmas.create({
+                'idAluno': reqs.idAluno,
+                'codigoTurma': req.body.codigoTurma,
+                'curso': reqs1.curso,
+                "nomeTurma": reqs1.nomeTurma,
+                'createdAt': new Date(),
+                'updatedAt': new Date()
+            });
+            if (reqs2){
+                res.status(202).send(reqs2);
+            }
+            else{
+                res.status(403).send(JSON.stringify('403'));
+            }
+        }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+});
+// ====================================================
 // ==================================================================
 // ==================================================================
 // ==================================================================
