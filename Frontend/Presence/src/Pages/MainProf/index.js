@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Text, View, Modal, StyleSheet, FlatList, SafeAreaView, Pressable, BackHandler, Alert, Image, Keyboard,
-} from "react-native";
+import { Text, View, Modal, StyleSheet, FlatList, SafeAreaView, Pressable, BackHandler, Alert, Image, Keyboard,} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Pressables from "../../components/pressables";
 import config from "../../config/config.json";
@@ -11,6 +10,16 @@ import Inputs from "../../components/inputs";
 import IconX from 'react-native-vector-icons/Ionicons';
 import { Context } from '../../context/Provider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+const EmptyListMessage = ({item}) => {
+  return (
+    // Flat List Item
+    <Text style={{ fontFamily: "poppinsr", fontSize: 18 }}>
+      Para começar, crie uma turma!
+    </Text>
+  );
+};
 
 // =========================================================
 // GERAÇÃO DE CÓDIGO TURMA:
@@ -25,7 +34,7 @@ function codigo() {
 // =========================================================
 
 export default function MainProf({ navigation }) {
-    
+
     // =========================================================
     // ALERTA PARA FECHAR APLICATIVO:
     useEffect(() => {
@@ -185,8 +194,9 @@ return (
       <View style={style.lista}>
         <FlatList
           data={DADOS}
+          ListEmptyComponent={EmptyListMessage}
           renderItem={({ item }) => (
-            <Pressable>
+            <Pressable onPress={() => navigation.navigate('CriarChamada')}>
               <View style={style.turma}>
                 <Text
                   style={{

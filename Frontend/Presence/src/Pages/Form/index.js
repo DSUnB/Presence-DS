@@ -78,7 +78,6 @@ export default function Form({ navigation }) {
         setMessage(null);
       }, 5000);
     }
-
   }
   // ==================================================================
 
@@ -87,7 +86,7 @@ export default function Form({ navigation }) {
 return (
 
 <ImageBackground source={require('../../assets/images/VetorCad.png')} resizeMode="cover">
-  <View>
+  <View style={{top: 45, left: 15}}>
     <PressableBtnBack click={() => navigation.navigate('Login')}  iconeIo="chevron-back"/>
   </View>
   <Div>
@@ -95,11 +94,10 @@ return (
   <Text style={{fontFamily:'poppinsr', fontSize:16, marginTop:40}}>Ei!</Text>
   <Text style={{fontFamily:'poppinsb', fontSize:20, marginBottom:20}}>Crie uma conta</Text>
   {message && (
-    <View style={{display:'flex' , flexDirection:'row'}}  >
-    <IconA name='alert-triangle' size={25} style={{marginRight:10}}/>
-    <Text style={{fontFamily:'poppinsr', fontSize:17, color:'#900020'}}>{message}</Text> 
+    <View style={{ display:"flex", flexDirection:"row"}}>
+      <IconA name="alert-triangle" size={25} style={{marginRight:10}}/>
+      <Text style={{fontFamily:'poppinsr', fontSize:17, color:'#900020'}}>{message}</Text>
     </View>
-    
   )}
   
   <Inputs place='Nome' iconeO='person' onChange={(text) => setName(text)}/>

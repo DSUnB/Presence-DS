@@ -41,7 +41,6 @@ export default function MainAlun({ navigation }) {
     
         return () => backHandler.remove();
     }, []);
-    // =========================================================
 
   // =========================================================
   // DECLARAÇÃO DE STATES:
@@ -161,8 +160,8 @@ export default function MainAlun({ navigation }) {
       <View style={style.lista}>
         <FlatList
           data={DADOS}
-          renderItem={({item}) => (
-            <Pressable>
+          renderItem={({ item }) => (
+            <Pressable onPress={() => navigation.navigate('ValidarChamada')}>
               <View style={style.turma}>
                 <Text
                   style={{
