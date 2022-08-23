@@ -12,6 +12,8 @@ import Inputs from "../../components/inputs";
 import IconX from 'react-native-vector-icons/Ionicons';
 import { Context } from '../../context/Provider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import IconC from 'react-native-vector-icons/FontAwesome';
+import IconA from 'react-native-vector-icons/Feather';
 
 export default function MainAlun({ navigation }) {
 
@@ -48,6 +50,7 @@ export default function MainAlun({ navigation }) {
   const [modalActive3, setModalActive3] = useState(false);
   const [codigo, setCodigo] = useState(null);
   const [message, setMessage] = useState(null);
+  const [message2, setMessage2] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const {DADOS, setDADOS} = useContext(Context);
 
@@ -100,10 +103,10 @@ export default function MainAlun({ navigation }) {
           }
           else{
             AtualizarTurma()
-            setMessage('Turma Encontrada!');
+            setMessage2('Turma Encontrada!');
             setIsLoading(false);
             setTimeout(() => {
-                setMessage(null);
+                setMessage2(null);
                 setModalActive3(false);
             }, 1000);
               
@@ -206,7 +209,17 @@ export default function MainAlun({ navigation }) {
               Insira o código da turma
             </Text>
             {message && (
-                        <Text>{message}</Text>
+                <View style={{display:'flex' , flexDirection:'row'}}>
+                <IconA name='alert-triangle' size={20} style={{marginRight:10, color:'#fff'}}/>
+                <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message}</Text>
+                </View>
+                    )}
+
+            {message2 && (
+              <View style={{display:'flex' , flexDirection:'row'}}>
+              <IconC name='check-circle-o' size={20} style={{marginRight:10, color:'#fff'}}/>
+              <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message2}</Text>
+              </View>
                     )}
             <Inputs place="Código" iconeF="book" onChange={(text) => setCodigo(text)}/>
             
