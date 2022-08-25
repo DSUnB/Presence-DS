@@ -17,13 +17,13 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
-      idChamada: {
+      codigoChamada: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         references: {
           model: 'chamadas',
-          key: 'idChamada'
+          key: 'codigoChamada'
         },
         onUpdate: 'cascade',
         onDelete: 'cascade'

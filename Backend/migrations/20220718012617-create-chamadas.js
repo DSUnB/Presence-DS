@@ -6,22 +6,17 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING
       },
-      idChamada: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
       codigoChamada: {
         allowNull: false,
+        primaryKey: true,
         type: Sequelize.STRING
       },
-      idProfessor: {
+      codigoTurma: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         references:{
-          model: 'professores',
-          key: 'idProfessor'
+          model: 'turmas',
+          key: 'codigoTurma'
         },
         onUpdate: 'cascade',  
         onDelete: 'cascade'
