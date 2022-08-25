@@ -77,6 +77,9 @@ export default function MainProf({ navigation }) {
     const [message2, setMessage2]=useState(null);
     const [isLoading, setIsLoading]=useState(false);
     const {DADOS, setDADOS} = useContext(Context);
+    const {setNomeCurso} = useContext(Context);
+    const {setCodTurma} = useContext(Context);
+    const {setInfoNome} = useContext(Context);
     // =========================================================
 
     // =========================================================
@@ -176,6 +179,16 @@ export default function MainProf({ navigation }) {
     }
     // =========================================================
 
+    // =========================================================
+    // FUNÇÃO PARA ENVIAR DADOS DA TURMA:
+    function EnvioDados(dado1, dado2, dado3){
+      setCodTurma(dado1);
+      setNomeCurso(dado2 + "-" + dado3);
+      navigation.navigate('CriarChamada');
+    }
+      
+    // =========================================================
+
 // =========================================================
 // ARQUITETURA DA SCREEN DA APLICAÇÃO:
 return (
@@ -199,7 +212,7 @@ return (
           data={DADOS}
           ListEmptyComponent={EmptyListMessage}
           renderItem={({ item }) => (
-            <Pressable onPress={() => navigation.navigate('CriarChamada')}>
+            <Pressable onPress={() => EnvioDados(item.codigoTurma ,item.curso, item.nomeTurma)}>
               <View style={style.turma}>
                 <Text
                   style={{

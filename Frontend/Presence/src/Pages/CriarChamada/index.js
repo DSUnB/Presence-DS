@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable, FlatList, TouchableOpacity } from "react-native";
 import PressablesConf from "../../components/pressablesConf";
 import PressableBtnBack from "../../components/PressableBtnBack";
@@ -15,6 +15,7 @@ import Inputs from "../../components/inputs";
 import IconLu from 'react-native-vector-icons/SimpleLineIcons';
 import Calendar from '../../components/Calendar';
 import DatePicker from 'react-native-modern-datepicker';
+import { Context } from '../../context/Provider';
 
 export default function CriarChamada({ navigation }) {
 
@@ -55,7 +56,9 @@ export default function CriarChamada({ navigation }) {
   const [modalActive1, setModalActive1] = useState(false);
   const [modalActive2, setModalActive2] = useState(false);
   const [modalActive3, setModalActive3] = useState(false);
-
+  const {nomeCurso, setNomeCurso} = useContext(Context);
+  const {codTurma, setCodTurma} = useContext(Context);
+  const {infoNome, setInfoNome} = useContext(Context);
 
   //Const para fechar modal e mudar de página
   const handleCloseAndRoute = () => {
@@ -74,7 +77,7 @@ export default function CriarChamada({ navigation }) {
     <SafeAreaView style={style.container}>
         <View style={style.header}>
             <View>
-                <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>{turma}</Text>
+                <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>{nomeCurso}</Text>
             </View>
             <View style={style.voltar}>
                 <PressableBtnBack
@@ -95,7 +98,7 @@ export default function CriarChamada({ navigation }) {
           <View style={{width: 55,height: 55, borderRadius: 100, backgroundColor: 'white', position: 'absolute', top: 6, left: 6}}>
             <IconO style={{alignSelf:'center', marginTop: 10}} name='key' size={30}/>
           </View>
-          <Text style={{ fontFamily: "poppinsb", fontSize: 24, textAlign: 'center', paddingLeft: 15, marginTop: 14 }}>{codigo}</Text>
+          <Text style={{ fontFamily: "poppinsb", fontSize: 24, textAlign: 'center', paddingLeft: 15, marginTop: 14 }}>{codTurma}</Text>
         </View>
 
       
