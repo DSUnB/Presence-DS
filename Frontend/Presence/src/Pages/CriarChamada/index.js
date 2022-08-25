@@ -56,6 +56,7 @@ export default function CriarChamada({ navigation }) {
   const [modalActive1, setModalActive1] = useState(false);
   const [modalActive2, setModalActive2] = useState(false);
   const [modalActive3, setModalActive3] = useState(false);
+  const [modalActive4, setModalActive4] = useState(false);
   const {nomeCurso, setNomeCurso} = useContext(Context);
   const {codTurma, setCodTurma} = useContext(Context);
 
@@ -64,11 +65,6 @@ export default function CriarChamada({ navigation }) {
     setModalActive2(false);
     navigation.navigate('MainProf')
   }
-
-  // Const's criados para a mudança do título e código da turma
-
-  const [codigo, setCodigo] = useState('83H5RY');
-  const [turma, setTurma] = useState('Cálculo 2 - B');
 
   // Início da criação da página
 
@@ -133,7 +129,7 @@ export default function CriarChamada({ navigation }) {
         <View style={{zIndex: 4}}>
           <Pressables
             texto='Criar Chamada'
-            click={() => navigation.navigate("Chamada")}
+            click={() => setModalActive4(true)}
           />
         </View>
       </View>
@@ -255,6 +251,33 @@ export default function CriarChamada({ navigation }) {
             </LinearGradient>
           </View>
         </Modal>
+
+        {/* Modal Confirmar */}
+        <Modal visible={modalActive4} animationType="fade" transparent={true}>
+        <View style={style.fundoModal}>
+          <LinearGradient
+            colors={["#2C5E7A", "#338995"]}
+            start={[1.0, 0.5]}
+            style={style.modal2}
+          >
+            <Text
+              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", paddingBottom: 50 }}
+            >
+              Deseja criar uma chamada?
+            </Text>
+            <View style={style.alinhamento}>
+              <PressablesModal
+                texto="Sim"
+                click={() => handleCloseAndRoute()}
+              />
+              <PressablesModal2
+                texto="Não"
+                click={() => setModalActive4(false)}
+              />
+            </View>
+          </LinearGradient>
+        </View>
+      </Modal>
 
     </SafeAreaView>
   );
