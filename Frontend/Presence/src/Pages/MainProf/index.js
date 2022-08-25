@@ -79,7 +79,6 @@ export default function MainProf({ navigation }) {
     const {DADOS, setDADOS} = useContext(Context);
     const {setNomeCurso} = useContext(Context);
     const {setCodTurma} = useContext(Context);
-    const {setInfoNome} = useContext(Context);
     // =========================================================
 
     // =========================================================
@@ -136,7 +135,7 @@ export default function MainProf({ navigation }) {
                 setMessage2('Turma Criada!');
                 setIsLoading(false);
                 setTimeout(() => {
-                    setMessage(null);
+                    setMessage2(null);
                     setMateria(null);
                     setNomeTurma(null);
                     setModalActive3(false);
@@ -183,7 +182,7 @@ export default function MainProf({ navigation }) {
     // FUNÇÃO PARA ENVIAR DADOS DA TURMA:
     function EnvioDados(dado1, dado2, dado3){
       setCodTurma(dado1);
-      setNomeCurso(dado2 + "-" + dado3);
+      setNomeCurso(dado2 + " - " + dado3);
       navigation.navigate('CriarChamada');
     }
       

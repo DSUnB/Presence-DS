@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable } from "react-native";
 import PressablesConf from "../../components/pressablesConf";
 import PressableBtnBack from "../../components/PressableBtnBack";
@@ -11,6 +11,7 @@ import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
 import IconX from 'react-native-vector-icons/Ionicons';
 import Inputs from "../../components/inputs";
+import { Context } from '../../context/Provider';
 
 export default function ValidarChamada({ navigation }) {
 
@@ -23,7 +24,7 @@ export default function ValidarChamada({ navigation }) {
   const [modalActive3, setModalActive3] = useState(false);
   const [modalActive2, setModalActive2] = useState(false);
   const [modalActive1, setModalActive1] = useState(false);
-
+  const {nomeCurso, setNomeCurso} = useContext(Context);
 
   const [faltas, setfaltas] = useState('2');
 
@@ -32,7 +33,7 @@ export default function ValidarChamada({ navigation }) {
     <SafeAreaView style={style.container}>
         <View style={style.header}>
             <View>
-                <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>Física 1 - A</Text>
+                <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>{nomeCurso}</Text>
             </View>
             <View style={style.voltar}>
                 <PressableBtnBack

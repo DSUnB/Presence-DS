@@ -62,6 +62,7 @@ export default function MainAlun({ navigation }) {
   const [message2, setMessage2] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const {DADOS, setDADOS} = useContext(Context);
+  const {setNomeCurso} = useContext(Context);
 
   // =========================================================
 
@@ -155,6 +156,14 @@ export default function MainAlun({ navigation }) {
       }
     }
   // =========================================================
+
+  // =========================================================
+  function EnvioDados(dado1, dado2){
+    setNomeCurso(dado1 + " - " + dado2);
+    navigation.navigate('ValidarChamada');
+  }
+  // =========================================================
+
   // =========================================================
   // ARQUITETURA DA SCREEN DA APLICAÇÃO:
   return (
@@ -174,7 +183,7 @@ export default function MainAlun({ navigation }) {
           data={DADOS}
           ListEmptyComponent={EmptyListMessage}
           renderItem={({ item }) => (
-            <Pressable onPress={() => navigation.navigate('ValidarChamada')}>
+            <Pressable onPress={() => EnvioDados(item.curso, item.nomeTurma)}>
               <View style={style.turma}>
                 <Text
                   style={{

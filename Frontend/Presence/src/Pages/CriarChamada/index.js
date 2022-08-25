@@ -58,7 +58,6 @@ export default function CriarChamada({ navigation }) {
   const [modalActive3, setModalActive3] = useState(false);
   const {nomeCurso, setNomeCurso} = useContext(Context);
   const {codTurma, setCodTurma} = useContext(Context);
-  const {infoNome, setInfoNome} = useContext(Context);
 
   //Const para fechar modal e mudar de página
   const handleCloseAndRoute = () => {
