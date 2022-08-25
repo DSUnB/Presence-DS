@@ -4,23 +4,29 @@ import  { View, Text, StyleSheet, Image } from 'react-native';
 export default function Desenvolvedor(props) {
     return(
         <View style={style.box}>
-            <Image source={{uri: props.img}} style={style.img}/>
-            <Text>{props.nome}</Text>
-            <Text>{props.cargo}</Text>
+            <Image source={{ uri: props.img }} style={style.img}/>
+            <View style={{ marginLeft: 15 }}>
+                <Text style={{ fontFamily: 'poppinsb', fontSize: 18 }}>{props.nome}</Text>
+                <Text style={{ fontFamily: 'poppinsr', fontSize: 15 }}>{props.cargo}</Text>
+            </View>
         </View>
     )
 }
 
 const style = StyleSheet.create({
     box: {
-        backgroundColor: 'pink',
-        height: 100,
+        backgroundColor: '#DCF0EC',
+        height: 75,
         width: 300,
         margin: 10,
+        borderRadius: 15,
+        flexDirection: 'row',
+        
     },
     img: {
         borderRadius: 100,
-        height: 85,
-        width: 85,
+        height: 65,
+        width: 65,
+        marginLeft: 5,
     }
 })
