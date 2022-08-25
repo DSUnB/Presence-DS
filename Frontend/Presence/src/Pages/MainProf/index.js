@@ -18,7 +18,7 @@ const EmptyListMessage = ({item}) => {
   return (
     // Flat List Item
     <Text style={{ fontFamily: "poppinsr", fontSize: 18 }}>
-      Para começar, crie uma turma!
+      Crie uma turma!
     </Text>
   );
 };
