@@ -48,8 +48,45 @@ export default function CriarChamada({ navigation }) {
  
   const [date, setDate] = useState('');
 
-
-
+  function DiaMes(mes){
+    if (date.slice(5,7) == "01"){
+      mes = "Janeiro de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "02"){
+      mes = "Fevereiro de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "03"){
+      mes = "Março de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "04"){
+      mes = "Abril de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "05"){
+      mes = "Maio de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "06"){
+      mes = "Junho de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "07"){
+      mes = "Julho de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "08"){
+      mes = "Agosto de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "09"){
+      mes = "Setembro de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "10"){
+      mes = "Outubro de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "11"){
+      mes = "Novembro de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "12"){
+      mes = "Dezembro de " + date.slice(0,5)
+    }
+    return mes
+  }
   //Const's criados para o aparecimento e desaparecimento dos modais
 
   const [modalActive1, setModalActive1] = useState(false);
@@ -107,7 +144,7 @@ export default function CriarChamada({ navigation }) {
         </Pressable>
 
         <View style={{height: 130}}>
-          <Text style={{ fontFamily: "poppinsr", color: '#ADA4A5', textAlign:'center', fontSize: 17}}>{date}</Text>
+          <Text style={{ fontFamily: "poppinsr", color: '#ADA4A5', textAlign:'center', fontSize: 17}}>{DiaMes("Escolha o mês")}</Text>
             <FlatList
               showsHorizontalScrollIndicator={false}
               horizontal
