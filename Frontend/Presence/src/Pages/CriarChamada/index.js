@@ -16,6 +16,7 @@ import IconLu from 'react-native-vector-icons/SimpleLineIcons';
 import Calendar from '../../components/Calendar';
 import DatePicker from 'react-native-modern-datepicker';
 import { Context } from '../../context/Provider';
+import config from "../../config/config.json";
 
 // =========================================================
 // GERAÇÃO DE CÓDIGO CHAMADA:
@@ -25,7 +26,7 @@ function codigoChamada() {
   codigo =  Math.random().toString(36).substring(2)   
   } while(codigo.length > 5)
 
-  return codigoChamada.toUpperCase();
+  return codigo.toUpperCase();
 }
 // =========================================================
 
@@ -69,14 +70,35 @@ export default function CriarChamada({ navigation }) {
   const [modalActive2, setModalActive2] = useState(false);
   const [modalActive3, setModalActive3] = useState(false);
   const [modalActive4, setModalActive4] = useState(false);
-  const {nomeCurso, setNomeCurso} = useContext(Context);
-  const {codTurma, setCodTurma} = useContext(Context);
+  const {nomeCurso} = useContext(Context);
+  const {codTurma} = useContext(Context);
 
   //Const para fechar modal e mudar de página
   const handleCloseAndRoute = () => {
     setModalActive2(false);
-    navigation.navigate('MainProf')
+    navigation.navigate('Chamada')
   }
+
+  // ====================================================================
+  async function CriarChamada(){
+    console.log('EBA FUI ACIONADO!')
+      let reqs = await fetch(config.urlRootNode+'professor/chamada/criar', {
+          method: 'POST',
+          headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              codigoTurma: codTurma,
+              codigoChamada: codigoChamada()
+          })
+      });
+      if(reqs){
+        console.log('Deu Certo!');
+        setModalActive4(false);
+      }
+  }
+  // ====================================================================
 
   // Início da criação da página
 
@@ -280,7 +302,7 @@ export default function CriarChamada({ navigation }) {
             <View style={style.alinhamento}>
               <PressablesModal
                 texto="Sim"
-                click={() => handleCloseAndRoute()}
+                click={CriarChamada}
               />
               <PressablesModal2
                 texto="Não"

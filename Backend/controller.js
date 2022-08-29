@@ -255,6 +255,29 @@ app.post('/aluno/turma/entrar', async (req,res)=>{
     }
 });
 // ====================================================
+
+// ====================================================
+// CRIAR CHAMADA: (CRIARCHAMADA)
+app.post('/professor/chamada/criar', async (req,res) =>{
+    try {
+        let reqs = await model.Chamadas.create({
+            'codigoTurma': req.body.codigoTurma,
+            'codigoChamada': req.body.codigoChamada,
+            'createdAt': new Date(),
+            'updatedAt': new Date()
+        });
+        if(reqs){
+            console.log('Sucesso!')
+            res.status(202).send(reqs);
+        }
+    }
+    catch{
+        res.status(403).send(JSON.stringify('403'));
+    }
+})
+
+// ====================================================
+
 // ==================================================================
 // ==================================================================
 // ==================================================================
