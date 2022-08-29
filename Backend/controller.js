@@ -261,8 +261,10 @@ app.post('/aluno/turma/entrar', async (req,res)=>{
 app.post('/professor/chamada/criar', async (req,res) =>{
     try {
         let reqs = await model.Chamadas.create({
-            'codigoTurma': req.body.codigoTurma,
+            'id': req.body.codigoChamada,
             'codigoChamada': req.body.codigoChamada,
+            'codigoTurma': req.body.codigoTurma,
+            'situation': 'enable',
             'createdAt': new Date(),
             'updatedAt': new Date()
         });

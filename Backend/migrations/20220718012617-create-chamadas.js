@@ -21,6 +21,10 @@ module.exports = {
         onUpdate: 'cascade',  
         onDelete: 'cascade'
       },
+      situation: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

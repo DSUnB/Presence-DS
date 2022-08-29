@@ -82,7 +82,7 @@ export default function MainAlun({ navigation }) {
       setIsLoading(true);
         let response = await AsyncStorage.getItem('userData');
         let json = JSON.parse(response);
-        if (codigo != '' ){
+        if (codigo != '' && codigo != null){
           let reqs = await fetch(config.urlRootNode+'aluno/turma/entrar', {
               method: 'POST',
               headers:{

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable, FlatList, TouchableOpacity } from "react-native";
+import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable, FlatList, TouchableOpacity, Image } from "react-native";
 import PressablesConf from "../../components/pressablesConf";
 import PressableBtnBack from "../../components/PressableBtnBack";
 import PressableCircle from "../../components/pressableCircle";
@@ -20,11 +20,8 @@ import config from "../../config/config.json";
 
 // =========================================================
 // GERAÇÃO DE CÓDIGO CHAMADA:
-function codigoChamada() {
-  let codigo = '';
-  do {
-  codigo =  Math.random().toString(36).substring(2)   
-  } while(codigo.length > 5)
+function codigoChamada(num) {
+  let codigo= Math.random().toString(36).substring(2,num+2);       
 
   return codigo.toUpperCase();
 }
@@ -81,7 +78,6 @@ export default function CriarChamada({ navigation }) {
 
   // ====================================================================
   async function CriarChamada(){
-    console.log('EBA FUI ACIONADO!')
       let reqs = await fetch(config.urlRootNode+'professor/chamada/criar', {
           method: 'POST',
           headers:{
@@ -90,13 +86,13 @@ export default function CriarChamada({ navigation }) {
           },
           body: JSON.stringify({
               codigoTurma: codTurma,
-              codigoChamada: codigoChamada()
+              codigoChamada: codigoChamada(5)
           })
       });
       let res= await reqs.json();
       if(res == '202'){
-        console.log('Deu Certo!');
         setModalActive4(false);
+        navigation.navigate('Chamada')
       }
   }
   // ====================================================================
@@ -300,16 +296,16 @@ export default function CriarChamada({ navigation }) {
             >
               Deseja criar uma chamada?
             </Text>
-            <View style={style.alinhamento}>
-              <PressablesModal
-                texto="Sim"
-                click={CriarChamada}
-              />
-              <PressablesModal2
-                texto="Não"
-                click={() => setModalActive4(false)}
-              />
-            </View>
+              <View style={style.alinhamento}>
+                <PressablesModal
+                  texto="Sim"
+                  click={CriarChamada}
+                />
+                <PressablesModal2
+                  texto="Não"
+                  click={() => setModalActive4(false)}
+                />
+              </View>
           </LinearGradient>
         </View>
       </Modal>
@@ -434,4 +430,8 @@ const style = StyleSheet.create({
     marginLeft: 12,
     borderColor: 'black',
   },
+  loading:{
+    height: 30,
+    width: 140,
+  }
 });
