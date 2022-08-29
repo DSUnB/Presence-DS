@@ -268,7 +268,7 @@ app.post('/professor/chamada/criar', async (req,res) =>{
         });
         if(reqs){
             console.log('Sucesso!')
-            res.status(202).send(reqs);
+            res.status(202).send(JSON.stringify('202'));
         }
     }
     catch{

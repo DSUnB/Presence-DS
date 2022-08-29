@@ -93,7 +93,8 @@ export default function CriarChamada({ navigation }) {
               codigoChamada: codigoChamada()
           })
       });
-      if(reqs){
+      let res= await reqs.json();
+      if(res == '202'){
         console.log('Deu Certo!');
         setModalActive4(false);
       }
