@@ -17,6 +17,18 @@ import Calendar from '../../components/Calendar';
 import DatePicker from 'react-native-modern-datepicker';
 import { Context } from '../../context/Provider';
 
+// =========================================================
+// GERAÇÃO DE CÓDIGO CHAMADA:
+function codigoChamada() {
+  let codigo = '';
+  do {
+  codigo =  Math.random().toString(36).substring(2)   
+  } while(codigo.length > 5)
+
+  return codigoChamada.toUpperCase();
+}
+// =========================================================
+
 export default function CriarChamada({ navigation }) {
 
   const DATA = [

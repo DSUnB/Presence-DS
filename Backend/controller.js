@@ -229,13 +229,11 @@ app.post('/aluno/turma/entrar', async (req,res)=>{
             where: {
                 codigoTurma: req.body.codigoTurma,
             } 
-        });console.log(req.body.codigoTurma)
+        });
         if(reqs === null){
             res.status(404).send(JSON.stringify('404'));
         }
         else{
-            console.log(reqs1.curso)
-            console.log(reqs1.nomeTurma)
             let reqs2 = await model.EntrarTurmas.create({
                 'idAluno': reqs.idAluno,
                 'codigoTurma': req.body.codigoTurma,
