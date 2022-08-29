@@ -41,7 +41,7 @@ export default function App() {
   <Provider>
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName="CriarChamada" 
+        initialRouteName="Creditos" 
         screenOptions={{
           headerShown: false
         }}

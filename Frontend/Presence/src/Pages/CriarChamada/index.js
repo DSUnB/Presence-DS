@@ -143,8 +143,8 @@ export default function CriarChamada({ navigation }) {
             </View>
         </Pressable>
 
-        <View style={{height: 130}}>
-          <Text style={{ fontFamily: "poppinsr", color: '#ADA4A5', textAlign:'center', fontSize: 17}}>{DiaMes("Escolha o mês")}</Text>
+        <View style={{height: 140}}>
+          <Text style={{ fontFamily: "poppinsr", color: '#ADA4A5', textAlign:'center', fontSize: 17, marginBottom: 10}}>{DiaMes("Escolha o mês")}</Text>
             <FlatList
               showsHorizontalScrollIndicator={false}
               horizontal
@@ -396,9 +396,7 @@ const style = StyleSheet.create({
     borderRadius:16,
     width:315,
     backgroundColor:'white',
-    
     zIndex:4,
-    
     borderBottomColor:"#2F7286",
     borderWidth:1,
     flexDirection: "row",
