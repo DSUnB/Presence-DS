@@ -269,8 +269,7 @@ app.post('/professor/chamada/criar', async (req,res) =>{
             'updatedAt': new Date()
         });
         if(reqs){
-            console.log('Sucesso!')
-            res.status(202).send(JSON.stringify('202'));
+            res.status(202).send(reqs);
         }
     }
     catch{
@@ -278,6 +277,50 @@ app.post('/professor/chamada/criar', async (req,res) =>{
     }
 })
 
+// ====================================================
+
+// ====================================================
+// EXCLUIR TURMA: (CRIARCHAMADA)
+app.delete('/professor/turma/excluir', async (req,res) =>{
+    try {
+        let reqs = await model.Turmas.destroy({
+        where: {
+            'codigoTurma': req.body.codigoTurma
+        }
+    });
+    if(reqs){
+        res.status(403).send(reqs);
+    }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+})
+
+// ====================================================
+
+// ====================================================
+// EDITAR TURMA: (CRIARCHAMADA)
+app.post('/professor/turma/atualizar', async (req,res) =>{
+    try {
+        let reqs = await model.Turmas.update({
+            'curso': req.body.materia,
+            'nomeTurma': req.body.turma,
+            'updatedAt': new Date()
+        },
+        {
+            where: {
+                'codigoTurma': req.body.codigoTurma
+            }
+        });
+    if(reqs){
+        res.status(403).send(reqs);
+    }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+})
 // ====================================================
 
 // ==================================================================

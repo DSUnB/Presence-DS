@@ -14,6 +14,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Inputs from "../../components/inputs";
 import IconLu from 'react-native-vector-icons/SimpleLineIcons';
 import Calendar from '../../components/Calendar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import DatePicker from 'react-native-modern-datepicker';
 import { Context } from '../../context/Provider';
 import config from "../../config/config.json";
@@ -21,7 +22,7 @@ import config from "../../config/config.json";
 // =========================================================
 // GERAÇÃO DE CÓDIGO CHAMADA:
 function codigoChamada(num) {
-  let codigo= Math.random().toString(36).substring(2,num+2);       
+  let codigo= Math.random().toString(36).substring(2,num);       
 
   return codigo.toUpperCase();
 }
@@ -67,8 +68,13 @@ export default function CriarChamada({ navigation }) {
   const [modalActive2, setModalActive2] = useState(false);
   const [modalActive3, setModalActive3] = useState(false);
   const [modalActive4, setModalActive4] = useState(false);
-  const {nomeCurso} = useContext(Context);
+  const [turma, setTurma] = useState(false);
+  const [materia, setMateria] = useState(false);
+  const [message, setMessage]=useState(null);
+  const {nomeCurso, setNomeCurso} = useContext(Context);
   const {codTurma} = useContext(Context);
+  const {setCodChamada} = useContext(Context);
+  const {setDADOS} = useContext(Context);
 
   //Const para fechar modal e mudar de página
   const handleCloseAndRoute = () => {
@@ -77,6 +83,7 @@ export default function CriarChamada({ navigation }) {
   }
 
   // ====================================================================
+  // FUNÇÃO PARA CRIAR UMA CHAMADA:
   async function CriarChamada(){
       let reqs = await fetch(config.urlRootNode+'professor/chamada/criar', {
           method: 'POST',
@@ -86,16 +93,101 @@ export default function CriarChamada({ navigation }) {
           },
           body: JSON.stringify({
               codigoTurma: codTurma,
-              codigoChamada: codigoChamada(5)
+              codigoChamada: codigoChamada(7)
           })
       });
       let res= await reqs.json();
-      if(res == '202'){
+      if(res){
+        setCodChamada(res.codigoChamada);
         setModalActive4(false);
         navigation.navigate('Chamada')
       }
   }
   // ====================================================================
+
+
+  // ====================================================================
+  // FUNÇÃO PARA EXCUIR TURMA:
+  async function ExcluirTurma(){
+    let reqs = await fetch(config.urlRootNode+'professor/turma/excluir', {
+        method: 'DELETE',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          codigoTurma: codTurma
+        })
+      });
+      let res= await reqs.json();
+      if (res) {
+         AtualizarTurma(1)
+      }
+}
+  // ====================================================================
+
+  // =========================================================
+  // FUNÇÃO PARA ATUALIZAR A LISTA DE TURMAS:
+  async function AtualizarTurma(method){
+    let response = await AsyncStorage.getItem('userData');
+    let json = JSON.parse(response);
+    let reqs = await fetch(config.urlRootNode+'professor/turma/obter', {
+      method: 'POST',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        professor: json.matricula,
+      })
+    });
+    let res= await reqs.json();
+    if(res) {
+      if (method == 1){
+        setDADOS(res)
+        setMessage('Turma Excluída!');
+          setTimeout(() => {
+            setMessage(null);
+            setModalActive2(false);
+            navigation.navigate('MainProf');
+          }, 2000);
+      }
+      else if (method == 2){
+        setDADOS(res);
+        setMateria(null);
+        setTurma(null);
+        navigation.navigate('MainProf');
+      }
+    }
+  }
+  // =========================================================
+
+  // =========================================================
+  // FUNÇÃO PARA EDIÇÃO DE TURMA:
+  async function EditarTurma(){
+    let reqs = await fetch(config.urlRootNode+'professor/turma/atualizar', {
+      method: 'POST',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        codigoTurma: codTurma,
+        materia: materia,
+        turma: turma
+      })
+    });
+    let res= await reqs.json();
+    if (res) {
+      setMessage('Turma Editada!');
+      setNomeCurso(materia + ' - ' + turma)
+        setTimeout(() => {
+          setMessage(null);
+          setModalActive1(false);
+        }, 2000);
+    }
+  }
+  // =========================================================
 
   // Início da criação da página
 
@@ -107,7 +199,7 @@ export default function CriarChamada({ navigation }) {
             </View>
             <View style={style.voltar}>
                 <PressableBtnBack
-                    click={() => navigation.navigate("MainProf")}
+                    click={() => AtualizarTurma(2)}
                     iconeIo="chevron-back"
                 />
             </View>
@@ -202,13 +294,13 @@ export default function CriarChamada({ navigation }) {
                 <Text style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", marginTop:5}}>
                   Editar sua turma
                 </Text>
-                <Inputs place="Nova Matéria" iconeF="book"/>
-                <Inputs place="Nova Turma" iconeO="people"/>
+                <Inputs place="Nova Matéria" iconeF="book" onChange={(text) => setMateria(text)}/>
+                <Inputs place="Nova Turma" iconeO="people" onChange={(text) => setTurma(text)}/>
               </View>
               <View style={{marginTop:15}}>
                 <PressablesModal
                   texto="Editar"
-                  click={() => setModalActive1(false)}
+                  click={EditarTurma}
                 />
               </View>
             </LinearGradient>
@@ -223,15 +315,22 @@ export default function CriarChamada({ navigation }) {
             start={[1.0, 0.5]}
             style={style.modal2}
           >
+            {message && (
+              <View style={{display:'flex' , flexDirection:'row'}}>
+                <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message}</Text>
+              </View>
+            )}
+
             <Text
               style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", paddingBottom: 50 }}
             >
               Deseja deletar essa turma?
             </Text>
+
             <View style={style.alinhamento}>
               <PressablesModal
                 texto="Sim"
-                click={() => handleCloseAndRoute()}
+                click={ExcluirTurma}
               />
               <PressablesModal2
                 texto="Não"

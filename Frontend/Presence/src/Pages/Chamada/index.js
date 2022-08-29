@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { SafeAreaView, Text, StyleSheet, View, Animated, Modal, FlatList, Pressable } from 'react-native';
 import PressableBtnBack from '../../components/PressableBtnBack';
 import ProgressBar from '../../components/ProgressBar';
@@ -7,15 +7,15 @@ import Pressablesee from '../../components/pressablesee';
 import { LinearGradient } from "expo-linear-gradient";
 import IconX from 'react-native-vector-icons/Ionicons';
 import IconP from 'react-native-vector-icons/Ionicons';
-
+import { Context } from '../../context/Provider';
+import config from "../../config/config.json";
 
 export default function Chamada({navigation}){
 
   const [modalActive1, setModalActive1] = useState(false);
 
-  const [codigoc, setCodigoc] = useState('AU427');
   const [dia, setdia] = useState('14 Julho');
-
+  const {codChamada} = useContext(Context);
 
   const DADOS = [
     {AlunoP: 'Leandro Almeida'},
@@ -107,7 +107,7 @@ export default function Chamada({navigation}){
             Código da chamada
           </Text>
           <View style={{backgroundColor:'#fff', width:258, height:39, borderRadius:14, marginBottom:20 }}>
-            <Text style={{fontFamily:'poppinsr', fontSize:24, marginTop:3, alignSelf:'center' }}>{codigoc}</Text>
+            <Text style={{fontFamily:'poppinsr', fontSize:24, marginTop:3, alignSelf:'center' }}>{codChamada}</Text>
           </View>  
           </LinearGradient>
       </View>
