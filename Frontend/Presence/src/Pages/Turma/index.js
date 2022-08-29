@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, Text, StyleSheet, View, FlatList, Pressable } from 'react-native';
+import { SafeAreaView, Text, StyleSheet, View, FlatList, Pressable, ImageBackground } from 'react-native';
 import PressableBtnBack from '../../components/PressableBtnBack';
 import IconP from 'react-native-vector-icons/Ionicons';
 

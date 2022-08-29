@@ -189,6 +189,7 @@ export default function MainAlun({ navigation }) {
           click={() => setModalActive3(true)}
         />
       </View>
+
       <Modal visible={modalActive3} animationType="fade" transparent={true}>
         <View style={style.fundoModal}>
           <LinearGradient
