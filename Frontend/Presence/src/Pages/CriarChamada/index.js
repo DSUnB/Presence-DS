@@ -19,11 +19,11 @@ const EmptyListMessage = ({item}) => {
   return (
     // Flat List Item
     <View>
-      <Text style={{ fontFamily: "poppinsr", fontSize: 18, textAlign: 'center'}}>
-        Não há chamadas.
+      <Text style={{ fontFamily: "poppinsr", fontSize: 18, textAlign: 'center',}}>
+        Não há listas de presenças.
       </Text>
       <Text style={{ fontFamily: "poppinsr", fontSize: 13, textAlign: 'center'}}>
-        Escolha um mês ou crie uma chamada!
+        Selecione um mês ou crie uma chamada!
       </Text>
     </View>   
   );
@@ -32,30 +32,30 @@ const EmptyListMessage = ({item}) => {
 export default function CriarChamada({ navigation }) {
 
   const DATA = [
-    // {
-    //   dia: 'Ter',
-    //   data: '12',
-    // },
-    // {
-    //   dia: 'Qua',
-    //   data: '13',
-    // },
-    // {
-    //   dia: 'Qui',
-    //   data: '14',
-    // },
-    // {
-    //   dia: 'Sex',
-    //   data: '15',
-    // },
-    // {
-    //   dia: 'Sab',
-    //   data: '16',
-    // },
-    // {
-    //   dia: 'Dom',
-    //   data: '17',
-    // },
+    {
+      dia: 'Ter',
+      data: '12',
+    },
+    {
+      dia: 'Qua',
+      data: '13',
+    },
+    {
+      dia: 'Qui',
+      data: '14',
+    },
+    {
+      dia: 'Sex',
+      data: '15',
+    },
+    {
+      dia: 'Sab',
+      data: '16',
+    },
+    {
+      dia: 'Dom',
+      data: '17',
+    },
   ]
 
   const [date, setDate] = useState('');
@@ -134,7 +134,7 @@ export default function CriarChamada({ navigation }) {
         
       </View>
 
-      <ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
+      
         <View style={{marginTop: 90, marginBottom: 75, height:'70%', justifyContent: "space-around", alignItems: 'center'}}>
           <View style={style.code}>
             <View style={{width: 55,height: 55, borderRadius: 100, backgroundColor: 'white', position: 'absolute', top: 6, left: 6}}>
@@ -150,8 +150,8 @@ export default function CriarChamada({ navigation }) {
             </View>
           </Pressable>
 
-          <View style={{height: 130}}>
-            <Text style={{ fontFamily: "poppinsr", color: '#ADA4A5', textAlign:'center', fontSize: 17}}>{DiaMes("Escolha o mês")}</Text>
+          <View style={{height: 145}}>
+            <Text style={{ fontFamily: "poppinsr", color: '#ADA4A5', textAlign:'center', fontSize: 17, marginBottom: 10}}>{DiaMes('')}</Text>
               <FlatList
                 showsHorizontalScrollIndicator={false}
                 horizontal
@@ -175,7 +175,7 @@ export default function CriarChamada({ navigation }) {
             />
           </View>
         </View>
-      </ImageBackground>
+      
 
       <View style={style.footer}>
         <View style={{width: 24, height: 24,}}>
