@@ -20,45 +20,48 @@ export default function ValidarChamada({ navigation }) {
     navigation.navigate('MainAlun')
   }
 
+  const [modalActive4, setModalActive4] = useState(false);
   const [modalActive3, setModalActive3] = useState(false);
   const [modalActive2, setModalActive2] = useState(false);
   const [modalActive1, setModalActive1] = useState(false);
 
+  const [turma, setTurma] = useState('Física 1 - A');
 
   const [faltas, setfaltas] = useState('2');
 
 
   return (
     <SafeAreaView style={style.container}>
-        <View style={style.header}>
-            <View>
-                <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>Física 1 - A</Text>
-            </View>
-            <View style={style.voltar}>
-                <PressableBtnBack
-                    click={() => navigation.navigate("MainAlun")}
-                    iconeIo="chevron-back"
-                />
-            </View>
-        </View>
+      <View style={style.header}>
+          <View>
+              <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>{turma}</Text>
+          </View>
+          <View style={style.voltar}>
+              <PressableBtnBack
+                  click={() => navigation.navigate("MainAlun")}
+                  iconeIo="chevron-back"
+              />
+          </View>
+      </View>
 
 
-        <View style={style.footer}>
-          <View style={{width: 24, height: 24,}}>
-            <IconO style={{alignSelf: 'center', color: 'black'}} name='megaphone' size={23.5} onPress={() => setModalActive1(true)}/>
-          </View>
-          <View style={{paddingBottom: 20}}>
-            <PressableCircle
-              click={() => navigation.navigate("MainProf")}
-              iconeMCI="calendar-multiple-check"
-            >
-            </PressableCircle>
-          </View>
-          <View style={{width: 27, height: 27}}>
-            <IconLo style={{alignSelf: 'center', color: '#DB4E4E'}} name='logout' size={27} onPress={() => setModalActive2(true)}/>
-          </View>
+      <View style={style.footer}>
+        <View style={{width: 24, height: 24,}}>
+          <IconO style={{alignSelf: 'center', color: 'black'}} name='megaphone' size={23.5} onPress={() => setModalActive1(true)}/>
         </View>
-        <Modal visible={modalActive2} animationType="fade" transparent={true}>
+        <View style={{paddingBottom: 20}}>
+          <PressableCircle
+            click={() => setModalActive4(true)}
+            iconeMCI="calendar-multiple-check"
+          >
+          </PressableCircle>
+        </View>
+        <View style={{width: 27, height: 27}}>
+          <IconLo style={{alignSelf: 'center', color: '#DB4E4E'}} name='logout' size={27} onPress={() => setModalActive2(true)}/>
+        </View>
+      </View>
+
+      <Modal visible={modalActive2} animationType="fade" transparent={true}>
         <View style={style.fundoModal}>
           <LinearGradient
             colors={["#2C5E7A", "#338995"]}
@@ -120,11 +123,37 @@ export default function ValidarChamada({ navigation }) {
             >
               Insira o código da chamada
             </Text>
-            <Inputs place="Código" iconeF="book" />
+            <Inputs place="Código" iconeF="check" />
 
             <PressablesModal
               texto="Validar"
               click={() => setModalActive3(false)}
+            />
+          </LinearGradient>
+        </View>
+      </Modal>
+      <Modal visible={modalActive4} animationType="fade" transparent={true}>
+        <View style={style.fundoModal}>
+          <LinearGradient
+            // Button Linear Gradient
+            colors={["#2C5E7A", "#338995"]}
+            start={[1.0, 0.5]}
+            style={style.modal}
+          >
+            <IconX
+              style={style.close}
+              name="close-circle"
+              size={30}
+              onPress={() => setModalActive4(false)}
+            />
+            <Text
+              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white" }}
+            >
+              Insira o código da chamada
+            </Text>
+            <Inputs place="Código da chamada" iconeF="check"/>
+            <PressablesModal
+                texto="Validar"
             />
           </LinearGradient>
         </View>
@@ -157,12 +186,6 @@ const style = StyleSheet.create({
     zIndex: 2,
     top: 55,
     left: 20,
-  },
-  opcoes: {
-    position:"absolute",
-    zIndex: 2,
-    top: 55,
-    right: 20,
   },
   code: {
     width: 319,
@@ -236,5 +259,5 @@ const style = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
   },
-
+  
 });

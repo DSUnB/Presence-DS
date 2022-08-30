@@ -13,36 +13,49 @@ import PressablesModal2 from "../../components/pressableModalN";
 import { LinearGradient } from "expo-linear-gradient";
 import Inputs from "../../components/inputs";
 import IconLu from 'react-native-vector-icons/SimpleLineIcons';
-import Calendar from '../../components/Calendar';
 import DatePicker from 'react-native-modern-datepicker';
+
+const EmptyListMessage = ({item}) => {
+  return (
+    // Flat List Item
+    <View>
+      <Text style={{ fontFamily: "poppinsr", fontSize: 18, textAlign: 'center'}}>
+        Não há chamadas.
+      </Text>
+      <Text style={{ fontFamily: "poppinsr", fontSize: 13, textAlign: 'center'}}>
+        Escolha um mês ou crie uma chamada!
+      </Text>
+    </View>   
+  );
+};
 
 export default function CriarChamada({ navigation }) {
 
   const DATA = [
-    {
-      dia: 'Ter',
-      data: '12',
-    },
-    {
-      dia: 'Qua',
-      data: '13',
-    },
-    {
-      dia: 'Qui',
-      data: '14',
-    },
-    {
-      dia: 'Sex',
-      data: '15',
-    },
-    {
-      dia: 'Sab',
-      data: '16',
-    },
-    {
-      dia: 'Dom',
-      data: '17',
-    },
+    // {
+    //   dia: 'Ter',
+    //   data: '12',
+    // },
+    // {
+    //   dia: 'Qua',
+    //   data: '13',
+    // },
+    // {
+    //   dia: 'Qui',
+    //   data: '14',
+    // },
+    // {
+    //   dia: 'Sex',
+    //   data: '15',
+    // },
+    // {
+    //   dia: 'Sab',
+    //   data: '16',
+    // },
+    // {
+    //   dia: 'Dom',
+    //   data: '17',
+    // },
   ]
 
   const [date, setDate] = useState('');
@@ -118,12 +131,7 @@ export default function CriarChamada({ navigation }) {
             iconeIo="chevron-back"
           />
         </View>
-        <View style={style.opcoes}>    
-          <PressablesConf
-            iconeSLI="options"
-            click={() => navigation.navigate("MainAlun")}
-          />
-        </View>
+        
       </View>
 
       <ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
@@ -148,6 +156,7 @@ export default function CriarChamada({ navigation }) {
                 showsHorizontalScrollIndicator={false}
                 horizontal
                 data={DATA}
+                ListEmptyComponent={EmptyListMessage}
                 renderItem={({ item }) => (
                   <TouchableOpacity style={style.chamada} underlayColor="#46B297" onPress={() => navigation.navigate('Chamada')}>
                     <View style={{alignSelf: 'center',  justifyContent: 'center', top: '25%'}}>
@@ -310,12 +319,6 @@ const style = StyleSheet.create({
     zIndex: 2,
     top: 55,
     left: 20,
-  },
-  opcoes: {
-    position:"absolute",
-    zIndex: 2,
-    top: 55,
-    right: 20,
   },
   code: {
     width: 319,
