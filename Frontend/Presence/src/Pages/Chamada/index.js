@@ -149,7 +149,7 @@ const style = StyleSheet.create({
       height: 173,
       borderRadius: 22,
       alignItems: "center",
-      justifyContent: "space-around", //
+      justifyContent: "space-around",
       },
     
     close: {

@@ -188,7 +188,7 @@ return (
 <ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
 <Div>
 
-  <Text style={{fontFamily:'poppinsb', fontSize:20}}>Bem vindo</Text>
+  <Text style={{fontFamily:'poppinsb', fontSize:20}} onPress={() => navigation.navigate('Tabs')} >Bem vindo</Text>
   <Text style={{fontFamily:'poppinsr', fontSize:16, marginBottom:50}}>ao Presence!</Text>
 
   {message && (

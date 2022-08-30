@@ -1,5 +1,6 @@
+
 import React, { useContext, useState } from "react";
-import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable, FlatList, TouchableOpacity, Image } from "react-native";
+import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable, FlatList, TouchableOpacity, Image, ImageBackground } from "react-native";
 import PressablesConf from "../../components/pressablesConf";
 import PressableBtnBack from "../../components/PressableBtnBack";
 import PressableCircle from "../../components/pressableCircle";
@@ -27,6 +28,20 @@ function codigoChamada(num) {
   return codigo.toUpperCase();
 }
 // =========================================================
+
+const EmptyListMessage = ({item}) => {
+  return (
+    // Flat List Item
+    <View>
+      <Text style={{ fontFamily: "poppinsr", fontSize: 18, textAlign: 'center',}}>
+        Não há listas de presenças.
+      </Text>
+      <Text style={{ fontFamily: "poppinsr", fontSize: 13, textAlign: 'center'}}>
+        Selecione um mês ou crie uma chamada!
+      </Text>
+    </View>   
+  );
+};
 
 export default function CriarChamada({ navigation }) {
 
@@ -57,11 +72,47 @@ export default function CriarChamada({ navigation }) {
     },
   ]
 
- 
   const [date, setDate] = useState('');
 
-
-
+  function DiaMes(mes){
+    if (date.slice(5,7) == "01"){
+      mes = "Janeiro de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "02"){
+      mes = "Fevereiro de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "03"){
+      mes = "Março de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "04"){
+      mes = "Abril de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "05"){
+      mes = "Maio de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "06"){
+      mes = "Junho de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "07"){
+      mes = "Julho de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "08"){
+      mes = "Agosto de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "09"){
+      mes = "Setembro de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "10"){
+      mes = "Outubro de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "11"){
+      mes = "Novembro de " + date.slice(0,5)
+    }
+    else if (date.slice(5,7) == "12"){
+      mes = "Dezembro de " + date.slice(0,5)
+    }
+    return mes
+  }
   //Const's criados para o aparecimento e desaparecimento dos modais
 
   const [modalActive1, setModalActive1] = useState(false);
@@ -193,6 +244,7 @@ export default function CriarChamada({ navigation }) {
 
   return (
     <SafeAreaView style={style.container}>
+      
         <View style={style.header}>
             <View>
                 <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>{nomeCurso}</Text>
@@ -219,96 +271,90 @@ export default function CriarChamada({ navigation }) {
           <Text style={{ fontFamily: "poppinsb", fontSize: 24, textAlign: 'center', paddingLeft: 15, marginTop: 14 }}>{codTurma}</Text>
         </View>
 
-      
-        <Pressable onPress={() => setModalActive3(true)}>
+          <Pressable onPress={() => setModalActive3(true)}>
             <View style={style.search}>
               <IconLu style={{marginTop:15, marginBottom:15, marginLeft:15, color:'#ADA4A5'}}name='magnifier' size={20}/>
               <Text style={{fontFamily:'poppinsr' , fontSize:16, textAlign:'center', color:"#ADA4A5" , marginTop:13,}}> Procure por um mês </Text>
             </View>
-        </Pressable>
+          </Pressable>
 
-        <View style={{height: 130}}>
-          <Text style={{ fontFamily: "poppinsr", color: '#ADA4A5', textAlign:'center', fontSize: 17}}>{date}</Text>
-            <FlatList
-              showsHorizontalScrollIndicator={false}
-              horizontal
-              data={DATA}
-              renderItem={({ item }) => (
-                <TouchableOpacity style={style.chamada} underlayColor="#46B297" onPress={() => navigation.navigate('Chamada')}
-                >
-                  
+          <View style={{height: 145}}>
+            <Text style={{ fontFamily: "poppinsr", color: '#ADA4A5', textAlign:'center', fontSize: 17, marginBottom: 10}}>{DiaMes('')}</Text>
+              <FlatList
+                showsHorizontalScrollIndicator={false}
+                horizontal
+                data={DATA}
+                ListEmptyComponent={EmptyListMessage}
+                renderItem={({ item }) => (
+                  <TouchableOpacity style={style.chamada} underlayColor="#46B297" onPress={() => navigation.navigate('Chamada')}>
                     <View style={{alignSelf: 'center',  justifyContent: 'center', top: '25%'}}>
                       <Text style={{ fontFamily: "poppinsr", fontSize: 15, textAlign: 'center', marginBottom: 3 }}>{item.dia}</Text>
                       <Text style={{ fontFamily: "poppinsr", fontSize: 17, textAlign: 'center', marginTop: 3 }}>{item.data}</Text>
-                    </View>
-                  
-                </TouchableOpacity>
-              )}
-            >
-            </FlatList>
+                    </View> 
+                  </TouchableOpacity>
+                )}>
+              </FlatList>
+      </View>
+
+          <View style={{zIndex: 4}}>
+            <Pressables
+              texto='Criar Chamada'
+              click={() => setModalActive4(true)}
+            />
+          </View>
         </View>
 
-
-        <View style={{zIndex: 4}}>
-          <Pressables
-            texto='Criar Chamada'
-            click={() => setModalActive4(true)}
-          />
+      <View style={style.footer}>
+        <View style={{width: 24, height: 24,}}>
+          <IconF style={{alignSelf: 'center', color: '#ADA4A5'}} name='edit' size={23.5} onPress={() => setModalActive1(true)}/>
+        </View>
+        <View style={{paddingBottom: 35}}>
+          <PressableCircle
+            click={() => navigation.navigate("Turma")}
+            iconeFA5="users"
+          >
+          </PressableCircle>
+        </View>
+        <View style={{width: 24, height: 24}}>
+          <IconMCI style={{alignSelf: 'center', color: '#DB4E4E'}} name='delete' size={27} onPress={() => setModalActive2(true)}/>
         </View>
       </View>
 
-        <View style={style.footer}>
-          <View style={{width: 24, height: 24,}}>
-            <IconF style={{alignSelf: 'center', color: '#ADA4A5'}} name='edit' size={23.5} onPress={() => setModalActive1(true)}/>
-          </View>
-          <View style={{paddingBottom: 35}}>
-            <PressableCircle
-              click={() => navigation.navigate("Turma")}
-              iconeFA5="users"
-            >
-            </PressableCircle>
-          </View>
-          <View style={{width: 24, height: 24}}>
-            <IconMCI style={{alignSelf: 'center', color: '#DB4E4E'}} name='delete' size={27} onPress={() => setModalActive2(true)}/>
-          </View>
-        </View>
-
-
-
-        {/* Modais */}
-        {/* Modal Edit */}
-        <Modal visible={modalActive1} animationType="fade" transparent={true}>
-          <View style={style.fundoModal}>
-            <LinearGradient
-              colors={["#2C5E7A", "#338995"]}
-              start={[1.0, 0.5]}
-              style={style.modal1}
-            >
-              <IconX
-                style={style.close}
-                name="close-circle"
-                size={30}
-                onPress={() => setModalActive1(false)}
+      {/* Modais */}
+      {/* Modal Edit */}
+      <Modal visible={modalActive1} animationType="fade" transparent={true}>
+        <View style={style.fundoModal}>
+          <LinearGradient
+            colors={["#2C5E7A", "#338995"]}
+            start={[1.0, 0.5]}
+            style={style.modal1}
+          >
+            <IconX
+              style={style.close}
+              name="close-circle"
+              size={30}
+              onPress={() => setModalActive1(false)}
+            />
+            <View style={{alignItems: 'center'}}>
+              <Text style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", marginTop:5}}>
+                Editar sua turma
+              </Text>
+              <Inputs place="Nova Matéria" iconeF="book" onChange={(text) => setMateria(text)}/>
+              <Inputs place="Nova Turma" iconeO="people" onChange={(text) => setTurma(text)}/>
+            </View>
+            <View style={{marginTop:15}}>
+              <PressablesModal
+                texto="Editar"
+                click={EditarTurma}
               />
-              <View style={{alignItems: 'center'}}>
-                <Text style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", marginTop:5}}>
-                  Editar sua turma
-                </Text>
-                <Inputs place="Nova Matéria" iconeF="book" onChange={(text) => setMateria(text)}/>
-                <Inputs place="Nova Turma" iconeO="people" onChange={(text) => setTurma(text)}/>
-              </View>
-              <View style={{marginTop:15}}>
-                <PressablesModal
-                  texto="Editar"
-                  click={EditarTurma}
-                />
-              </View>
-            </LinearGradient>
-          </View>
-        </Modal>
+            </View>
+          </LinearGradient>
+        </View>
+      </Modal>
 
-        {/* Modal Delete */}
-        <Modal visible={modalActive2} animationType="fade" transparent={true}>
+
+      {/* Modal Delete */}
+      <Modal visible={modalActive2} animationType="fade" transparent={true}>
         <View style={style.fundoModal}>
           <LinearGradient
             colors={["#2C5E7A", "#338995"]}
@@ -343,44 +389,43 @@ export default function CriarChamada({ navigation }) {
 
       {/* Modal Calendário */}
       <Modal visible={modalActive3} animationType="fade" transparent={true}>
-          <View style={style.fundoModal}>
-            <LinearGradient
-              colors={["#2C5E7A", "#338995"]}
-              start={[1.0, 1.0]}
-              style={style.modal3}
-            >
-              <IconX
-                style={style.close}
-                name="close-circle"
-                size={30}
-                onPress={() => setModalActive3(false)}
+        <View style={style.fundoModal}>
+          <LinearGradient
+            colors={["#2C5E7A", "#338995"]}
+            start={[1.0, 1.0]}
+            style={style.modal3}
+          >
+            <IconX
+              style={style.close}
+              name="close-circle"
+              size={30}
+              onPress={() => setModalActive3(false)}
+            />
+            <DatePicker
+              options={{
+                backgroundColor: 'rgba(44,94,122,0)',
+                textHeaderColor: 'white',
+                textDefaultColor: 'white',
+                selectedTextColor: 'black',
+                mainColor: '#69D498',
+                textSecondaryColor: '#9DCEFF',
+                borderColor: 'rgba(122, 146, 165, 0.6)',
+                defaultFont: 'poppinsr',
+                headerFont: 'poppinsb',
+              }}
+              mode="monthYear"
+              onMonthYearChange={selectedDate => setDate(selectedDate)}
+              style={{ borderRadius: 10, marginTop: 5 }}
+            />
+            <View style={{height: 36, width: 91, position: 'absolute', bottom: 38}}>
+              <PressablesModal
+                texto="Ok"
+                click={() => setModalActive3(false)}
               />
-              <DatePicker
-                options={{
-                  backgroundColor: 'rgba(44,94,122,0)',
-                  textHeaderColor: 'white',
-                  textDefaultColor: 'white',
-                  selectedTextColor: 'black',
-                  mainColor: '#69D498',
-                  textSecondaryColor: '#9DCEFF',
-                  borderColor: 'rgba(122, 146, 165, 0.6)',
-                  defaultFont: 'poppinsr',
-                  headerFont: 'poppinsb',
-                }}
-                mode="monthYear"
-
-                onMonthYearChange={selectedDate => setDate(selectedDate)}
-                style={{ borderRadius: 10, marginTop: 5 }}
-              />
-              <View style={{height: 36, width: 91, position: 'absolute', bottom: 38}}>
-                <PressablesModal
-                    texto="Ok"
-                    click={() => setModalActive3(false)}
-                  />
-              </View>
-            </LinearGradient>
-          </View>
-        </Modal>
+            </View>
+           </LinearGradient>
+        </View>
+      </Modal>
 
         {/* Modal Confirmar */}
         <Modal visible={modalActive4} animationType="fade" transparent={true}>
@@ -408,7 +453,7 @@ export default function CriarChamada({ navigation }) {
           </LinearGradient>
         </View>
       </Modal>
-
+      
     </SafeAreaView>
   );
 }
@@ -437,12 +482,6 @@ const style = StyleSheet.create({
     zIndex: 2,
     top: 55,
     left: 20,
-  },
-  opcoes: {
-    position:"absolute",
-    zIndex: 2,
-    top: 55,
-    right: 20,
   },
   code: {
     width: 319,
@@ -514,9 +553,7 @@ const style = StyleSheet.create({
     borderRadius:16,
     width:315,
     backgroundColor:'white',
-    
     zIndex:4,
-    
     borderBottomColor:"#2F7286",
     borderWidth:1,
     flexDirection: "row",

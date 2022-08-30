@@ -18,8 +18,8 @@ import IconA from 'react-native-vector-icons/Feather';
 const EmptyListMessage = ({item}) => {
   return (
     // Flat List Item
-    <Text style={{ fontFamily: "poppinsr", fontSize: 18 }}>
-      Entre em uma turma!
+    <Text style={{ fontFamily: "poppinsr", fontSize: 18, marginTop: '83%'}}>
+      Para começar, entre em uma turma!
     </Text>
   );
 };
@@ -208,6 +208,7 @@ export default function MainAlun({ navigation }) {
           click={() => setModalActive3(true)}
         />
       </View>
+
       <Modal visible={modalActive3} animationType="fade" transparent={true}>
         <View style={style.fundoModal}>
           <LinearGradient
