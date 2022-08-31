@@ -2,6 +2,7 @@ import React from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Creditos from '../Creditos'
 import Tecnologias from '../Tecnologias';
+import Aplicativo from '../Aplicativo';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -10,6 +11,10 @@ export default function Tabs() {
     <Tab.Navigator
       initialRouteName="Creditos"
     >
+      <Tab.Screen
+        name="Aplicativo"
+        component={Aplicativo}
+      />
       <Tab.Screen
         name="Desenvolvedores"
         component={Creditos}
