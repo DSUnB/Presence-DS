@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable, FlatList, TouchableOpacity, ImageBackground } from "react-native";
 import PressablesConf from "../../components/pressablesConf";
 import PressableBtnBack from "../../components/PressableBtnBack";
@@ -14,6 +14,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Inputs from "../../components/inputs";
 import IconLu from 'react-native-vector-icons/SimpleLineIcons';
 import DatePicker from 'react-native-modern-datepicker';
+import { Context } from "../../context/Provider";
 
 const EmptyListMessage = ({item}) => {
   return (
@@ -104,7 +105,7 @@ export default function CriarChamada({ navigation }) {
   const [modalActive1, setModalActive1] = useState(false);
   const [modalActive2, setModalActive2] = useState(false);
   const [modalActive3, setModalActive3] = useState(false);
-
+  const {setSituation} = useContext(Context);
 
   //Const para fechar modal e mudar de página
   const handleCloseAndRoute = () => {

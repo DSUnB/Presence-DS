@@ -44,7 +44,7 @@ export default function App() {
   <Provider>
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName="Tabs" 
+        initialRouteName="Chamada" 
         screenOptions={{
           headerShown: false
         }}

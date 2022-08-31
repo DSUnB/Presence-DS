@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { SafeAreaView, Text, StyleSheet, View, Animated, Modal, FlatList, Pressable } from 'react-native';
 import PressableBtnBack from '../../components/PressableBtnBack';
 import ProgressBar from '../../components/ProgressBar';
@@ -6,16 +6,22 @@ import IconO from 'react-native-vector-icons/Octicons';
 import Pressablesee from '../../components/pressablesee';
 import { LinearGradient } from "expo-linear-gradient";
 import IconX from 'react-native-vector-icons/Ionicons';
-import IconP from 'react-native-vector-icons/Ionicons';
-
+import BtnClose from "../../components/BtnClose";
+import BtnOpen from "../../components/BtnOpen";
+import PressablesModal from "../../components/pressablesModalS";
+import PressablesModal2 from "../../components/pressableModalN";
+import { Context } from "../../context/Provider";
 
 export default function Chamada({navigation}){
 
   const [modalActive1, setModalActive1] = useState(false);
+  const [modalActive2, setModalActive2] = useState(false);
+  const [modalActive3, setModalActive3] = useState(false);
 
   const [codigoc, setCodigoc] = useState('AU427');
   const [dia, setdia] = useState('14 Julho');
 
+  const {situation} = useContext(Context);
 
   const DADOS = [
     {AlunoP: 'Leandro Almeida'},
@@ -61,7 +67,7 @@ export default function Chamada({navigation}){
             <Pressable onPress={() => navigation.navigate('CriarChamada')}>
               <View style={style.alunos}>
                 <View style={{flexDirection: "row", justifyContent:'space-between'}}>
-                <IconP style={{position:'absolute', alignSelf:'center', marginLeft:14, paddingTop:12, color:'#7B6F72'}} name='person-outline' size={18}/>
+                <IconX style={{position:'absolute', alignSelf:'center', marginLeft:14, paddingTop:12, color:'#7B6F72'}} name='person-outline' size={18}/>
                 <Text
                   style={{
                     fontFamily: "poppinsm",
@@ -90,6 +96,19 @@ export default function Chamada({navigation}){
         <ProgressBar texto={P} titulo='Presença Geral'/>
       </View>
 
+      <View style={style.closeturma}>
+        {situation && (
+          <BtnClose iconeMCI="sort-variant-lock" texto="Fechar chamada" click={() => setModalActive2(true)}/>
+        )}
+        {!situation && (
+          <BtnOpen iconeMCI="sort-variant-lock-open" texto="Reabrir Chamada" click={() => setModalActive3(true)} />
+        )}
+      </View>
+      
+
+
+      {/* Modais */}
+
       <Modal visible={modalActive1} animationType="fade" transparent={true}>
       <View style={style.fundoModal}>
           <LinearGradient
@@ -112,6 +131,69 @@ export default function Chamada({navigation}){
           </LinearGradient>
       </View>
       </Modal>
+
+      <Modal visible={modalActive2} animationType="fade" transparent={true}>
+        <View style={style.fundoModal}>
+          <LinearGradient
+            colors={["#2C5E7A", "#338995"]}
+            start={[1.0, 0.5]}
+            style={style.modal2}
+          >
+            <Text
+              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", paddingBottom: 5}}
+            >
+              Deseja fechar a chamada?
+            </Text>
+            <Text
+              style={{ fontFamily: "poppinsr", fontSize: 8.7, color: "#FEF5F5", paddingBottom: 60 }}
+            >
+              (Isso impedirá o aluno de efetuar a presença desta chamada)
+            </Text>
+            <View style={style.alinhamento}>
+              <PressablesModal
+                texto="Sim"
+                click={() => setModalActive2(false)}
+              />
+              <PressablesModal2
+                texto="Não"
+                click={() => setModalActive2(false)}
+              />
+            </View>
+          </LinearGradient>
+        </View>
+      </Modal>
+
+      <Modal visible={modalActive3} animationType="fade" transparent={true}>
+        <View style={style.fundoModal}>
+          <LinearGradient
+            colors={["#2C5E7A", "#338995"]}
+            start={[1.0, 0.5]}
+            style={style.modal2}
+          >
+            <Text
+              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", paddingBottom: 5}}
+            >
+              Deseja reabrir a chamada?
+            </Text>
+            <Text
+              style={{ fontFamily: "poppinsr", fontSize: 8.7, color: "#FEF5F5", paddingBottom: 60 }}
+            >
+              (Isso permitirá ao aluno efetuar a presença desta chamada)
+            </Text>
+            <View style={style.alinhamento}>
+              <PressablesModal
+                texto="Sim"
+                click={() => setModalActive3(false)}
+              />
+              <PressablesModal2
+                texto="Não"
+                click={() => setModalActive3(false)}
+              />
+            </View>
+          </LinearGradient>
+        </View>
+      </Modal>
+
     </SafeAreaView>
   )}
 
@@ -123,7 +205,6 @@ const style = StyleSheet.create({
       height: "100%",
       backgroundColor: "#fff",
     },
-
     header: {
         zIndex: 1,
         position: "absolute",
@@ -149,7 +230,14 @@ const style = StyleSheet.create({
       height: 173,
       borderRadius: 22,
       alignItems: "center",
-      justifyContent: "space-around",
+      justifyContent: "center",
+      },
+
+      alinhamento: {
+        position: 'absolute',
+        bottom: 40,
+        flexDirection: "row",
+        justifyContent: "space-between",
       },
     
     close: {
@@ -157,14 +245,22 @@ const style = StyleSheet.create({
       right: 20,
       top: 20,
       color: "#ffffff",
-      },
+    },
 
     voltar: {
         position:"absolute",
         zIndex: 2,
         top: 55,
         left: 20,
-      },
+    },
+
+    closeturma:{
+      position:"absolute",
+      display: "flex",
+      zIndex: 2,
+      bottom: 65,
+      left: 50,
+    },
 
     opcoes: {
         position:"absolute",
@@ -174,13 +270,13 @@ const style = StyleSheet.create({
       },
     
       progress:{
-        width:315, 
-        height:63, 
+        width: 315, 
+        height: 63, 
         borderRadius: 16, 
         backgroundColor:'#fff', 
-        padding:15, 
+        padding: 15, 
         position:'absolute', 
-        bottom:80,
+        bottom: 95,
         shadowColor: 'rgb(221,221,221)',
         shadowOpacity: 0.5,
         shadowRadius: 5,
@@ -193,8 +289,7 @@ const style = StyleSheet.create({
         borderRadius:20,
         backgroundColor:'#C5E2D6',
         position:'absolute',
-        bottom:165,
-
+        bottom:175,
       },
 
       circulo:{
@@ -204,7 +299,6 @@ const style = StyleSheet.create({
         width:55,
         height:55,
         borderRadius:100,
-
       },
 
       lista: {
@@ -222,7 +316,6 @@ const style = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 5,
         elevation: 3.5,
-        
       },
 
 })
