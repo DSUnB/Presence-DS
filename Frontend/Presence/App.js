@@ -16,6 +16,7 @@ import Provider from './src/context/Provider';
 import Tabs from './src/Pages/Tabs';
 import Creditos from './src/Pages/Creditos';
 import Tecnologias from './src/Pages/Tecnologias';
+import Aplicativo from './src/Pages/Aplicativo';
 
 const Stack = createNativeStackNavigator();
 
@@ -59,6 +60,7 @@ export default function App() {
         <Stack.Screen name="Tabs" component={Tabs} />
         <Stack.Screen name="Creditos" component={Creditos} />
         <Stack.Screen name="Tecnologias" component={Tecnologias} />
+        <Stack.Screen name="Aplicativo" component={Aplicativo} />
       </Stack.Navigator>
     </NavigationContainer>
   </Provider>

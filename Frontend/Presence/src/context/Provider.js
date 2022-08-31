@@ -4,6 +4,7 @@ export const Context = createContext();
 
 export default function Provider({children}) {
     
+    const [situation, setSituation] = useState(true)
     const [DADOS, setDADOS] = useState(null);
     const [nomeCurso, setNomeCurso] = useState(null);
     const [codTurma, setCodTurma] = useState(null);
@@ -15,7 +16,8 @@ export default function Provider({children}) {
                 DADOS, setDADOS, 
                 nomeCurso, setNomeCurso, 
                 codTurma, setCodTurma,
-                codChamada, setCodChamada
+                codChamada, setCodChamada,
+                situation, setSituation,
             }}>
             {children}
         </Context.Provider>

@@ -1,4 +1,3 @@
-
 import React, { useContext, useState } from "react";
 import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable, FlatList, TouchableOpacity, Image, ImageBackground } from "react-native";
 import PressablesConf from "../../components/pressablesConf";
@@ -14,7 +13,6 @@ import PressablesModal2 from "../../components/pressableModalN";
 import { LinearGradient } from "expo-linear-gradient";
 import Inputs from "../../components/inputs";
 import IconLu from 'react-native-vector-icons/SimpleLineIcons';
-import Calendar from '../../components/Calendar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DatePicker from 'react-native-modern-datepicker';
 import { Context } from '../../context/Provider';
@@ -122,16 +120,12 @@ export default function CriarChamada({ navigation }) {
   const [turma, setTurma] = useState(false);
   const [materia, setMateria] = useState(false);
   const [message, setMessage]=useState(null);
+
   const {nomeCurso, setNomeCurso} = useContext(Context);
   const {codTurma} = useContext(Context);
   const {setCodChamada} = useContext(Context);
   const {setDADOS} = useContext(Context);
-
-  //Const para fechar modal e mudar de página
-  const handleCloseAndRoute = () => {
-    setModalActive2(false);
-    navigation.navigate('Chamada')
-  }
+  const {setSituation} = useContext(Context);
 
   // ====================================================================
   // FUNÇÃO PARA CRIAR UMA CHAMADA:
