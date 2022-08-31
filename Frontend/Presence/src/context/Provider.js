@@ -4,7 +4,7 @@ export const Context = createContext();
 
 export default function Provider({children}) {
     
-    const [situation, setSituation] = useState(true)
+    const [situation, setSituation] = useState(false)
     const [DADOS, setDADOS] = useState(null);
     const [nomeCurso, setNomeCurso] = useState(null);
     const [codTurma, setCodTurma] = useState(null);
