@@ -9,6 +9,9 @@ const Tab = createMaterialTopTabNavigator();
 export default function Tabs() {
   return (
     <Tab.Navigator
+      tabBarOptions={{
+        showLabel: false
+      }}
       initialRouteName="Creditos"
     >
       <Tab.Screen
