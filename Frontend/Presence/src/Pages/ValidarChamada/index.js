@@ -21,11 +21,12 @@ export default function ValidarChamada({ navigation }) {
     navigation.navigate('MainAlun')
   }
 
-
+  const [modalActive4, setModalActive4] = useState(false);
   const [modalActive3, setModalActive3] = useState(false);
   const [modalActive2, setModalActive2] = useState(false);
   const [modalActive1, setModalActive1] = useState(false);
 
+  const [turma, setTurma] = useState('Física 1 - A');
 
   const DADOS = [
     {ChamadaRealizada: '08 de Fevereiro'},
@@ -122,7 +123,7 @@ export default function ValidarChamada({ navigation }) {
             <IconLo style={{alignSelf: 'center', color: '#DB4E4E'}} name='logout' size={27} onPress={() => setModalActive2(true)}/>
           </View>
         </View>
-        <Modal visible={modalActive2} animationType="fade" transparent={true}>
+      <Modal visible={modalActive2} animationType="fade" transparent={true}>
         <View style={style.fundoModal}>
           <LinearGradient
             colors={["#2C5E7A", "#338995"]}
@@ -184,11 +185,37 @@ export default function ValidarChamada({ navigation }) {
             >
               Insira o código da chamada
             </Text>
-            <Inputs place="Código" iconeF="book" />
+            <Inputs place="Código" iconeF="check" />
 
             <PressablesModal
               texto="Validar"
               click={() => setModalActive3(false)}
+            />
+          </LinearGradient>
+        </View>
+      </Modal>
+      <Modal visible={modalActive4} animationType="fade" transparent={true}>
+        <View style={style.fundoModal}>
+          <LinearGradient
+            // Button Linear Gradient
+            colors={["#2C5E7A", "#338995"]}
+            start={[1.0, 0.5]}
+            style={style.modal}
+          >
+            <IconX
+              style={style.close}
+              name="close-circle"
+              size={30}
+              onPress={() => setModalActive4(false)}
+            />
+            <Text
+              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white" }}
+            >
+              Insira o código da chamada
+            </Text>
+            <Inputs place="Código da chamada" iconeF="check"/>
+            <PressablesModal
+                texto="Validar"
             />
           </LinearGradient>
         </View>
@@ -221,12 +248,6 @@ const style = StyleSheet.create({
     zIndex: 2,
     top: 55,
     left: 20,
-  },
-  opcoes: {
-    position:"absolute",
-    zIndex: 2,
-    top: 55,
-    right: 20,
   },
   code: {
     width: 319,

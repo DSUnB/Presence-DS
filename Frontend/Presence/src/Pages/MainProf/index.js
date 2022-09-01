@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Text, View, Modal, StyleSheet, FlatList, SafeAreaView, Pressable, BackHandler, Alert, Image, Keyboard,} from "react-native";
+import { Text, View, Modal, StyleSheet, FlatList, SafeAreaView, Pressable, BackHandler, Alert, Image, Keyboard, ImageBackground} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Pressables from "../../components/pressables";
 import config from "../../config/config.json";
@@ -17,7 +17,7 @@ import IconA from 'react-native-vector-icons/Feather';
 const EmptyListMessage = ({item}) => {
   return (
     // Flat List Item
-    <Text style={{ fontFamily: "poppinsr", fontSize: 18 }}>
+    <Text style={{ fontFamily: "poppinsr", fontSize: 18, marginTop: '100%' }}>
       Para começar, crie uma turma!
     </Text>
   );
@@ -178,21 +178,18 @@ export default function MainProf({ navigation }) {
 
 // =========================================================
 // ARQUITETURA DA SCREEN DA APLICAÇÃO:
-return (
-
-      <SafeAreaView style={style.container}>
- 
+  return (
+    <SafeAreaView style={style.container}>
       <View style={style.logout}>
         <PressablesConf iconeLo="logout" click={() => setModalActive2(true)} />
       </View>
- 
+  
       <View style={style.header}>
         <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>
           {" "}
           Turmas Ministradas
         </Text>
       </View>
-
 
       <View style={style.lista}>
         <FlatList
@@ -209,12 +206,13 @@ return (
                     paddingTop: 18,
                   }}
                 >
-                 {item.curso} - {item.nomeTurma}
+                  {item.curso} - {item.nomeTurma}
                 </Text>
               </View>
             </Pressable>
           )}
-        ></FlatList>
+          >
+        </FlatList>
       </View>
 
       <View style={style.botao}>
@@ -246,7 +244,6 @@ return (
                 texto="Não"
                 click={() => setModalActive2(false)}
               />
-
             </View>
           </LinearGradient>
         </View>
@@ -266,49 +263,45 @@ return (
               onPress={() => setModalActive3(false)}
             />
             <View style={{alignItems: 'center'}}>
-            <Text
-              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", marginTop:5}}
-            >
-              Crie sua turma
-            </Text>
+              <Text
+                style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", marginTop:5}}
+              >
+                Crie sua turma
+              </Text>
 
-            {message && (
+              {message && (
                 <>
-                       <View style={{display:'flex' , flexDirection:'row'}}>
-                        <IconA name='alert-triangle' size={20} style={{marginRight:10, color:'#fff'}}/>
-                        <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message}</Text>
-                        </View>
+                  <View style={{display:'flex' , flexDirection:'row'}}>
+                  <IconA name='alert-triangle' size={20} style={{marginRight:10, color:'#fff'}}/>
+                  <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message}</Text>
+                  </View>
                 </>
-                    )}
-            
-            {message2 && (
-              <>
-                <View style={{display:'flex' , flexDirection:'row'}}>
-                <IconC name='check-circle-o' size={20} style={{marginRight:10, color:'#fff'}}/>
-                <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message2}</Text>
-                </View>
-              </>
-                    )}
-                    
+              )}
+              
+              {message2 && (
+                <>
+                  <View style={{display:'flex' , flexDirection:'row'}}>
+                  <IconC name='check-circle-o' size={20} style={{marginRight:10, color:'#fff'}}/>
+                  <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message2}</Text>
+                  </View>
+                </>
+              )}
+                      
               <Inputs place="Matéria" iconeF="book" onChange={(text) => setMateria(text)} />
               <Inputs place="Turma" iconeO="people" onChange={(text) => setNomeTurma(text)} />
-              </View>
-              <View style={{marginTop:15}}>
-                
-                {isLoading && (
-                  <Image style={style.loading} source={require('../../assets/videos/LoadingApp.gif')}/>
-                )}
+            </View>
 
-                {!isLoading && (
-                  <PressablesModal
-                    texto="Criar"
-                    click={CriarTurma}
-                  />
-                )}
-                
-
-              </View>
-            
+            <View style={{marginTop:15}}>
+              {isLoading && (
+                <Image style={style.loading} source={require('../../assets/videos/LoadingApp.gif')}/>
+              )}
+              {!isLoading && (
+                <PressablesModal
+                  texto="Criar"
+                  click={CriarTurma}
+                />
+              )}
+            </View>   
           </LinearGradient>
         </View>
       </Modal>

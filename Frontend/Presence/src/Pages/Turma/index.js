@@ -1,25 +1,38 @@
 import React from 'react';
-import { SafeAreaView, Text, StyleSheet, View, FlatList, Pressable } from 'react-native';
+import { SafeAreaView, Text, StyleSheet, View, FlatList, Pressable, ImageBackground } from 'react-native';
 import PressableBtnBack from '../../components/PressableBtnBack';
 import IconP from 'react-native-vector-icons/Ionicons';
+
+const EmptyListMessage = ({item}) => {
+  return (
+    // Flat List Item
+    <View style={{alignItems:'center', marginTop: '82%'}}>
+      <Text style={{ fontFamily: "poppinsr", fontSize: 18, textAlign: 'center'}}>
+        Ainda não há alunos na sua turma.
+      </Text>
+      <Text style={{ fontFamily: "poppinsr", fontSize: 12, textAlign: 'center'}}>
+        Compartilhe o código da turma para que possam entrar!
+      </Text>
+    </View>    
+  );
+};
 
 export default function Turma({ navigation }) {
 
 
   const DADOS = [
-    {AlunoP: 'Leandro Almeida'},
-    {AlunoP: 'Alana Gabriele'},
-    {AlunoP: 'Rafaela Lopes'},
-    {AlunoP: 'Doan FIlho'},
-    {AlunoP: 'Harleny Angelica'},
-    {AlunoP: 'Daniel Rodrigues'},
-    {AlunoP: 'Danielle Rodrigues'},
-    {AlunoP: 'Davi Rodrigues'},
-    {AlunoP: 'Renan Araújo'},
-    {AlunoP: 'Felipe de Sousa'},
-    {AlunoP: 'Dara Cristina'},
-    {AlunoP: 'Rafaela Lopes'},
-
+    // {AlunoP: 'Leandro Almeida'},
+    // {AlunoP: 'Alana Gabriele'},
+    // {AlunoP: 'Rafaela Lopes'},
+    // {AlunoP: 'Doan FIlho'},
+    // {AlunoP: 'Harleny Angelica'},
+    // {AlunoP: 'Daniel Rodrigues'},
+    // {AlunoP: 'Danielle Rodrigues'},
+    // {AlunoP: 'Davi Rodrigues'},
+    // {AlunoP: 'Renan Araújo'},
+    // {AlunoP: 'Felipe de Sousa'},
+    // {AlunoP: 'Dara Cristina'},
+    // {AlunoP: 'Rafaela Lopes'},
   ];
 
 
@@ -39,6 +52,7 @@ export default function Turma({ navigation }) {
         <View style={style.lista}>
         <FlatList
           data={DADOS}
+          ListEmptyComponent={EmptyListMessage}
           renderItem={({ item }) => (
             <Pressable onPress={() => navigation.navigate('CriarChamada')}>
               <View style={style.alunos}>

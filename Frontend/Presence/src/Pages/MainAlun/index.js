@@ -15,6 +15,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import IconC from 'react-native-vector-icons/FontAwesome';
 import IconA from 'react-native-vector-icons/Feather';
 
+const EmptyListMessage = ({item}) => {
+  return (
+    // Flat List Item
+    <Text style={{ fontFamily: "poppinsr", fontSize: 18, marginTop: '83%'}}>
+      Para começar, entre em uma turma!
+    </Text>
+  );
+};
+
 export default function MainAlun({ navigation }) {
 
     // =========================================================
@@ -163,6 +172,7 @@ export default function MainAlun({ navigation }) {
       <View style={style.lista}>
         <FlatList
           data={DADOS}
+          ListEmptyComponent={EmptyListMessage}
           renderItem={({ item }) => (
             <Pressable onPress={() => navigation.navigate('ValidarChamada')}>
               <View style={style.turma}>
@@ -189,6 +199,7 @@ export default function MainAlun({ navigation }) {
           click={() => setModalActive3(true)}
         />
       </View>
+
       <Modal visible={modalActive3} animationType="fade" transparent={true}>
         <View style={style.fundoModal}>
           <LinearGradient
