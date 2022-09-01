@@ -14,6 +14,7 @@ import MainAlun from './src/Pages/MainAlun';
 import ValidarChamada from './src/Pages/ValidarChamada';
 import Provider from './src/context/Provider';
 import Creditos from './src/Pages/Creditos';
+import Teste from './src/Pages/Teste';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,7 +42,7 @@ export default function App() {
   <Provider>
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName="CriarChamada" 
+        initialRouteName="ValidarChamada" 
         screenOptions={{
           headerShown: false
         }}
@@ -55,6 +56,7 @@ export default function App() {
         <Stack.Screen name="MainAlun" component={MainAlun} />
         <Stack.Screen name="ValidarChamada" component={ValidarChamada} />
         <Stack.Screen name="Creditos" component={Creditos} />
+        <Stack.Screen name='Teste' component={Teste}/>
       </Stack.Navigator>
     </NavigationContainer>
   </Provider>

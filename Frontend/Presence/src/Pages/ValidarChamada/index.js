@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable } from "react-native";
-import PressablesConf from "../../components/pressablesConf";
+import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable, FlatList,  ScrollView, } from "react-native";
 import PressableBtnBack from "../../components/PressableBtnBack";
 import PressableCircle from "../../components/pressableCircle";
-import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
+import SwitchSelector from 'react-native-switch-selector';
 import IconO from 'react-native-vector-icons/Octicons';
 import IconLo from 'react-native-vector-icons/MaterialIcons';
 import { LinearGradient } from "expo-linear-gradient";
@@ -11,6 +10,8 @@ import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
 import IconX from 'react-native-vector-icons/Ionicons';
 import Inputs from "../../components/inputs";
+import ProgressBarIP from "../../components/ProgressBarIP";
+import IconCa from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function ValidarChamada({ navigation }) {
 
@@ -20,12 +21,39 @@ export default function ValidarChamada({ navigation }) {
     navigation.navigate('MainAlun')
   }
 
+
   const [modalActive3, setModalActive3] = useState(false);
   const [modalActive2, setModalActive2] = useState(false);
   const [modalActive1, setModalActive1] = useState(false);
 
 
+  const DADOS = [
+    {ChamadaRealizada: '08 de Fevereiro'},
+    {ChamadaRealizada: '12 de Abril'},
+    {ChamadaRealizada: '01 de Junho'},
+    {ChamadaRealizada: '04 de Junho'},
+    {ChamadaRealizada: '10 de Novembro'},
+
+
+  ];
+
+  const options = [
+    { label: 'Jan', value: '1' },
+    { label: 'Fev', value: '2' },
+    { label: 'Mar', value: '3' },
+    { label: 'Abr', value: '4' },
+    { label: 'Maio', value: '5' },
+    { label: 'Jun', value: '6' },
+];
+
+
   const [faltas, setfaltas] = useState('2');
+
+  function Porcent(Alunosp,Alunosi){
+    return (Alunosp/Alunosi)*100;
+  }
+  
+  let P = Math.round(Porcent (100,100))
 
 
   return (
@@ -41,11 +69,47 @@ export default function ValidarChamada({ navigation }) {
                 />
             </View>
         </View>
+        <View  style={{marginTop: 90, marginBottom: 75, width:'100%' ,height:'100%', justifyContent: "space-around", alignItems: 'center',}}>
+        <View style={{backgroundColor:'red', zIndex:2 , width:'100%', position:'absolute', marginTop:220}}>
+          <SwitchSelector
+            options={options}
+            initial={0}
+            onPress={value => console.log(`Call onPress with value: ${value}`)}/>
+          </View>
+          <View style={style.progress}>
+        <ProgressBarIP texto={P} titulo='Índice de Presença'/>
+          </View>
+          
+          <View style={style.lista}> 
+        <FlatList
+          data={DADOS}
+          renderItem={({ item }) => (
+            <Pressable onPress={() => navigation.navigate('CriarChamada')}>
+              <View style={style.alunos}>
+                <View style={{flexDirection: "row", justifyContent:'space-between'}}>
+                <IconCa style={{position:'absolute', alignSelf:'center', marginLeft:14, paddingTop:12, }} name='calendar-range-outline' size={18}/>
+                <Text
+                  style={{
+                    fontFamily: "poppinsm",
+                    fontSize: 14,
+                    paddingLeft: 38,
+                    paddingTop: 18,
+                  }}
+                >
+                 {item.ChamadaRealizada}
+                </Text>
+                </View>
+              </View>
+            </Pressable>
+          )}
+        ></FlatList>
+        </View>
+        </View>
 
 
         <View style={style.footer}>
           <View style={{width: 24, height: 24,}}>
-            <IconO style={{alignSelf: 'center', color: 'black'}} name='megaphone' size={23.5} onPress={() => setModalActive1(true)}/>
+            <IconO style={{alignSelf: 'center', color: '#ADA4A5'}} name='megaphone' size={23.5} onPress={() => setModalActive1(true)}/>
           </View>
           <View style={{paddingBottom: 20}}>
             <PressableCircle
@@ -235,6 +299,30 @@ const style = StyleSheet.create({
     height: 220,
     alignItems: "center",
     justifyContent: "space-around",
+  },
+
+  progress:{
+    width:345,
+    position:'absolute',
+    top:130,
+  },
+
+  alunos: {
+    height: 57,
+    borderRadius: 16,
+    width: 315,
+    backgroundColor: "#dff1f1",
+    marginBottom: 15,
+    shadowColor: 'rgb(221,221,221)',
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 3.5,
+    
+  },
+
+  lista: {
+    marginTop: 280,
+    marginBottom: 186,
   },
 
 });

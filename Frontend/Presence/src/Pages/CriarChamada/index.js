@@ -13,7 +13,6 @@ import PressablesModal2 from "../../components/pressableModalN";
 import { LinearGradient } from "expo-linear-gradient";
 import Inputs from "../../components/inputs";
 import IconLu from 'react-native-vector-icons/SimpleLineIcons';
-import Calendar from '../../components/Calendar';
 import DatePicker from 'react-native-modern-datepicker';
 
 export default function CriarChamada({ navigation }) {
@@ -44,7 +43,6 @@ export default function CriarChamada({ navigation }) {
       data: '17',
     },
   ]
-
  
   const [date, setDate] = useState('');
 
@@ -277,7 +275,6 @@ export default function CriarChamada({ navigation }) {
                   headerFont: 'poppinsb',
                 }}
                 mode="monthYear"
-
                 onMonthYearChange={selectedDate => setDate(selectedDate)}
                 style={{ borderRadius: 10, marginTop: 5 }}
               />
