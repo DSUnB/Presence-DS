@@ -232,26 +232,36 @@ export default function CriarChamada({ navigation }) {
   // =========================================================
   // FUNÇÃO PARA EDIÇÃO DE TURMA:
   async function EditarTurma(){
-    let reqs = await fetch(config.urlRootNode+'professor/turma/atualizar', {
-      method: 'POST',
-      headers:{
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        codigoTurma: codTurma,
-        materia: materia,
-        turma: turma
-      })
-    });
-    let res= await reqs.json();
-    if (res) {
-      setMessage('Turma Editada!');
-      setNomeCurso(materia + ' - ' + turma)
+    if ((materia == null || materia == '') || (turma == null || turma == '')){
+        setMessage('Preencha Todos os Campos!');
         setTimeout(() => {
           setMessage(null);
-          setModalActive1(false);
         }, 2000);
+    }
+    else {
+      let reqs = await fetch(config.urlRootNode+'professor/turma/atualizar', {
+        method: 'POST',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          codigoTurma: codTurma,
+          materia: materia,
+          turma: turma
+        })
+      });
+      let res= await reqs.json();
+      if (res) {
+        setMessage('Turma Editada!');
+        setNomeCurso(materia + ' - ' + turma);
+          setTimeout(() => {
+            setMessage(null);
+            setMateria(null);
+            setTurma(null);
+            setModalActive1(false);
+          }, 2000);
+      }
     }
   }
   // =========================================================
@@ -369,6 +379,9 @@ export default function CriarChamada({ navigation }) {
               <Text style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", marginTop:5}}>
                 Editar sua turma
               </Text>
+              {message && (
+                <Text>{message}</Text>
+              )}
               <Inputs place="Nova Matéria" iconeF="book" onChange={(text) => setMateria(text)}/>
               <Inputs place="Nova Turma" iconeO="people" onChange={(text) => setTurma(text)}/>
             </View>
@@ -391,27 +404,25 @@ export default function CriarChamada({ navigation }) {
             start={[1.0, 0.5]}
             style={style.modal2}
           >
-            {message && (
-              <View style={{display:'flex' , flexDirection:'row'}}>
-                <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message}</Text>
-              </View>
-            )}
 
             <Text
               style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", paddingBottom: 50 }}
-            >
+              >
               Deseja deletar essa turma?
             </Text>
 
+              {message && (
+                <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message}</Text>
+              )}
             <View style={style.alinhamento}>
               <PressablesModal
                 texto="Sim"
                 click={ExcluirTurma}
-              />
+                />
               <PressablesModal2
                 texto="Não"
                 click={() => setModalActive2(false)}
-              />
+                />
             </View>
           </LinearGradient>
         </View>
