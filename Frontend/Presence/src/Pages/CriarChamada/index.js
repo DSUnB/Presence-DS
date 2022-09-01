@@ -143,9 +143,18 @@ export default function CriarChamada({ navigation }) {
       });
       let res= await reqs.json();
       if(res){
-        setCodChamada(res.codigoChamada);
-        setModalActive4(false);
-        navigation.navigate('Chamada')
+        if (res.situation == true){
+            setCodChamada(res.codigoChamada);
+            setSituation(true);
+            setModalActive4(false);
+            navigation.navigate('Chamada')
+        }
+        else if (res.situation == false){
+            setCodChamada(res.codigoChamada);
+            setSituation(false);
+            setModalActive4(false);
+            navigation.navigate('Chamada')
+        }
       }
   }
   // ====================================================================

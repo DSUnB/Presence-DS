@@ -323,6 +323,26 @@ app.post('/professor/turma/atualizar', async (req,res) =>{
 })
 // ====================================================
 
+app.post('/professor/chamada/situacao', async (req,res) =>{
+    try {
+        let reqs = await model.Chamadas.update({
+            'situation': req.body.situation,
+            'updatedAt': new Date()
+        },
+        {
+            where: {
+                'codigoChamada': req.body.codigoChamada
+            }
+        });
+    if(reqs){
+        res.status(403).send(reqs);
+    }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+})
+
 // ==================================================================
 // ==================================================================
 // ==================================================================

@@ -18,11 +18,12 @@ export default function Chamada({navigation}){
   const [modalActive1, setModalActive1] = useState(false);
   const [modalActive2, setModalActive2] = useState(false);
   const [modalActive3, setModalActive3] = useState(false);
+  const [message, setMessage] = useState(null);
 
   const [dia, setdia] = useState('14 Julho');
 
   const {codChamada} = useContext(Context);
-  const {situation} = useContext(Context);
+  const {situation, setSituation} = useContext(Context);
 
   const DADOS = [
     {AlunoP: 'Leandro Almeida'},
@@ -47,6 +48,69 @@ export default function Chamada({navigation}){
   
   let P = Math.round(Porcent (100,100))
 
+  // =========================================================
+  // FUNÇÃO PARA ALTERAR ESTADO PARA DESATIVAR CHAMADA:
+  async function DesativarChamada(method){
+    if (method == 1){
+      let reqs = await fetch(config.urlRootNode+'professor/chamada/situacao', {
+        method: 'POST',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            codigoChamada: codChamada,
+            situation: false,
+        })
+      });
+      let res= await reqs.json();
+        if(res == '403'){
+          setMessage('Algo inesperado ocorreu!');
+          setTimeout(() => {
+            setModalActive2(false)
+            setMessage(null);
+          }, 3000);
+        }
+        else {
+          setMessage('Turma Fechada!');
+          setSituation(false);
+          setTimeout(() => {
+            setModalActive2(false)
+            setMessage(null);
+          }, 3000);
+        }
+    }
+    else if(method == 2){
+      let reqs = await fetch(config.urlRootNode+'professor/chamada/situacao', {
+        method: 'POST',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            codigoChamada: codChamada,
+            situation: true,
+        })
+      });
+      let res= await reqs.json();
+        if(res == '403'){
+          setMessage('Algo inesperado ocorreu!');
+          setTimeout(() => {
+            setModalActive3(false)
+            setMessage(null);
+          }, 3000);
+        }
+        else {
+          setMessage('Turma Reaberta!');
+          setSituation(true);
+          setTimeout(() => {
+            setModalActive3(false)
+            setMessage(null);
+          }, 3000);
+        }
+    }
+  }
+  // =========================================================
   return (
     <SafeAreaView style={style.container}>
         <View style={style.header}>
@@ -151,7 +215,7 @@ export default function Chamada({navigation}){
             <View style={style.alinhamento}>
               <PressablesModal
                 texto="Sim"
-                click={() => setModalActive2(false)}
+                click={() => DesativarChamada(1)}
               />
               <PressablesModal2
                 texto="Não"
@@ -182,7 +246,7 @@ export default function Chamada({navigation}){
             <View style={style.alinhamento}>
               <PressablesModal
                 texto="Sim"
-                click={() => setModalActive3(false)}
+                click={() => DesativarChamada(2)}
               />
               <PressablesModal2
                 texto="Não"
