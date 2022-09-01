@@ -137,9 +137,7 @@ export default function CriarChamada({ navigation }) {
 
   // ====================================================================
   // FUNÇÃO PARA CRIAR UMA CHAMADA:
-  async function CriarChamada(){
-    
-     
+  async function CriarChamada(){    
       let reqs = await fetch(config.urlRootNode+'professor/chamada/criar', {
           method: 'POST',
           headers:{
@@ -149,9 +147,12 @@ export default function CriarChamada({ navigation }) {
           body: JSON.stringify({
               codigoTurma: codTurma,
               codigoChamada: codigoChamada(7),
-              data: moment().format('ll')
-          })
+              dia: moment().format('DD'),
+              mes: moment().format('MMM'),
+              ano: moment().format('YYYY'),
+          })   
       });
+      
       let res= await reqs.json();
       if(res){
         if (res.situation == true){

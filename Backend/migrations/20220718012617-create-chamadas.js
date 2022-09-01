@@ -25,9 +25,21 @@ module.exports = {
         allowNull: false,
         type: Sequelize.BOOLEAN
       },
-      createdAt: {
+      dia: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      mes: {
         allowNull: false,
         type: Sequelize.STRING
+      },
+      ano: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
