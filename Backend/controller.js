@@ -266,8 +266,10 @@ app.post('/professor/chamada/criar', async (req,res) =>{
             'codigoTurma': req.body.codigoTurma,
             'situation': true,
             'dia': req.body.dia,
+            'diaNominal': req.body.diaNominal,
             'mes': req.body.mes,
             'ano': req.body.ano,
+            'createAt': new Date(),
             'updatedAt': new Date()
         });
         if(reqs){
@@ -344,7 +346,31 @@ app.post('/professor/chamada/situacao', async (req,res) =>{
         res.status(403).send(JSON.stringify('403'));
     }
 })
+// ====================================================
 
+// ====================================================
+// PESQUISA DE TURMAS: (LOGIN - for professor)
+
+app.post('/professor/chamada/obter', async (req,res) => {
+    try{
+        let reqs = await model.Chamadas.findAll({
+            where: {
+                'codigoTurma': req.body.codigoTurma,
+                'mes': req.body.mes,
+                'ano': req.body.ano,
+            },
+            raw: true,
+        });
+        if(reqs){
+            res.status(403).send(reqs);
+        }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+})
+
+// ====================================================
 // ==================================================================
 // ==================================================================
 // ==================================================================

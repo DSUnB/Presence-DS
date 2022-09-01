@@ -53,28 +53,28 @@ export default function CriarChamada({ navigation }) {
 
   const DATA = [
     {
-      dia: 'Ter',
-      data: '12',
+      diaNominal: 'Ter',
+      dia: '12',
     },
     {
-      dia: 'Qua',
-      data: '13',
+      diaNominal: 'Qua',
+      dia: '13',
     },
     {
-      dia: 'Qui',
-      data: '14',
+      diaNominal: 'Qui',
+      dia: '14',
     },
     {
-      dia: 'Sex',
-      data: '15',
+      diaNominal: 'Sex',
+      dia: '15',
     },
     {
-      dia: 'Sab',
-      data: '16',
+      diaNominal: 'Sab',
+      dia: '16',
     },
     {
-      dia: 'Dom',
-      data: '17',
+      diaNominal: 'Dom',
+      dia: '17',
     },
   ]
 
@@ -128,12 +128,12 @@ export default function CriarChamada({ navigation }) {
   const [turma, setTurma] = useState(false);
   const [materia, setMateria] = useState(false);
   const [message, setMessage]=useState(null);
-
   const {nomeCurso, setNomeCurso} = useContext(Context);
   const {codTurma} = useContext(Context);
-  const {setCodChamada} = useContext(Context);
+  const {codChamadas, setCodChamada} = useContext(Context);
   const {setDADOS} = useContext(Context);
-  const {setSituation} = useContext(Context);
+  const {situation, setSituation} = useContext(Context);
+  const {chamadas} = useContext(Context);
 
   // ====================================================================
   // FUNÇÃO PARA CRIAR UMA CHAMADA:
@@ -148,7 +148,8 @@ export default function CriarChamada({ navigation }) {
               codigoTurma: codTurma,
               codigoChamada: codigoChamada(7),
               dia: moment().format('DD'),
-              mes: moment().format('MMM'),
+              diaNominal: moment().format('ddd'),
+              mes: moment().format('MM'),
               ano: moment().format('YYYY'),
           })   
       });
@@ -255,6 +256,18 @@ export default function CriarChamada({ navigation }) {
   }
   // =========================================================
 
+  // =========================================================
+  // FUNÇÃO PARA MOSTRAR CHAMADA ESPECÍFICA:
+  function EnvioDados(dado2, dado1){
+    console.log(chamadas);
+    setSituation(dado2);
+    setCodChamada(dado1);
+    console.log(codChamadas);
+    console.log(situation);
+    navigation.navigate('Chamada');
+  } 
+
+  // =========================================================
   // Início da criação da página
 
   return (
@@ -298,13 +311,13 @@ export default function CriarChamada({ navigation }) {
               <FlatList
                 showsHorizontalScrollIndicator={false}
                 horizontal
-                data={DATA}
+                data={chamadas}
                 ListEmptyComponent={EmptyListMessage}
                 renderItem={({ item }) => (
-                  <TouchableOpacity style={style.chamada} underlayColor="#46B297" onPress={() => navigation.navigate('Chamada')}>
+                  <TouchableOpacity style={style.chamada} underlayColor="#46B297" onPress={() => EnvioDados(item.situation, item.codigoChamada)}>
                     <View style={{alignSelf: 'center',  justifyContent: 'center', top: '25%'}}>
-                      <Text style={{ fontFamily: "poppinsr", fontSize: 15, textAlign: 'center', marginBottom: 3 }}>{item.dia}</Text>
-                      <Text style={{ fontFamily: "poppinsr", fontSize: 17, textAlign: 'center', marginTop: 3 }}>{item.data}</Text>
+                      <Text style={{ fontFamily: "poppinsr", fontSize: 15, textAlign: 'center', marginBottom: 3 }}>{item.diaNominal.toUpperCase()}</Text>
+                      <Text style={{ fontFamily: "poppinsr", fontSize: 17, textAlign: 'center', marginTop: 3 }}>{item.dia}</Text>
                     </View> 
                   </TouchableOpacity>
                 )}>

@@ -12,6 +12,14 @@ import BtnOpen from "../../components/BtnOpen";
 import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
 import { Context } from "../../context/Provider";
+import moment from 'moment';
+import 'moment/locale/pt-br'
+
+// =========================================================
+// GERAÇÃO DA DATA EM PORTUGUES:
+moment().format();
+moment.locale('pt-br');
+// =========================================================
 
 export default function Chamada({navigation}){
 
@@ -24,6 +32,8 @@ export default function Chamada({navigation}){
 
   const {codChamada} = useContext(Context);
   const {situation, setSituation} = useContext(Context);
+  const {codTurma} = useContext(Context);
+  const {setChamadas} = useContext(Context);
 
   const DADOS = [
     {AlunoP: 'Leandro Almeida'},
@@ -111,6 +121,32 @@ export default function Chamada({navigation}){
     }
   }
   // =========================================================
+
+  // =========================================================
+  // FUNÇÃO PARA PESQUISAR REGISTRO DAS CHAMADAS:
+  async function PesquisaChamadas(){
+    let reqs = await fetch(config.urlRootNode+'professor/chamada/obter', {
+      method: 'POST',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        codigoTurma: codTurma,
+        mes: moment().format('MM'),
+        ano: moment().format('YYYY'),
+      })
+    });
+    let res= await reqs.json();
+    if (res){
+      setChamadas(res);
+      navigation.navigate('CriarChamada');
+    }
+    else {
+      null
+    }
+  }
+  // =========================================================
   return (
     <SafeAreaView style={style.container}>
         <View style={style.header}>
@@ -120,7 +156,7 @@ export default function Chamada({navigation}){
             </View>
             <View style={style.voltar}>
                 <PressableBtnBack
-                    click={() => navigation.navigate("CriarChamada")}
+                    click={() => PesquisaChamadas()}
                     iconeIo="chevron-back"
                 />
             </View>

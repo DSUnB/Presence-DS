@@ -12,6 +12,14 @@ import { Context } from '../../context/Provider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import IconC from 'react-native-vector-icons/FontAwesome';
 import IconA from 'react-native-vector-icons/Feather';
+import moment from 'moment';
+import 'moment/locale/pt-br'
+
+// =========================================================
+// GERAÇÃO DA DATA EM PORTUGUES:
+moment().format();
+moment.locale('pt-br');
+// =========================================================
 
 
 const EmptyListMessage = ({item}) => {
@@ -79,6 +87,7 @@ export default function MainProf({ navigation }) {
     const {DADOS, setDADOS} = useContext(Context);
     const {setNomeCurso} = useContext(Context);
     const {setCodTurma} = useContext(Context);
+    const {setChamadas} = useContext(Context);
     // =========================================================
 
     // =========================================================
@@ -183,10 +192,36 @@ export default function MainProf({ navigation }) {
     function EnvioDados(dado1, dado2, dado3){
       setCodTurma(dado1);
       setNomeCurso(dado2 + " - " + dado3);
-      navigation.navigate('CriarChamada');
-    }
-      
+      PesquisaChamadas(dado1);
+    } 
     // =========================================================
+
+    // =========================================================
+    // FUNÇÃO PARA PESQUISAR REGISTRO DE CHAMADAS:
+    async function PesquisaChamadas(codigoTurma){
+      let reqs = await fetch(config.urlRootNode+'professor/chamada/obter', {
+        method: 'POST',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          codigoTurma: codigoTurma,
+          mes: moment().format('MM'),
+          ano: moment().format('YYYY'),
+        })
+      });
+      let res= await reqs.json();
+      if (res){
+        setChamadas(res);
+        navigation.navigate('CriarChamada');
+      }
+      else {
+        null
+      }
+    }
+     // =========================================================
+
 
 // =========================================================
 // ARQUITETURA DA SCREEN DA APLICAÇÃO:

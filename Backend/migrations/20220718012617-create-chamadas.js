@@ -29,9 +29,13 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER
       },
-      mes: {
+      diaNominal: {
         allowNull: false,
         type: Sequelize.STRING
+      },
+      mes: {
+        allowNull: false,
+        type: Sequelize.INTEGER
       },
       ano: {
         allowNull: false,

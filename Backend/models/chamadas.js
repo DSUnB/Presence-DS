@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     codigoChamada: DataTypes.STRING,
     codigoTurma: DataTypes.STRING,
     dia: DataTypes.INTEGER,
-    mes: DataTypes.STRING,
+    diaNominal: DataTypes.STRING,
+    mes: DataTypes.INTEGER,
     ano: DataTypes.STRING,
     situation: DataTypes.BOOLEAN,
   }, {

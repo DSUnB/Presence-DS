@@ -9,6 +9,7 @@ export default function Provider({children}) {
     const [nomeCurso, setNomeCurso] = useState(null);
     const [codTurma, setCodTurma] = useState(null);
     const [codChamada, setCodChamada] = useState(null);
+    const [chamadas, setChamadas] = useState(null);
 
     return(
         <Context.Provider
@@ -18,6 +19,7 @@ export default function Provider({children}) {
                 codTurma, setCodTurma,
                 codChamada, setCodChamada,
                 situation, setSituation,
+                chamadas, setChamadas
             }}>
             {children}
         </Context.Provider>
