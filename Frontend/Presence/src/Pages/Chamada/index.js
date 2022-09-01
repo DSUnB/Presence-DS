@@ -79,7 +79,7 @@ export default function Chamada({navigation}){
           setTimeout(() => {
             setModalActive2(false)
             setMessage(null);
-          }, 3000);
+          }, 1000);
         }
         else {
           setMessage('Turma Fechada!');
@@ -87,7 +87,7 @@ export default function Chamada({navigation}){
           setTimeout(() => {
             setModalActive2(false)
             setMessage(null);
-          }, 3000);
+          }, 1000);
         }
     }
     else if(method == 2){
@@ -108,7 +108,7 @@ export default function Chamada({navigation}){
           setTimeout(() => {
             setModalActive3(false)
             setMessage(null);
-          }, 3000);
+          }, 1000);
         }
         else {
           setMessage('Turma Reaberta!');
@@ -116,7 +116,7 @@ export default function Chamada({navigation}){
           setTimeout(() => {
             setModalActive3(false)
             setMessage(null);
-          }, 3000);
+          }, 1000);
         }
     }
   }

@@ -130,7 +130,7 @@ export default function CriarChamada({ navigation }) {
   const [message, setMessage]=useState(null);
   const {nomeCurso, setNomeCurso} = useContext(Context);
   const {codTurma} = useContext(Context);
-  const {codChamadas, setCodChamada} = useContext(Context);
+  const {codChamada, setCodChamada} = useContext(Context);
   const {setDADOS} = useContext(Context);
   const {situation, setSituation} = useContext(Context);
   const {chamadas} = useContext(Context);
@@ -258,14 +258,16 @@ export default function CriarChamada({ navigation }) {
 
   // =========================================================
   // FUNÇÃO PARA MOSTRAR CHAMADA ESPECÍFICA:
-  function EnvioDados(dado2, dado1){
-    console.log(chamadas);
-    setSituation(dado2);
-    setCodChamada(dado1);
-    console.log(codChamadas);
-    console.log(situation);
+  function EnvioDados(dado1, dado2){
+    if (dado1 == 0){
+      setSituation(false);
+    }
+    else {
+      setSituation(true);
+    }
+    setCodChamada(dado2);
     navigation.navigate('Chamada');
-  } 
+  }
 
   // =========================================================
   // Início da criação da página
