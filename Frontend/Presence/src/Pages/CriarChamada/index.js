@@ -18,6 +18,14 @@ import DatePicker from 'react-native-modern-datepicker';
 import { Context } from '../../context/Provider';
 import config from "../../config/config.json";
 import moment from 'moment';
+import 'moment/locale/pt-br'
+
+// =========================================================
+// GERAÇÃO DA DATA EM PORTUGUES:
+moment().format();
+moment.locale('pt-br');
+// =========================================================
+
 // =========================================================
 // GERAÇÃO DE CÓDIGO CHAMADA:
 function codigoChamada(num) {
@@ -131,7 +139,7 @@ export default function CriarChamada({ navigation }) {
   // FUNÇÃO PARA CRIAR UMA CHAMADA:
   async function CriarChamada(){
     
-    //moment.locale(); 
+     
       let reqs = await fetch(config.urlRootNode+'professor/chamada/criar', {
           method: 'POST',
           headers:{
