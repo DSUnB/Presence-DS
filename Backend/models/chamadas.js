@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   Chamadas.init({
     codigoChamada: DataTypes.STRING,
     codigoTurma: DataTypes.STRING,
+    createdAt: DataTypes.STRING,
     situation: DataTypes.BOOLEAN,
   }, {
     sequelize,

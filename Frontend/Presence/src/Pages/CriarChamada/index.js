@@ -17,7 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DatePicker from 'react-native-modern-datepicker';
 import { Context } from '../../context/Provider';
 import config from "../../config/config.json";
-
+import moment from 'moment';
 // =========================================================
 // GERAÇÃO DE CÓDIGO CHAMADA:
 function codigoChamada(num) {
@@ -130,6 +130,8 @@ export default function CriarChamada({ navigation }) {
   // ====================================================================
   // FUNÇÃO PARA CRIAR UMA CHAMADA:
   async function CriarChamada(){
+    
+    //moment.locale(); 
       let reqs = await fetch(config.urlRootNode+'professor/chamada/criar', {
           method: 'POST',
           headers:{
@@ -138,7 +140,8 @@ export default function CriarChamada({ navigation }) {
           },
           body: JSON.stringify({
               codigoTurma: codTurma,
-              codigoChamada: codigoChamada(7)
+              codigoChamada: codigoChamada(7),
+              data: moment().format('ll')
           })
       });
       let res= await reqs.json();

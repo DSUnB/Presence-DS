@@ -265,7 +265,7 @@ app.post('/professor/chamada/criar', async (req,res) =>{
             'codigoChamada': req.body.codigoChamada,
             'codigoTurma': req.body.codigoTurma,
             'situation': true,
-            'createdAt': new Date(),
+            'createdAt': req.body.data,
             'updatedAt': new Date()
         });
         if(reqs){
