@@ -1,10 +1,11 @@
 # Projeto Presence - Feudo Verde Pantano 
 
-![Logo2](https://user-images.githubusercontent.com/101230741/184557466-0a971e0e-c811-4437-b51d-481839d9b121.png)
+![Design sem nome](https://user-images.githubusercontent.com/101230741/188218804-132e5c0f-9788-49da-8bfc-a6274a386994.png)
 
 
-## Integrantes do Grupo ![calendar-free-icon-font](https://user-images.githubusercontent.com/101230741/184557440-c0f434ee-cb33-41bc-a514-73205962453a.png)
+![Inserir um título](https://user-images.githubusercontent.com/101230741/188219496-a8ce1dec-e643-4158-a06e-2a95ca7c465c.png)
 
+**Integrantes do Grupo** 
 
 - [Leandro Almeida](https://github.com/LeanArs)
   - Fullstack, Duque.
@@ -19,13 +20,17 @@
 - [Harleny Angélica](https://github.com/Angelicahaas)
   - FullStack.
 
-## Tema ![edit-alt-free-icon-font](https://user-images.githubusercontent.com/101230741/184557692-cbaceda3-941e-429f-ad08-82edd0ea5cec.png)
+![Inserir um título](https://user-images.githubusercontent.com/101230741/188219594-cafb510d-3416-419d-a3ba-c16859e773b0.png)
 
+
+**Tema**
 
 Aplicativo Android que tem como objetivo o controle de presença acadêmica tanto por parte do professor quanto por parte do aluno.
 
-## Nossas Tecnologias Usadas ![database-free-icon-font](https://user-images.githubusercontent.com/101230741/184557650-f67dbe33-fdf2-4153-a9e4-d6bbe5d7c50c.png)
+![Inserir um título](https://user-images.githubusercontent.com/101230741/188219675-46a897f5-7a17-4593-b026-088bc6afd7b9.png)
 
+
+**Nossas Tecnologias Usadas
 
 - Javascript.
 - Expo.
@@ -34,8 +39,10 @@ Aplicativo Android que tem como objetivo o controle de presença acadêmica tant
 - MySQL.
 - Node js.
 
-## Cronograma ![calendario](https://user-images.githubusercontent.com/101230741/184557360-2dc94ea0-1315-41e3-a5ba-bf3724c77961.png)
+![Inserir um título](https://user-images.githubusercontent.com/101230741/188219743-c50eed88-30f3-4734-aeb5-2a0f599c44fc.png)
 
+
+**Cronograma**
 
  Pensado para ser realizado até o Festival de SolstÍcio.
 
@@ -47,9 +54,8 @@ Sprint 8| Editar, deletar uma turma e buscar chamda por dia (professor), finaliz
 Sprint 9| Sair de uma turma, ferar histórico de presença individual (aluno) e pull request.
 Festival de Solstício| Finalização do projeto.
 
-## Progress ![chart-histogram-free-icon-font](https://user-images.githubusercontent.com/101230741/184557590-59bb9a3c-0cfe-4a67-9bf0-a0b1987befcc.png)
+![Inserir um título](https://user-images.githubusercontent.com/101230741/188219800-057faebf-00f8-4edd-8fb6-ceddcf01e929.png)
 
-
-![f523f8cc53733c74890663753f8e41a3](https://user-images.githubusercontent.com/101230741/184557506-b549e45f-1f65-491c-81ef-2ce0473b0ea4.gif)
-
+**Progresso**
+![Final do Banner](https://user-images.githubusercontent.com/101230741/188221910-4bb3dab1-41be-4d47-a861-2607bc5e3b2c.jpg)
 
