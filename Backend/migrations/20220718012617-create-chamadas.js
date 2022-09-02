@@ -27,7 +27,7 @@ module.exports = {
       },
       dia: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       diaNominal: {
         allowNull: false,

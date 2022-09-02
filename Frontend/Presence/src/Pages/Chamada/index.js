@@ -46,8 +46,8 @@ export default function Chamada({navigation}){
   const {situation, setSituation} = useContext(Context);
   const {codTurma} = useContext(Context);
   const {setChamadas} = useContext(Context);
-  const {diaChamada} = useContext(Context);
-  const {mesNominalChamada} = useContext(Context);
+  const {diaChamada, setDiaChamada} = useContext(Context);
+  const {mesNominalChamada, setMesNominalChamada} = useContext(Context);
   const {respostaChamada, setRespostaChamada} = useContext(Context);
 
 
@@ -139,6 +139,8 @@ export default function Chamada({navigation}){
     let res= await reqs.json();
     if (res){
       setRespostaChamada(null);
+      setMesNominalChamada(null);
+      setDiaChamada(null);
       setChamadas(res);
       navigation.navigate('CriarChamada');
     }
