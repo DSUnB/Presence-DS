@@ -39,12 +39,18 @@ export default function ValidarChamada({ navigation }) {
   ];
 
   const options = [
-    { label: 'Jan', value: '1' },
-    { label: 'Fev', value: '2' },
-    { label: 'Mar', value: '3' },
-    { label: 'Abr', value: '4' },
-    { label: 'Maio', value: '5' },
-    { label: 'Jun', value: '6' },
+    { label: 'Janeiro'},
+    { label: 'Fevereiro'},
+    { label: 'Março'},
+    { label: 'Abril'},
+    { label: 'Maio'},
+    { label: 'Junho'},
+    { label: 'Julho'},
+    { label: 'Agosto'},
+    { label: 'Setembro'},
+    { label: 'Outubro'},
+    { label: 'Novembro'},
+    { label: 'Dezembro'},
 ];
 
 
@@ -70,12 +76,37 @@ export default function ValidarChamada({ navigation }) {
                 />
             </View>
         </View>
-        <View  style={{marginTop: 90, marginBottom: 75, width:'100%' ,height:'100%', justifyContent: "space-around", alignItems: 'center',}}>
-        <View style={{backgroundColor:'red', zIndex:2 , width:'100%', position:'absolute', marginTop:220}}>
-          <SwitchSelector
-            options={options}
-            initial={0}
-            onPress={value => console.log(`Call onPress with value: ${value}`)}/>
+        <View  style={{marginTop: 90, marginBottom: 75, width:'100%' ,height:'100%', justifyContent: "space-around", alignItems: 'center', display:'flex'}}>
+         <View style={{backgroundColor:'#F7F8F8', zIndex:2 , width:315, height:60, borderRadius:30 , position:'absolute', marginTop:209}}>
+          <View style={{width:285, color:'red', justifyContent:'center' }}>
+            <FlatList
+            data={options}
+            horizontal
+            renderItem={({item}) =>(
+              <Pressable style={{ paddingRight:24,}} onPress={() => navigation.navigate('CriarChamada')}>
+              <View>
+                <LinearGradient
+                  colors = {['#2C5E7A' , '#338995']}
+                  start = {[1.0 , 0.5]}
+                  style={{width:130, height:40, borderRadius:30}}>
+                <View style={{flexDirection: "row", justifyContent:'space-between'}}>
+                <Text
+                  style={{
+                    fontFamily: "poppinsm",
+                    fontSize: 14,
+                    paddingTop: 10,
+                    color:'#fff'
+                    
+                  }}
+                >
+                 {item.label}
+                </Text>
+                </View>
+                </LinearGradient>
+              </View>
+            </Pressable> )}
+          ></FlatList>
+          </View>
           </View>
           <View style={style.progress}>
         <ProgressBarIP texto={P} titulo='Índice de Presença'/>
@@ -340,6 +371,7 @@ const style = StyleSheet.create({
     elevation: 3.5,
     
   },
+  
 
   lista: {
     marginTop: 280,

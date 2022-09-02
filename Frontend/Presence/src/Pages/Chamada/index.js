@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { SafeAreaView, Text, StyleSheet, View, Animated, Modal, FlatList, Pressable } from 'react-native';
 import PressableBtnBack from '../../components/PressableBtnBack';
-import ProgressBar from '../../components/ProgressBarPG';
+import ProgressBar from '../../components/ProgressBar';
 import IconO from 'react-native-vector-icons/Octicons';
 import Pressablesee from '../../components/pressablesee';
 import { LinearGradient } from "expo-linear-gradient";
