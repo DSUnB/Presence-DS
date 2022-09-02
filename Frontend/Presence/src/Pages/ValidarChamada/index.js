@@ -76,20 +76,20 @@ export default function ValidarChamada({ navigation }) {
                 />
             </View>
         </View>
-        <View  style={{marginTop: 90, marginBottom: 75, width:'100%' ,height:'100%', justifyContent: "space-around", alignItems: 'center', display:'flex'}}>
-         <View style={{backgroundColor:'#F7F8F8', zIndex:2 , width:315, height:60, borderRadius:30 , position:'absolute', marginTop:209}}>
-          <View style={{width:285, color:'red', justifyContent:'center' }}>
+        <View  style={{marginTop: 90, marginBottom: 75, width:'100%' ,height:'100%', justifyContent: "space-around", alignItems: 'center'}}>
+         <View style={{backgroundColor:'#F7F8F8', zIndex:2 , width:315, height:60, borderRadius:30, position:'absolute', marginTop:210}}>
+          <View style={{width:286, color:'red', display:"flex", justifyContent:'center', marginTop:10, marginLeft:15 }}>
             <FlatList
             data={options}
             horizontal
             renderItem={({item}) =>(
-              <Pressable style={{ paddingRight:24,}} onPress={() => navigation.navigate('CriarChamada')}>
+              <Pressable style={{ paddingRight:24}} onPress={() => navigation.navigate('CriarChamada')}>
               <View>
                 <LinearGradient
                   colors = {['#2C5E7A' , '#338995']}
                   start = {[1.0 , 0.5]}
                   style={{width:130, height:40, borderRadius:30}}>
-                <View style={{flexDirection: "row", justifyContent:'space-between'}}>
+                <View style={{flexDirection: "row", justifyContent:'center'}}>
                 <Text
                   style={{
                     fontFamily: "poppinsm",
