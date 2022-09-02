@@ -37,6 +37,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER
       },
+      mesNominal: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       ano: {
         allowNull: false,
         type: Sequelize.STRING

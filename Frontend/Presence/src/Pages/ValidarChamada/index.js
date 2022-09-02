@@ -9,7 +9,9 @@ import IconLo from 'react-native-vector-icons/MaterialIcons';
 import { LinearGradient } from "expo-linear-gradient";
 import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
+import config from "../../config/config.json";
 import IconX from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Inputs from "../../components/inputs";
 import { Context } from '../../context/Provider';
 
@@ -25,8 +27,79 @@ export default function ValidarChamada({ navigation }) {
   const [modalActive3, setModalActive3] = useState(false);
   const [modalActive2, setModalActive2] = useState(false);
   const [modalActive1, setModalActive1] = useState(false);
-  const {nomeCurso, setNomeCurso} = useContext(Context);
+  const [codigoChamada, setCodigoChamada] = useState(false);
+  const [message, setMessage] = useState(false);
   const [faltas, setfaltas] = useState('2');
+  const {nomeCurso, setNomeCurso} = useContext(Context);
+  const {codTurma} = useContext(Context);
+
+  // ================================================================
+  // FUNÇÃO PARA REALIZAR CHAMADA:
+  async function RealizarPresenca(){
+    let response = await AsyncStorage.getItem('userData');
+    let json = JSON.parse(response);
+    if (codigoChamada == '' || codigoChamada == null){
+      setMessage('Preencha o Campo!')
+      setTimeout(() => {
+        setMessage(null);
+    }, 2000);
+    }
+    else{
+      let reqs = await fetch(config.urlRootNode+'aluno/chamada/realizar', {
+        method: 'POST',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          aluno: json.matricula,
+          nomeAluno: json.nome,
+          codigoTurma: codTurma,
+          codigoChamada: codigoChamada.toUpperCase(),
+        })
+      });
+      let res= await reqs.json();
+      if (res){
+        if (res == '403'){
+          setMessage('Você já fez esta chamada!')
+          setTimeout(() => {
+            setMessage(null);
+          }, 2000);
+        }
+        else if (res == '404'){
+          setMessage('Erro de Autenticação!');
+            setTimeout(() => {
+                setMessage(null);
+                AsyncStorage.clear();
+                navigation.navigate('Login')
+            }, 2000);
+        }
+        else if (res == '404.1'){
+          setMessage('Código Inválido!')
+          setTimeout(() => {
+            setMessage(null);
+          }, 2000);
+        }
+        else if (res == '202.0'){
+          setMessage('Esta chamada foi fechada!')
+          setTimeout(() => {
+            setMessage(null);
+          }, 2000);
+        }
+        else if (res == '202'){
+          setMessage('Presença Registrada!')
+          setCodigoChamada(null);
+          setTimeout(() => {
+            setMessage(null);
+            setModalActive4(false);
+          }, 1000);
+        }
+      }
+    }
+    
+  }
+
+   // ================================================================
 
 
   return (
@@ -122,11 +195,10 @@ export default function ValidarChamada({ navigation }) {
             >
               Insira o código da chamada
             </Text>
-            <Inputs place="Código" iconeF="check" />
+            <Inputs place="Código" iconeF="check"/>
 
             <PressablesModal
               texto="Validar"
-              click={() => setModalActive3(false)}
             />
           </LinearGradient>
         </View>
@@ -150,9 +222,13 @@ export default function ValidarChamada({ navigation }) {
             >
               Insira o código da chamada
             </Text>
-            <Inputs place="Código da chamada" iconeF="check"/>
+            {message && (
+              <Text>{message}</Text>
+            )}
+            <Inputs place="Código da chamada" iconeF="check" onChange={(text) => setCodigoChamada(text)}/>
             <PressablesModal
                 texto="Validar"
+                click={() => RealizarPresenca()}
             />
           </LinearGradient>
         </View>

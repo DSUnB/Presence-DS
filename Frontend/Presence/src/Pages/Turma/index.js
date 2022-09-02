@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { SafeAreaView, Text, StyleSheet, View, FlatList, Pressable, ImageBackground } from 'react-native';
 import PressableBtnBack from '../../components/PressableBtnBack';
 import IconP from 'react-native-vector-icons/Ionicons';
+import config from "../../config/config.json";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Context } from '../../context/Provider';
 
 const EmptyListMessage = ({item}) => {
   return (
@@ -18,6 +21,13 @@ const EmptyListMessage = ({item}) => {
 };
 
 export default function Turma({ navigation }) {
+
+  // =============================================
+  // DECLARAÇÕES DE STATES E CONTEXTOS:
+
+  const {alunosTurma} = useContext(Context);
+
+  // =============================================
 
 
   const DADOS = [
@@ -51,7 +61,7 @@ export default function Turma({ navigation }) {
         </View>
         <View style={style.lista}>
         <FlatList
-          data={DADOS}
+          data={alunosTurma}
           ListEmptyComponent={EmptyListMessage}
           renderItem={({ item }) => (
             <Pressable onPress={() => navigation.navigate('CriarChamada')}>
@@ -66,7 +76,7 @@ export default function Turma({ navigation }) {
                     paddingTop: 18,
                   }}
                 >
-                 {item.AlunoP}
+                 {item.nome}
                 </Text>
                 </View>
               </View>

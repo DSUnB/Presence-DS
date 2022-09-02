@@ -51,32 +51,6 @@ const EmptyListMessage = ({item}) => {
 
 export default function CriarChamada({ navigation }) {
 
-  const DATA = [
-    {
-      diaNominal: 'Ter',
-      dia: '12',
-    },
-    {
-      diaNominal: 'Qua',
-      dia: '13',
-    },
-    {
-      diaNominal: 'Qui',
-      dia: '14',
-    },
-    {
-      diaNominal: 'Sex',
-      dia: '15',
-    },
-    {
-      diaNominal: 'Sab',
-      dia: '16',
-    },
-    {
-      diaNominal: 'Dom',
-      dia: '17',
-    },
-  ]
 
   const [date, setDate] = useState('');
 
@@ -128,12 +102,17 @@ export default function CriarChamada({ navigation }) {
   const [turma, setTurma] = useState(false);
   const [materia, setMateria] = useState(false);
   const [message, setMessage]=useState(null);
+  const [message2, setMessage2]=useState(null);
   const {nomeCurso, setNomeCurso} = useContext(Context);
   const {codTurma} = useContext(Context);
-  const {codChamada, setCodChamada} = useContext(Context);
+  const {setCodChamada, codChamada} = useContext(Context);
   const {setDADOS} = useContext(Context);
-  const {situation, setSituation} = useContext(Context);
+  const {setSituation} = useContext(Context);
   const {chamadas} = useContext(Context);
+  const {setDiaChamada} = useContext(Context);
+  const {setMesNominalChamada} = useContext(Context);
+  const {setRespostaChamada} = useContext(Context);
+  const {setAlunosTurma} = useContext(Context);
 
   // ====================================================================
   // FUNÇÃO PARA CRIAR UMA CHAMADA:
@@ -150,6 +129,7 @@ export default function CriarChamada({ navigation }) {
               dia: moment().format('DD'),
               diaNominal: moment().format('ddd'),
               mes: moment().format('MM'),
+              mesNominal: moment().format('MMMM'),
               ano: moment().format('YYYY'),
           })   
       });
@@ -212,9 +192,9 @@ export default function CriarChamada({ navigation }) {
     if(res) {
       if (method == 1){
         setDADOS(res)
-        setMessage('Turma Excluída!');
+        setMessage2('Turma Excluída!');
           setTimeout(() => {
-            setMessage(null);
+            setMessage2(null);
             setModalActive2(false);
             navigation.navigate('MainProf');
           }, 2000);
@@ -267,8 +247,60 @@ export default function CriarChamada({ navigation }) {
   // =========================================================
 
   // =========================================================
+  // FUNÇÃO PARA PESQUISAR SE ALGUM ALUNO RESPONDEU A CHAMADA:
+  async function PesquisarRespostas(chamada){
+      let reqs = await fetch(config.urlRootNode+'professor/chamada/resposta', {
+        method: 'POST',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          codigoChamada: chamada,
+        })
+      });
+      let res= await reqs.json();
+      if (res){
+        if (res == '403'){
+          console.log('Deu merda!')
+        }
+        else if (res){
+          setRespostaChamada(res);
+          navigation.navigate('Chamada')
+        }
+      }
+  }
+  // =========================================================
+
+  // =========================================================
+  // FUNÇÃO PARA PESQUISAR ALUNOS DA CHAMADA:
+  async function PesquisarAlunos(){
+    let reqs = await fetch(config.urlRootNode+'professor/turma/alunos', {
+      method: 'POST',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        codigoTurma: codTurma,
+      })
+    });
+    let res= await reqs.json();
+    if (res) {
+      if (res == '403'){
+        null
+      }
+      else {
+        setAlunosTurma(res);
+        navigation.navigate('Turma')
+      }
+    }
+}
+// =========================================================
+
+  // =========================================================
   // FUNÇÃO PARA MOSTRAR CHAMADA ESPECÍFICA:
-  function EnvioDados(dado1, dado2){
+  async function EnvioDados(dado1, dado2, dado3, dado4){
     if (dado1 == 0){
       setSituation(false);
     }
@@ -276,8 +308,12 @@ export default function CriarChamada({ navigation }) {
       setSituation(true);
     }
     setCodChamada(dado2);
-    navigation.navigate('Chamada');
+    setDiaChamada(dado3);
+    setMesNominalChamada(dado4[0].toUpperCase() + dado4.substring(1))
+    PesquisarRespostas(dado2);
+    // navigation.navigate('Chamada');
   }
+  // =========================================================
 
   // =========================================================
   // Início da criação da página
@@ -326,9 +362,9 @@ export default function CriarChamada({ navigation }) {
                 data={chamadas}
                 ListEmptyComponent={EmptyListMessage}
                 renderItem={({ item }) => (
-                  <TouchableOpacity style={style.chamada} underlayColor="#46B297" onPress={() => EnvioDados(item.situation, item.codigoChamada)}>
+                  <TouchableOpacity style={style.chamada} underlayColor="#46B297" onPress={() => EnvioDados(item.situation, item.codigoChamada, item.dia, item.mesNominal)}>
                     <View style={{alignSelf: 'center',  justifyContent: 'center', top: '25%'}}>
-                      <Text style={{ fontFamily: "poppinsr", fontSize: 15, textAlign: 'center', marginBottom: 3 }}>{item.diaNominal.toUpperCase()}</Text>
+                      <Text style={{ fontFamily: "poppinsr", fontSize: 15, textAlign: 'center', marginBottom: 3 }}>{item.diaNominal[0].toUpperCase() + item.diaNominal.substring(1)}</Text>
                       <Text style={{ fontFamily: "poppinsr", fontSize: 17, textAlign: 'center', marginTop: 3 }}>{item.dia}</Text>
                     </View> 
                   </TouchableOpacity>
@@ -350,7 +386,7 @@ export default function CriarChamada({ navigation }) {
         </View>
         <View style={{paddingBottom: 35}}>
           <PressableCircle
-            click={() => navigation.navigate("Turma")}
+            click={() => PesquisarAlunos()}
             iconeFA5="users"
           >
           </PressableCircle>
@@ -411,7 +447,7 @@ export default function CriarChamada({ navigation }) {
               Deseja deletar essa turma?
             </Text>
 
-              {message && (
+              {message2 && (
                 <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message}</Text>
               )}
             <View style={style.alinhamento}>

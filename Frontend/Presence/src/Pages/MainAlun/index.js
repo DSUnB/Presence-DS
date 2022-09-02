@@ -63,6 +63,7 @@ export default function MainAlun({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
   const {DADOS, setDADOS} = useContext(Context);
   const {setNomeCurso} = useContext(Context);
+  const {setCodTurma} = useContext(Context);
 
   // =========================================================
 
@@ -91,12 +92,13 @@ export default function MainAlun({ navigation }) {
               },
               body: JSON.stringify({
                   aluno: json.matricula,
+                  nome: json.nome,
                   codigoTurma: codigo.toUpperCase(),
               })                 
           });
           let res= await reqs.json();
           if(res === '403'){
-              setMessage('Turma já existente!');
+              setMessage('Turma já existe!');
               setIsLoading(false);
               setTimeout(() => {
                   setMessage(null);
@@ -111,9 +113,17 @@ export default function MainAlun({ navigation }) {
                 navigation.navigate('Login')
             }, 2000);
           }
+          else if(res === '404.1'){
+            setMessage('Turma não encontrada!');
+            setIsLoading(false);
+            setTimeout(() => {
+                setMessage(null);
+            }, 2000);
+          }
           else{
             AtualizarTurma()
             setMessage2('Turma Encontrada!');
+            setCodigo(null)
             setIsLoading(false);
             setTimeout(() => {
                 setMessage2(null);
@@ -158,8 +168,9 @@ export default function MainAlun({ navigation }) {
   // =========================================================
 
   // =========================================================
-  function EnvioDados(dado1, dado2){
+  function EnvioDados(dado1, dado2, dado3){
     setNomeCurso(dado1 + " - " + dado2);
+    setCodTurma(dado3);
     navigation.navigate('ValidarChamada');
   }
   // =========================================================
@@ -183,7 +194,7 @@ export default function MainAlun({ navigation }) {
           data={DADOS}
           ListEmptyComponent={EmptyListMessage}
           renderItem={({ item }) => (
-            <Pressable onPress={() => EnvioDados(item.curso, item.nomeTurma)}>
+            <Pressable onPress={() => EnvioDados(item.curso, item.nomeTurma, item.codigoTurma)}>
               <View style={style.turma}>
                 <Text
                   style={{

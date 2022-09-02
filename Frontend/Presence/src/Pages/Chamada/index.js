@@ -21,6 +21,20 @@ moment().format();
 moment.locale('pt-br');
 // =========================================================
 
+const EmptyListMessage = ({item}) => {
+  return (
+    // Flat List Item
+    <View>
+      <Text style={{ fontFamily: "poppinsr", fontSize: 18, textAlign: 'center',}}>
+        Nenhum aluno respondeu ainda
+      </Text>
+      <Text style={{ fontFamily: "poppinsr", fontSize: 13, textAlign: 'center'}}>
+        Tente atualizar a página!
+      </Text>
+    </View>   
+  );
+};
+
 export default function Chamada({navigation}){
 
   const [modalActive1, setModalActive1] = useState(false);
@@ -28,28 +42,13 @@ export default function Chamada({navigation}){
   const [modalActive3, setModalActive3] = useState(false);
   const [message, setMessage] = useState(null);
 
-  const [dia, setdia] = useState('14 Julho');
-
   const {codChamada} = useContext(Context);
   const {situation, setSituation} = useContext(Context);
   const {codTurma} = useContext(Context);
   const {setChamadas} = useContext(Context);
-
-  const DADOS = [
-    {AlunoP: 'Leandro Almeida'},
-    {AlunoP: 'Alana Gabriele'},
-    {AlunoP: 'Rafaela Lopes'},
-    {AlunoP: 'Doan FIlho'},
-    {AlunoP: 'Harleny Angelica'},
-    {AlunoP: 'Daniel Rodrigues'},
-    {AlunoP: 'Danielle Rodrigues'},
-    {AlunoP: 'Davi Rodrigues'},
-    {AlunoP: 'Renan Araújo'},
-    {AlunoP: 'Felipe de Sousa'},
-    {AlunoP: 'Dara Cristina'},
-    {AlunoP: 'Rafaela Lopes'},
-
-  ];
+  const {diaChamada} = useContext(Context);
+  const {mesNominalChamada} = useContext(Context);
+  const {respostaChamada, setRespostaChamada} = useContext(Context);
 
 
   function Porcent(Alunosp,Alunosi){
@@ -139,6 +138,7 @@ export default function Chamada({navigation}){
     });
     let res= await reqs.json();
     if (res){
+      setRespostaChamada(null);
       setChamadas(res);
       navigation.navigate('CriarChamada');
     }
@@ -152,7 +152,7 @@ export default function Chamada({navigation}){
         <View style={style.header}>
             <View>
                 <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}> Lista de chamada</Text>
-                <Text style={{ fontFamily:'poppinsr', fontSize:14, color:'#ADA4A5' , alignSelf:'center' }}>{dia}</Text>
+                <Text style={{ fontFamily:'poppinsr', fontSize:14, color:'#ADA4A5' , alignSelf:'center' }}>{diaChamada} {mesNominalChamada}</Text>
             </View>
             <View style={style.voltar}>
                 <PressableBtnBack
@@ -163,7 +163,8 @@ export default function Chamada({navigation}){
         </View>
         <View style={style.lista}>
         <FlatList
-          data={DADOS}
+          ListEmptyComponent={EmptyListMessage}
+          data={respostaChamada}
           renderItem={({ item }) => (
             <Pressable onPress={() => navigation.navigate('CriarChamada')}>
               <View style={style.alunos}>
@@ -177,7 +178,7 @@ export default function Chamada({navigation}){
                     paddingTop: 18,
                   }}
                 >
-                 {item.AlunoP}
+                 {item.aluno}
                 </Text>
                 </View>
               </View>

@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     dia: DataTypes.INTEGER,
     diaNominal: DataTypes.STRING,
     mes: DataTypes.INTEGER,
+    mesNominal: DataTypes.STRING,
     ano: DataTypes.STRING,
     situation: DataTypes.BOOLEAN,
   }, {
