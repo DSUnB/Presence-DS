@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable, FlatList, TouchableOpacity, ImageBackground } from "react-native";
-import PressablesConf from "../../components/pressablesConf";
 import PressableBtnBack from "../../components/PressableBtnBack";
 import PressableCircle from "../../components/pressableCircle";
 import IconMCI from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -123,178 +122,180 @@ export default function CriarChamada({ navigation }) {
   // Início da criação da página
 
   return (
-    <SafeAreaView style={style.container}>
-      <View style={style.header}>
-        <View>
-          <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>{turma}</Text>
+    <ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
+      <SafeAreaView style={style.container}>
+        <View style={style.header}>
+          <View>
+            <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>{turma}</Text>
+          </View>
+          <View style={style.voltar}>
+            <PressableBtnBack
+              click={() => navigation.navigate("MainProf")}
+              iconeIo="chevron-back"
+            />
+          </View>
+          
         </View>
-        <View style={style.voltar}>
-          <PressableBtnBack
-            click={() => navigation.navigate("MainProf")}
-            iconeIo="chevron-back"
-          />
-        </View>
+
         
-      </View>
-
-      
-        <View style={{marginTop: 90, marginBottom: 75, height:'70%', justifyContent: "space-around", alignItems: 'center'}}>
-          <View style={style.code}>
-            <View style={{width: 55,height: 55, borderRadius: 100, backgroundColor: 'white', position: 'absolute', top: 6, left: 6}}>
-              <IconO style={{alignSelf:'center', marginTop: 10}} name='key' size={30}/>
+          <View style={{marginTop: 90, marginBottom: 75, height:'70%', justifyContent: "space-around", alignItems: 'center'}}>
+            <View style={style.code}>
+              <View style={{width: 55,height: 55, borderRadius: 100, backgroundColor: 'white', position: 'absolute', top: 6, left: 6}}>
+                <IconO style={{alignSelf:'center', marginTop: 10}} name='key' size={30}/>
+              </View>
+              <Text style={{ fontFamily: "poppinsb", fontSize: 24, textAlign: 'center', paddingLeft: 15, marginTop: 14 }}>{codigo}</Text>
             </View>
-            <Text style={{ fontFamily: "poppinsb", fontSize: 24, textAlign: 'center', paddingLeft: 15, marginTop: 14 }}>{codigo}</Text>
-          </View>
 
-          <Pressable onPress={() => setModalActive3(true)}>
-            <View style={style.search}>
-              <IconLu style={{marginTop:15, marginBottom:15, marginLeft:15, color:'#ADA4A5'}}name='magnifier' size={20}/>
-              <Text style={{fontFamily:'poppinsr' , fontSize:16, textAlign:'center', color:"#ADA4A5" , marginTop:13,}}> Procure por um mês </Text>
+            <Pressable onPress={() => setModalActive3(true)}>
+              <View style={style.search}>
+                <IconLu style={{marginTop:15, marginBottom:15, marginLeft:15, color:'#ADA4A5'}}name='magnifier' size={20}/>
+                <Text style={{fontFamily:'poppinsr' , fontSize:16, textAlign:'center', color:"#ADA4A5" , marginTop:13,}}> Procure por um mês </Text>
+              </View>
+            </Pressable>
+
+            <View style={{height: 145}}>
+              <Text style={{ fontFamily: "poppinsr", color: '#ADA4A5', textAlign:'center', fontSize: 17, marginBottom: 10}}>{DiaMes('')}</Text>
+                <FlatList
+                  showsHorizontalScrollIndicator={false}
+                  horizontal
+                  data={DATA}
+                  ListEmptyComponent={EmptyListMessage}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity style={style.chamada} underlayColor="#46B297" onPress={() => navigation.navigate('Chamada')}>
+                      <View style={{alignSelf: 'center',  justifyContent: 'center', top: '25%'}}>
+                        <Text style={{ fontFamily: "poppinsr", fontSize: 15, textAlign: 'center', marginBottom: 3 }}>{item.dia}</Text>
+                        <Text style={{ fontFamily: "poppinsr", fontSize: 17, textAlign: 'center', marginTop: 3 }}>{item.data}</Text>
+                      </View> 
+                    </TouchableOpacity>
+                  )}>
+                </FlatList>
             </View>
-          </Pressable>
 
-          <View style={{height: 145}}>
-            <Text style={{ fontFamily: "poppinsr", color: '#ADA4A5', textAlign:'center', fontSize: 17, marginBottom: 10}}>{DiaMes('')}</Text>
-              <FlatList
-                showsHorizontalScrollIndicator={false}
-                horizontal
-                data={DATA}
-                ListEmptyComponent={EmptyListMessage}
-                renderItem={({ item }) => (
-                  <TouchableOpacity style={style.chamada} underlayColor="#46B297" onPress={() => navigation.navigate('Chamada')}>
-                    <View style={{alignSelf: 'center',  justifyContent: 'center', top: '25%'}}>
-                      <Text style={{ fontFamily: "poppinsr", fontSize: 15, textAlign: 'center', marginBottom: 3 }}>{item.dia}</Text>
-                      <Text style={{ fontFamily: "poppinsr", fontSize: 17, textAlign: 'center', marginTop: 3 }}>{item.data}</Text>
-                    </View> 
-                  </TouchableOpacity>
-                )}>
-              </FlatList>
-          </View>
-
-          <View style={{zIndex: 4}}>
-            <Pressables
-              texto='Criar Chamada'
-              click={() => navigation.navigate("Chamada")}
-            />
-          </View>
-        </View>
-      
-
-      <View style={style.footer}>
-        <View style={{width: 24, height: 24,}}>
-          <IconF style={{alignSelf: 'center', color: '#ADA4A5'}} name='edit' size={23.5} onPress={() => setModalActive1(true)}/>
-        </View>
-        <View style={{paddingBottom: 35}}>
-          <PressableCircle
-            click={() => navigation.navigate("Turma")}
-            iconeFA5="users"
-          >
-          </PressableCircle>
-        </View>
-        <View style={{width: 24, height: 24}}>
-          <IconMCI style={{alignSelf: 'center', color: '#DB4E4E'}} name='delete' size={27} onPress={() => setModalActive2(true)}/>
-        </View>
-      </View>
-
-      {/* Modais */}
-      {/* Modal Edit */}
-      <Modal visible={modalActive1} animationType="fade" transparent={true}>
-        <View style={style.fundoModal}>
-          <LinearGradient
-            colors={["#2C5E7A", "#338995"]}
-            start={[1.0, 0.5]}
-            style={style.modal1}
-          >
-            <IconX
-              style={style.close}
-              name="close-circle"
-              size={30}
-              onPress={() => setModalActive1(false)}
-            />
-            <View style={{alignItems: 'center'}}>
-              <Text style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", marginTop:5}}>
-                Editar sua turma
-              </Text>
-              <Inputs place="Nova Matéria" iconeF="book"/>
-              <Inputs place="Nova Turma" iconeO="people"/>
-            </View>
-            <View style={{marginTop:15}}>
-              <PressablesModal
-                texto="Editar"
-                click={() => setModalActive1(false)}
+            <View style={{zIndex: 4}}>
+              <Pressables
+                texto='Criar Chamada'
+                click={() => navigation.navigate("Chamada")}
               />
             </View>
-          </LinearGradient>
-        </View>
-      </Modal>
+          </View>
+        
 
-      {/* Modal Delete */}
-      <Modal visible={modalActive2} animationType="fade" transparent={true}>
-        <View style={style.fundoModal}>
-          <LinearGradient
-            colors={["#2C5E7A", "#338995"]}
-            start={[1.0, 0.5]}
-            style={style.modal2}
-          >
-            <Text
-              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", paddingBottom: 50 }}
+        <View style={style.footer}>
+          <View style={{width: 24, height: 24,}}>
+            <IconF style={{alignSelf: 'center', color: '#ADA4A5'}} name='edit' size={23.5} onPress={() => setModalActive1(true)}/>
+          </View>
+          <View style={{paddingBottom: 35}}>
+            <PressableCircle
+              click={() => navigation.navigate("Turma")}
+              iconeFA5="users"
             >
-              Deseja deletar essa turma?
-            </Text>
-            <View style={style.alinhamento}>
-              <PressablesModal
-                texto="Sim"
-                click={() => handleCloseAndRoute()}
-              />
-              <PressablesModal2
-                texto="Não"
-                click={() => setModalActive2(false)}
-              />
-            </View>
-          </LinearGradient>
+            </PressableCircle>
+          </View>
+          <View style={{width: 24, height: 24}}>
+            <IconMCI style={{alignSelf: 'center', color: '#DB4E4E'}} name='delete' size={27} onPress={() => setModalActive2(true)}/>
+          </View>
         </View>
-      </Modal>
 
-      {/* Modal Calendário */}
-      <Modal visible={modalActive3} animationType="fade" transparent={true}>
-        <View style={style.fundoModal}>
-          <LinearGradient
-            colors={["#2C5E7A", "#338995"]}
-            start={[1.0, 1.0]}
-            style={style.modal3}
-          >
-            <IconX
-              style={style.close}
-              name="close-circle"
-              size={30}
-              onPress={() => setModalActive3(false)}
-            />
-            <DatePicker
-              options={{
-                backgroundColor: 'rgba(44,94,122,0)',
-                textHeaderColor: 'white',
-                textDefaultColor: 'white',
-                selectedTextColor: 'black',
-                mainColor: '#69D498',
-                textSecondaryColor: '#9DCEFF',
-                borderColor: 'rgba(122, 146, 165, 0.6)',
-                defaultFont: 'poppinsr',
-                headerFont: 'poppinsb',
-              }}
-              mode="monthYear"
-              onMonthYearChange={selectedDate => setDate(selectedDate)}
-              style={{ borderRadius: 10, marginTop: 5 }}
-            />
-            <View style={{height: 36, width: 91, position: 'absolute', bottom: 38}}>
-              <PressablesModal
-                texto="Ok"
-                click={() => setModalActive3(false)}
+        {/* Modais */}
+        {/* Modal Edit */}
+        <Modal visible={modalActive1} animationType="fade" transparent={true}>
+          <View style={style.fundoModal}>
+            <LinearGradient
+              colors={["#2C5E7A", "#338995"]}
+              start={[1.0, 0.5]}
+              style={style.modal1}
+            >
+              <IconX
+                style={style.close}
+                name="close-circle"
+                size={30}
+                onPress={() => setModalActive1(false)}
               />
-            </View>
-          </LinearGradient>
-        </View>
-      </Modal>
-    </SafeAreaView>
+              <View style={{alignItems: 'center'}}>
+                <Text style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", marginTop:5}}>
+                  Editar sua turma
+                </Text>
+                <Inputs place="Nova Matéria" iconeF="book"/>
+                <Inputs place="Nova Turma" iconeO="people"/>
+              </View>
+              <View style={{marginTop:15}}>
+                <PressablesModal
+                  texto="Editar"
+                  click={() => setModalActive1(false)}
+                />
+              </View>
+            </LinearGradient>
+          </View>
+        </Modal>
+
+        {/* Modal Delete */}
+        <Modal visible={modalActive2} animationType="fade" transparent={true}>
+          <View style={style.fundoModal}>
+            <LinearGradient
+              colors={["#2C5E7A", "#338995"]}
+              start={[1.0, 0.5]}
+              style={style.modal2}
+            >
+              <Text
+                style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", paddingBottom: 50 }}
+              >
+                Deseja deletar essa turma?
+              </Text>
+              <View style={style.alinhamento}>
+                <PressablesModal
+                  texto="Sim"
+                  click={() => handleCloseAndRoute()}
+                />
+                <PressablesModal2
+                  texto="Não"
+                  click={() => setModalActive2(false)}
+                />
+              </View>
+            </LinearGradient>
+          </View>
+        </Modal>
+
+        {/* Modal Calendário */}
+        <Modal visible={modalActive3} animationType="fade" transparent={true}>
+          <View style={style.fundoModal}>
+            <LinearGradient
+              colors={["#2C5E7A", "#338995"]}
+              start={[1.0, 1.0]}
+              style={style.modal3}
+            >
+              <IconX
+                style={style.close}
+                name="close-circle"
+                size={30}
+                onPress={() => setModalActive3(false)}
+              />
+              <DatePicker
+                options={{
+                  backgroundColor: 'rgba(44,94,122,0)',
+                  textHeaderColor: 'white',
+                  textDefaultColor: 'white',
+                  selectedTextColor: 'black',
+                  mainColor: '#69D498',
+                  textSecondaryColor: '#9DCEFF',
+                  borderColor: 'rgba(122, 146, 165, 0.6)',
+                  defaultFont: 'poppinsr',
+                  headerFont: 'poppinsb',
+                }}
+                mode="monthYear"
+                onMonthYearChange={selectedDate => setDate(selectedDate)}
+                style={{ borderRadius: 10, marginTop: 5 }}
+              />
+              <View style={{height: 36, width: 91, position: 'absolute', bottom: 38}}>
+                <PressablesModal
+                  texto="Ok"
+                  click={() => setModalActive3(false)}
+                />
+              </View>
+            </LinearGradient>
+          </View>
+        </Modal>
+      </SafeAreaView>
+    </ImageBackground>
   );
 }
 
@@ -304,7 +305,6 @@ const style = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     height: "100%",
-    backgroundColor: "#FFF",
   },
   header: {
     zIndex: 2,

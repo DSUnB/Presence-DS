@@ -74,11 +74,11 @@ export default function ProgressBar(props){
             <Text style={{fontFamily:'poppinsm', fontSize: 16}}> {props.titulo} </Text>
             <Text style={{fontFamily:'poppinsm', fontSize: 16 , color:'#4CB69A'}}>{props.texto}%</Text>
           </View>
-            <Progress Alunosp={100} Alunosi={100} height={20}/>
+            <Progress Alunosp={100} Alunosi={100} height={20} />
         </View>
     )}
 
-    /* Para presença geral:
+    /* Para presença individual:
      - Alunosp = Alunos presentes no dia;
      - Alunosi = Alunos inscritos na turma;
     */
