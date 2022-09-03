@@ -138,7 +138,7 @@ export default function CriarChamada({ navigation }) {
       </View>
 
       
-        <View style={{marginTop: 90, marginBottom: 75, height:'70%', justifyContent: "space-around", alignItems: 'center'}}>
+        <View style={{marginTop: 90, marginBottom: 75, height:'70%', justifyContent: 'space-evenly', alignItems: 'center'}}>
           <View style={style.code}>
             <View style={{width: 55,height: 55, borderRadius: 100, backgroundColor: 'white', position: 'absolute', top: 6, left: 6}}>
               <IconO style={{alignSelf:'center', marginTop: 10}} name='key' size={30}/>

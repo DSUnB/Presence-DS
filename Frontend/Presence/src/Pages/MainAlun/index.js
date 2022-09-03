@@ -18,7 +18,7 @@ import IconA from 'react-native-vector-icons/Feather';
 const EmptyListMessage = ({item}) => {
   return (
     // Flat List Item
-    <Text style={{ fontFamily: "poppinsr", fontSize: 18, marginTop: '83%'}}>
+    <Text style={{ fontFamily: "poppinsr", fontSize: 18}}>
       Para começar, entre em uma turma!
     </Text>
   );

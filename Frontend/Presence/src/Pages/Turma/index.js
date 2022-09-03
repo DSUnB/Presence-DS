@@ -6,7 +6,7 @@ import IconP from 'react-native-vector-icons/Ionicons';
 const EmptyListMessage = ({item}) => {
   return (
     // Flat List Item
-    <View style={{alignItems:'center', marginTop: '82%'}}>
+    <View style={{alignItems:'center'}}>
       <Text style={{ fontFamily: "poppinsr", fontSize: 18, textAlign: 'center'}}>
         Ainda não há alunos na sua turma.
       </Text>
