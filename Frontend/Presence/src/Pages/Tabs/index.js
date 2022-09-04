@@ -19,12 +19,12 @@ export default function Tabs() {
         component={Aplicativo}
       />
       <Tab.Screen
-        name="Desenvolvedores"
-        component={Creditos}
-      />
-      <Tab.Screen
         name="Tecnologias"
         component={Tecnologias}
+      />
+            <Tab.Screen
+        name="Desenvolvedores"
+        component={Creditos}
       />
     </Tab.Navigator>
   )
