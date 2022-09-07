@@ -221,7 +221,7 @@ return (
           Registre-se
         </Text> 
       </Text>
-      <Text style={{fontFamily:'poppinsr', fontSize: 12, marginTop: 25}} onPress={() => navigation.navigate('Tabs')} >
+      <Text style={{fontFamily:'poppinsr', fontSize: 12, marginTop: 25, color: '#0D5354'}} onPress={() => navigation.navigate('Tabs')} >
           Saiba mais sobre o Presence
       </Text>
 </Div>

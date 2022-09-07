@@ -7,9 +7,10 @@ export default function Desenvolvedor(props) {
         <View>
             <Pressable style={style.box}  onPress={()=>Linking.openURL(props.link)}>
                 <Image source={{ uri: props.img }} style={style.img}/>
-                    <View style={{ marginLeft: 15 }}>
+                    <View style={{ marginLeft: 15, justifyContent: 'center' }}>
                         <Text style={{ fontFamily: 'poppinsb', fontSize: 18 }} onPress={()=>Linking.openURL('https://github.com/LeanArs')}>{props.nome}</Text>
-                        <Text style={{ fontFamily: 'poppinsr', fontSize: 15 }}>{props.cargo}</Text>
+                        <Text style={{ fontFamily: 'poppinsr', fontSize: 13 }}>{props.cargo}</Text>
+                        <Text style={{ fontFamily: 'poppinsr', fontSize: 10 }}>{props.titulo}</Text>
                     </View>
             </Pressable>
         </View>
