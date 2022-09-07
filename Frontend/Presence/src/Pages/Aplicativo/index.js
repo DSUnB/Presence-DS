@@ -7,7 +7,7 @@ import * as Linking from 'expo-linking';
 
 export default function Aplicativo({ navigation }) {
   return (
-    <ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
+    <ImageBackground source={require('../../assets/images/Tabs-02.png')} resizeMode="cover">
       <View style={style.container}>
         <Text style={{fontFamily:'poppinsb', fontSize:20}}>O que é o aplicativo Presence?</Text>
           <Image source={logo} style={{width: 210, height: 210}}></Image>
@@ -16,7 +16,7 @@ export default function Aplicativo({ navigation }) {
             <Text style={{fontFamily:'poppinsr', fontSize:18, textAlign: 'justify'}}>É um Aplicativo Android que tem como objetivo o controle de presença acadêmica, tanto por parte do professor como por parte do aluno.</Text>
             <IconI name='code-slash' size={ 20 }></IconI>
           </View>
-        <Text style={{fontFamily:'poppinsr', fontSize: 15, textAlign: 'center'}} onPress={()=>Linking.openURL('https://github.com/DSUnB/Presence-DS')}>Clique aqui para acessar o nosso respoitório!</Text>
+        <Text style={{fontFamily:'poppinsr', fontSize: 15, textAlign: 'center', color: '#0D5354'}} onPress={()=>Linking.openURL('https://github.com/DSUnB/Presence-DS')}>Clique aqui para acessar o nosso respoitório!</Text>
       </View>
     </ImageBackground>
   )

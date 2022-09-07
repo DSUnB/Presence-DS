@@ -13,6 +13,7 @@ import MainAlun from './src/Pages/MainAlun';
 import ValidarChamada from './src/Pages/ValidarChamada';
 import Provider from './src/context/Provider';
 import Tabs from './src/Pages/Tabs';
+import VerdePantano from './src/Pages/VerdePantano';
 import Creditos from './src/Pages/Creditos';
 import Tecnologias from './src/Pages/Tecnologias';
 import Aplicativo from './src/Pages/Aplicativo';
@@ -57,6 +58,7 @@ export default function App() {
         <Stack.Screen name="MainAlun" component={MainAlun} />
         <Stack.Screen name="ValidarChamada" component={ValidarChamada} />
         <Stack.Screen name="Tabs" component={Tabs} />
+        <Stack.Screen name="VerdePantano" component={VerdePantano} />
         <Stack.Screen name="Creditos" component={Creditos} />
         <Stack.Screen name="Tecnologias" component={Tecnologias} />
         <Stack.Screen name="Aplicativo" component={Aplicativo} />

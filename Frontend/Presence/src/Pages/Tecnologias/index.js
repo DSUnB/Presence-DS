@@ -2,9 +2,10 @@ import React from 'react'
 import { View, Text, StyleSheet, ImageBackground } from 'react-native'
 import Tecnologia from '../../components/Tecnologia'
 
+
 export default function Tecnologias({ navigation }) {
   return (
-    <ImageBackground source={require('../../assets/images/VetorCad.png')} resizeMode="cover">
+    <ImageBackground source={require('../../assets/images/Tabs-03.png')} resizeMode="cover">
       <View style={style.container}>
         <Text style={{ fontFamily: 'poppinsb', fontSize: 20 }}>Quais Tecnologias utilizamos?</Text>
         <View style={{flexDirection:'row'}}>

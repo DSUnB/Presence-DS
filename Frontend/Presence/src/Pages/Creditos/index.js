@@ -4,7 +4,7 @@ import Desenvolvedor from "../../components/Desenvolvedor";
 
 export default function Creditos({ navigation }) {
     return(
-        <ImageBackground source={require('../../assets/images/VetorCad.png')} resizeMode="cover">
+        <ImageBackground source={require('../../assets/images/Tabs-04.png')} resizeMode="cover">
             <View style={style.container}>
                 <Text style={{fontFamily:'poppinsb', fontSize:20}}>Duques e Cavaleiros</Text>
                 <Text  style={{fontFamily:'poppinsr', fontSize:16, padding: 10}}>Clique e acesse o nosso perfil no Github!</Text>
