@@ -9,7 +9,10 @@ const Tab = createMaterialTopTabNavigator();
 
 export default function Tabs() {
   return (
-    <Tab.Navigator
+    <Tab.Navigator tabBar={() => null}
+      tabBarOptions={{
+        tabStyle: {height: 35},
+      }}
       screenOptions={{
         "tabBarShowLabel": false
       }}

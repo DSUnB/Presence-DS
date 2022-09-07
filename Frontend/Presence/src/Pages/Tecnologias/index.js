@@ -13,8 +13,8 @@ export default function Tecnologias({ navigation }) {
   return (
     <ImageBackground source={require('../../assets/images/Tabs-03.png')} resizeMode="cover">
       <View style={style.container}>
-        <Text style={{ fontFamily: 'poppinsb', fontSize: 20, marginBottom: 50}}>Quais Tecnologias utilizamos?</Text>
         <View>
+        <Text style={{ fontFamily: 'poppinsb', fontSize: 20}}>Quais tecnologias utilizamos?</Text>
           <View style={{flexDirection:'row'}}>
             <Tecnologia img={JS} texto='JavaScript'/>
             <Tecnologia img={EXPO} texto='Expo'/>
