@@ -60,6 +60,13 @@ export default function ValidarChamada({ navigation }, pr) {
       });
       let res= await reqs.json();
       if (res){
+        if (res == '404.01'){
+          setMessage('Esta turma foi excluída pelo professor!')
+          setTimeout(() => {
+            setMessage(null);
+            ObterTurmaAlun();
+          }, 2000);
+        }
         if (res == '403'){
           setMessage('Você já fez esta chamada!')
           setTimeout(() => {

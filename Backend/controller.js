@@ -400,34 +400,44 @@ app.post('/aluno/chamada/realizar', async (req,res) => {
             res.status(404).send(JSON.stringify('404'));
         }
         else {
-            let reqs1 = await model.Chamadas.findOne({
+            let reqs0 = await model.Turmas.findOne({
                 where: {
-                    codigoChamada: req.body.codigoChamada,
-                }
+                    codigoTurma: req.body.codigoTurma,
+                } 
             });
-            if (reqs1 == null){
-                res.status(404).send(JSON.stringify('404.1'));
+            if (reqs0 == null){
+                res.status(404).send(JSON.stringify('404.01'));
             }
-            else if (reqs1.codigoTurma == req.body.codigoTurma){
-                    if (reqs1.situation == true){
-                        let reqs2 = await model.ResponderChamadas.create({
-                            'idAluno': reqs.idAluno,
-                            'codigoChamada': req.body.codigoChamada,
-                            'codigoTurma': req.body.codigoTurma,
-                            'aluno': req.body.nomeAluno,
-                            'createAt': new Date(),
-                            'updatedAt': new Date()
-                        });
-                        if (reqs2) {
-                            res.status(202).send(JSON.stringify('202'))
+            else {
+                let reqs1 = await model.Chamadas.findOne({
+                    where: {
+                        codigoChamada: req.body.codigoChamada,
+                    }
+                });
+                if (reqs1 == null){
+                    res.status(404).send(JSON.stringify('404.1'));
+                }
+                else if (reqs1.codigoTurma == req.body.codigoTurma){
+                        if (reqs1.situation == true){
+                            let reqs2 = await model.ResponderChamadas.create({
+                                'idAluno': reqs.idAluno,
+                                'codigoChamada': req.body.codigoChamada,
+                                'codigoTurma': req.body.codigoTurma,
+                                'aluno': req.body.nomeAluno,
+                                'createAt': new Date(),
+                                'updatedAt': new Date()
+                            });
+                            if (reqs2) {
+                                res.status(202).send(JSON.stringify('202'))
+                            }
+                        }
+                        else {
+                            res.status(202).send(JSON.stringify('202.0'));
                         }
                     }
-                    else {
-                        res.status(202).send(JSON.stringify('202.0'));
-                    }
-                }
-            else {
-                res.status(412).send(JSON.stringify('404.1'));
+                else {
+                    res.status(412).send(JSON.stringify('404.1'));
+                }     
             }
             }
         }
