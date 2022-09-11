@@ -331,12 +331,6 @@ export default function CriarChamada({ navigation }) {
                     iconeIo="chevron-back"
                 />
             </View>
-            <View style={style.opcoes}>    
-                <PressablesConf
-                    iconeSLI="options"
-                    click={() => navigation.navigate("MainAlun")}
-                />
-            </View>
         </View>
 
       <View style={{marginTop: 90, marginBottom: 75, height:'70%', justifyContent: "space-around", alignItems: 'center',}}>
