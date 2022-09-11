@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Text, View, Modal, StyleSheet, FlatList, SafeAreaView, Pressable, BackHandler, Alert, Image, Keyboard,
+import { Text, View, Modal, StyleSheet, FlatList, ImageBackground, SafeAreaView, Pressable, BackHandler, Alert, Image, Keyboard,
 } from "react-native";
 import Pressables from "../../components/pressables";
 import config from "../../config/config.json";
@@ -7,7 +7,6 @@ import PressablesConf from "../../components/pressablesConf";
 import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
 import { LinearGradient } from "expo-linear-gradient";
-import { Div } from "./styled";
 import Inputs from "../../components/inputs";
 import IconX from 'react-native-vector-icons/Ionicons';
 import { Context } from '../../context/Provider';
@@ -18,7 +17,7 @@ import IconA from 'react-native-vector-icons/Feather';
 const EmptyListMessage = ({item}) => {
   return (
     // Flat List Item
-    <Text style={{ fontFamily: "poppinsr", fontSize: 18, marginTop: '83%'}}>
+    <Text style={{ fontFamily: "poppinsr", fontSize: 18}}>
       Para começar, entre em uma turma!
     </Text>
   );
@@ -178,121 +177,123 @@ export default function MainAlun({ navigation }) {
   // =========================================================
   // ARQUITETURA DA SCREEN DA APLICAÇÃO:
   return (
-    <Div>
-      <View style={style.logout}>
-        <PressablesConf iconeLo="logout" click={() => setModalActive2(true)} />
-      </View>
+    <ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
+      <SafeAreaView style={style.container}>
+        <View style={style.logout}>
+          <PressablesConf iconeLo="logout" click={() => setModalActive2(true)} />
+        </View>
 
-      <View style={style.header}>
-        <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>
-          Turmas Inscritas
-        </Text>
-      </View>
+        <View style={style.header}>
+          <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>
+            Turmas Inscritas
+          </Text>
+        </View>
 
-      <View style={style.lista}>
-        <FlatList
-          data={DADOS}
-          ListEmptyComponent={EmptyListMessage}
-          renderItem={({ item }) => (
-            <Pressable onPress={() => EnvioDados(item.curso, item.nomeTurma, item.codigoTurma)}>
-              <View style={style.turma}>
-                <Text
-                  style={{
-                    fontFamily: "poppinsm",
-                    fontSize: 14,
-                    paddingLeft: 20,
-                    paddingTop: 18,
-                  }}
-                >
-                  {item.curso} - {item.nomeTurma}
-                </Text>
-              </View>
-            </Pressable>
-          )}
-        ></FlatList>
-      </View>
-
-      <View style={style.botao}>
-        <Pressables
-          iconeM="login"
-          texto="Entrar em uma turma"
-          click={() => setModalActive3(true)}
-        />
-      </View>
-
-      <Modal visible={modalActive3} animationType="fade" transparent={true}>
-        <View style={style.fundoModal}>
-          <LinearGradient
-            // Button Linear Gradient
-            colors={["#2C5E7A", "#338995"]}
-            start={[1.0, 0.5]}
-            style={style.modal}
-          >
-            <IconX
-              style={style.close}
-              name="close-circle"
-              size={30}
-              onPress={() => setModalActive3(false)}
-            />
-            <Text
-              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white" }}
-            >
-              Insira o código da turma
-            </Text>
-            {message && (
-                <View style={{display:'flex' , flexDirection:'row'}}>
-                <IconA name='alert-triangle' size={20} style={{marginRight:10, color:'#fff'}}/>
-                <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message}</Text>
+        <View style={style.lista}>
+          <FlatList
+            data={DADOS}
+            ListEmptyComponent={EmptyListMessage}
+            renderItem={({ item }) => (
+              <Pressable onPress={() => EnvioDados(item.curso, item.nomeTurma, item.codigoTurma)}>
+                <View style={style.turma}>
+                  <Text
+                    style={{
+                      fontFamily: "poppinsm",
+                      fontSize: 14,
+                      paddingLeft: 20,
+                      paddingTop: 18,
+                    }}
+                  >
+                    {item.curso} - {item.nomeTurma}
+                  </Text>
                 </View>
-                    )}
-
-            {message2 && (
-              <View style={{display:'flex' , flexDirection:'row'}}>
-              <IconC name='check-circle-o' size={20} style={{marginRight:10, color:'#fff'}}/>
-              <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message2}</Text>
-              </View>
-                    )}
-            <Inputs place="Código" iconeF="book" onChange={(text) => setCodigo(text)}/>
-            
-            {isLoading && (
-              <Image style={style.loading} source={require('../../assets/videos/LoadingApp.gif')}/>
+              </Pressable>
             )}
+          ></FlatList>
+        </View>
 
-            {!isLoading && (
-              <PressablesModal
-                texto="Entrar"
-                click={EntrarTurmas}
-              />
-            )}  
-          </LinearGradient>
+        <View style={style.botao}>
+          <Pressables
+            iconeM="login"
+            texto="Entrar em uma turma"
+            click={() => setModalActive3(true)}
+          />
         </View>
-      </Modal>
-      <Modal visible={modalActive2} animationType="fade" transparent={true}>
-        <View style={style.fundoModal}>
-          <LinearGradient
-            colors={["#2C5E7A", "#338995"]}
-            start={[1.0, 0.5]}
-            style={style.modal2}
-          >
-            <Text
-              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", paddingBottom: 50 }}
+
+        <Modal visible={modalActive3} animationType="fade" transparent={true}>
+          <View style={style.fundoModal}>
+            <LinearGradient
+              // Button Linear Gradient
+              colors={["#2C5E7A", "#338995"]}
+              start={[1.0, 0.5]}
+              style={style.modal}
             >
-              Deseja mesmo sair?
-            </Text>
-            <View style={style.alinhamento}>
-              <PressablesModal
-                texto="Sim"
-                click={() => handleCloseAndRoute()}
+              <IconX
+                style={style.close}
+                name="close-circle"
+                size={30}
+                onPress={() => setModalActive3(false)}
               />
-              <PressablesModal2
-                texto="Não"
-                click={() => setModalActive2(false)}
-              />
-            </View>
-          </LinearGradient>
-        </View>
-      </Modal>
-    </Div>
+              <Text
+                style={{ fontFamily: "poppinsb", fontSize: 15, color: "white" }}
+              >
+                Insira o código da turma
+              </Text>
+              {message && (
+                  <View style={{display:'flex' , flexDirection:'row'}}>
+                  <IconA name='alert-triangle' size={20} style={{marginRight:10, color:'#fff'}}/>
+                  <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message}</Text>
+                  </View>
+                      )}
+
+              {message2 && (
+                <View style={{display:'flex' , flexDirection:'row'}}>
+                <IconC name='check-circle-o' size={20} style={{marginRight:10, color:'#fff'}}/>
+                <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message2}</Text>
+                </View>
+                      )}
+              <Inputs place="Código" iconeF="book" onChange={(text) => setCodigo(text)}/>
+              
+              {isLoading && (
+                <Image style={style.loading} source={require('../../assets/videos/LoadingApp.gif')}/>
+              )}
+
+              {!isLoading && (
+                <PressablesModal
+                  texto="Entrar"
+                  click={EntrarTurmas}
+                />
+              )}  
+            </LinearGradient>
+          </View>
+        </Modal>
+        <Modal visible={modalActive2} animationType="fade" transparent={true}>
+          <View style={style.fundoModal}>
+            <LinearGradient
+              colors={["#2C5E7A", "#338995"]}
+              start={[1.0, 0.5]}
+              style={style.modal2}
+            >
+              <Text
+                style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", paddingBottom: 50 }}
+              >
+                Deseja mesmo sair?
+              </Text>
+              <View style={style.alinhamento}>
+                <PressablesModal
+                  texto="Sim"
+                  click={() => handleCloseAndRoute()}
+                />
+                <PressablesModal2
+                  texto="Não"
+                  click={() => setModalActive2(false)}
+                />
+              </View>
+            </LinearGradient>
+          </View>
+        </Modal>
+      </SafeAreaView>
+    </ImageBackground>
   );
 }
 
@@ -309,7 +310,6 @@ const style = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: '100%',
-    backgroundColor: '#fff',
   }, 
   
   header: {

@@ -9,7 +9,7 @@ import { Context } from '../../context/Provider';
 const EmptyListMessage = ({item}) => {
   return (
     // Flat List Item
-    <View style={{alignItems:'center', marginTop: '82%'}}>
+    <View style={{alignItems:'center'}}>
       <Text style={{ fontFamily: "poppinsr", fontSize: 18, textAlign: 'center'}}>
         Ainda não há alunos na sua turma.
       </Text>
@@ -47,44 +47,46 @@ export default function Turma({ navigation }) {
 
 
   return (
-    <SafeAreaView style={style.container}>
-      <View style={style.header}>
-            <View>
-                <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>Alunos</Text>
-            </View>
-            <View style={style.voltar}>
-                <PressableBtnBack
-                    click={() => navigation.navigate("CriarChamada")}
-                    iconeIo="chevron-back"
-                />
-            </View>
-        </View>
-        <View style={style.lista}>
-        <FlatList
-          data={alunosTurma}
-          ListEmptyComponent={EmptyListMessage}
-          renderItem={({ item }) => (
-            <Pressable onPress={() => navigation.navigate('CriarChamada')}>
-              <View style={style.alunos}>
-                <View style={{flexDirection: "row", justifyContent:'space-between'}}>
-                <IconP style={{position:'absolute', alignSelf:'center', marginLeft:14, paddingTop:12, color:'#7B6F72'}} name='person-outline' size={18}/>
-                <Text
-                  style={{
-                    fontFamily: "poppinsm",
-                    fontSize: 14,
-                    paddingLeft: 38,
-                    paddingTop: 18,
-                  }}
-                >
-                 {item.nome}
-                </Text>
-                </View>
+    <ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
+      <SafeAreaView style={style.container}>
+        <View style={style.header}>
+              <View>
+                  <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>Alunos</Text>
               </View>
-            </Pressable>
-          )}
-        ></FlatList>
-      </View>   
-    </SafeAreaView>
+              <View style={style.voltar}>
+                  <PressableBtnBack
+                      click={() => navigation.navigate("CriarChamada")}
+                      iconeIo="chevron-back"
+                  />
+              </View>
+          </View>
+          <View style={style.lista}>
+          <FlatList
+            data={DADOS}
+            ListEmptyComponent={EmptyListMessage}
+            renderItem={({ item }) => (
+              <Pressable onPress={() => navigation.navigate('CriarChamada')}>
+                <View style={style.alunos}>
+                  <View style={{flexDirection: "row", justifyContent:'space-between'}}>
+                  <IconP style={{position:'absolute', alignSelf:'center', marginLeft:14, paddingTop:12, color:'#7B6F72'}} name='person-outline' size={18}/>
+                  <Text
+                    style={{
+                      fontFamily: "poppinsm",
+                      fontSize: 14,
+                      paddingLeft: 38,
+                      paddingTop: 18,
+                    }}
+                  >
+                  {item.AlunoP}
+                  </Text>
+                  </View>
+                </View>
+              </Pressable>
+            )}
+          ></FlatList>
+        </View>   
+      </SafeAreaView>
+    </ImageBackground>
   )
 }
 
@@ -94,7 +96,6 @@ const style = StyleSheet.create({
       alignItems: "center",
       width: "100%",
       height: "100%",
-      backgroundColor: "#fff",
     },
     header: {
       zIndex: 1,

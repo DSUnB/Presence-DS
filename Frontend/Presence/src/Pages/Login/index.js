@@ -202,7 +202,7 @@ return (
 <ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
 <Div>
 
-  <Text style={{fontFamily:'poppinsb', fontSize:20}} onPress={() => navigation.navigate('Tabs')} >Bem vindo</Text>
+  <Text style={{fontFamily:'poppinsb', fontSize:20}}>Bem vindo</Text>
   <Text style={{fontFamily:'poppinsr', fontSize:16, marginBottom:50}}>ao Presence!</Text>
 
   {message && (
@@ -234,6 +234,9 @@ return (
         <Text style={styles.hypertexto} onPress={() => navigation.navigate('Form')}> 
           Registre-se
         </Text> 
+      </Text>
+      <Text style={{fontFamily:'poppinsr', fontSize: 12, marginTop: 25, color: '#0D5354'}} onPress={() => navigation.navigate('Tabs')} >
+          Saiba mais sobre o Presence
       </Text>
 </Div>
 </ImageBackground>

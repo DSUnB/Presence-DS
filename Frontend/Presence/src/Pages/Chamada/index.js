@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { SafeAreaView, Text, StyleSheet, View, Animated, Modal, FlatList, Pressable } from 'react-native';
+import React, { useContext, useState } from "react";
+import { SafeAreaView, Text, StyleSheet, View, Animated, Modal, FlatList, Pressable, ImageBackground } from 'react-native';
 import PressableBtnBack from '../../components/PressableBtnBack';
 import ProgressBar from '../../components/ProgressBar';
 import IconO from 'react-native-vector-icons/Octicons';
@@ -143,6 +143,7 @@ export default function Chamada({navigation}){
   }
   // =========================================================
   return (
+  <ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
     <SafeAreaView style={style.container}>
         <View style={style.header}>
             <View>
@@ -157,53 +158,60 @@ export default function Chamada({navigation}){
             </View>
         </View>
         <View style={style.lista}>
-        <FlatList
-          ListEmptyComponent={EmptyListMessage}
-          data={respostaChamada}
-          renderItem={({ item }) => (
-            <Pressable onPress={() => navigation.navigate('CriarChamada')}>
-              <View style={style.alunos}>
-                <View style={{flexDirection: "row", justifyContent:'space-between'}}>
-                <IconX style={{position:'absolute', alignSelf:'center', marginLeft:14, paddingTop:12, color:'#7B6F72'}} name='person-outline' size={18}/>
-                <Text
-                  style={{
-                    fontFamily: "poppinsm",
-                    fontSize: 14,
-                    paddingLeft: 38,
-                    paddingTop: 18,
-                  }}
-                >
-                 {item.aluno}
-                </Text>
-                </View>
-              </View>
-            </Pressable>
-          )}
-        ></FlatList>
-      </View>
-
-      <View style={style.seecode}>
-        <View style={style.circulo}>
-          <IconO style={{alignSelf:'center', marginTop: 10}} name='key' size={30}/>
+          <FlatList
+            ListEmptyComponent={EmptyListMessage}
+            data={respostaChamada}
+            renderItem={({ item }) => (
+                <Pressable onPress={() => navigation.navigate('CriarChamada')}>
+                  <View style={style.alunos}>
+                    <View style={{flexDirection: "row", justifyContent:'space-between'}}>
+                      <IconX style={{position:'absolute', alignSelf:'center', marginLeft:14, paddingTop:12, color:'#7B6F72'}} name='person-outline' size={18}/>
+                      <Text
+                        style={{
+                          fontFamily: "poppinsm",
+                          fontSize: 14,
+                          paddingLeft: 38,
+                          paddingTop: 18,
+                      }}
+                      >
+                        {item.aluno}
+                      </Text>
+                    </View>
+                  </View>
+                </Pressable>
+          )} />
         </View>
-      <Text style={{fontFamily:'poppinsm', fontSize:14, alignSelf:'center', marginTop:8}}>Código da chamada</Text>
-      <Pressablesee click={() => setModalActive1(true)}></Pressablesee>
-      </View>  
-      <View style={style.progress}>
-        <ProgressBar titulo='Presença Geral'/>
-      </View>
 
-      <View style={style.closeturma}>
-        {situation && (
-          <BtnClose iconeMCI="sort-variant-lock" texto="Fechar chamada" click={() => setModalActive2(true)}/>
-        )}
-        {!situation && (
-          <BtnOpen iconeMCI="sort-variant-lock-open" texto="Reabrir Chamada" click={() => setModalActive3(true)} />
-        )}
-      </View>
-      
-      {/* Modais */}
+        <View style={style.voltar}>
+            <PressableBtnBack
+                click={() => navigation.navigate("CriarChamada")}
+                iconeIo="chevron-back"
+            />
+        </View>
 
+        <View style={style.seecode}>
+          <View style={style.circulo}>
+            <IconO style={{alignSelf:'center', marginTop: 10}} name='key' size={30}/>
+          </View>
+        <Text style={{fontFamily:'poppinsm', fontSize:14, alignSelf:'center', marginTop:8}}>Código da chamada</Text>
+        <Pressablesee click={() => setModalActive1(true)}></Pressablesee>
+        </View>  
+        <View style={style.progress}>
+          <ProgressBar titulo='Presença Geral'/>
+        </View>
+
+        <View style={style.closeturma}>
+          {situation && (
+            <BtnClose iconeMCI="sort-variant-lock" texto="Fechar chamada" click={() => setModalActive2(true)}/>
+          )}
+          {!situation && (
+            <BtnOpen iconeMCI="sort-variant-lock-open" texto="Reabrir Chamada" click={() => setModalActive3(true)} />
+          )}
+        </View>
+
+        {/* Modais */}
+
+        {/* Modal Código Chamada */}
       <Modal visible={modalActive1} animationType="fade" transparent={true}>
       <View style={style.fundoModal}>
           <LinearGradient
@@ -227,6 +235,7 @@ export default function Chamada({navigation}){
       </View>
       </Modal>
 
+      {/* Modal fechar chamada */}
       <Modal visible={modalActive2} animationType="fade" transparent={true}>
         <View style={style.fundoModal}>
           <LinearGradient
@@ -258,6 +267,7 @@ export default function Chamada({navigation}){
         </View>
       </Modal>
 
+      {/* Modal Reabrir chamada */}
       <Modal visible={modalActive3} animationType="fade" transparent={true}>
         <View style={style.fundoModal}>
           <LinearGradient
@@ -288,9 +298,10 @@ export default function Chamada({navigation}){
           </LinearGradient>
         </View>
       </Modal>
-
-    </SafeAreaView>
-  )}
+      </SafeAreaView>
+    </ImageBackground>
+  )
+}
 
 const style = StyleSheet.create({
     container: {
@@ -298,7 +309,6 @@ const style = StyleSheet.create({
       alignItems: "center",
       width: "100%",
       height: "100%",
-      backgroundColor: "#fff",
     },
     header: {
         zIndex: 1,

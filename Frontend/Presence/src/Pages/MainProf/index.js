@@ -25,7 +25,7 @@ moment.locale('pt-br');
 const EmptyListMessage = ({item}) => {
   return (
     // Flat List Item
-    <Text style={{ fontFamily: "poppinsr", fontSize: 18, marginTop: '100%' }}>
+    <Text style={{ fontFamily: "poppinsr", fontSize: 18}}>
       Para começar, crie uma turma!
     </Text>
   );
@@ -226,133 +226,135 @@ export default function MainProf({ navigation }) {
 // =========================================================
 // ARQUITETURA DA SCREEN DA APLICAÇÃO:
   return (
-    <SafeAreaView style={style.container}>
-      <View style={style.logout}>
-        <PressablesConf iconeLo="logout" click={() => setModalActive2(true)} />
-      </View>
-  
-      <View style={style.header}>
-        <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>
-          {" "}
-          Turmas Ministradas
-        </Text>
-      </View>
+    <ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
+      <SafeAreaView style={style.container}>
+        <View style={style.logout}>
+          <PressablesConf iconeLo="logout" click={() => setModalActive2(true)} />
+        </View>
+    
+        <View style={style.header}>
+          <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>
+            {" "}
+            Turmas Ministradas
+          </Text>
+        </View>
 
-      <View style={style.lista}>
-        <FlatList
-          data={DADOS}
-          ListEmptyComponent={EmptyListMessage}
-          renderItem={({ item }) => (
-            <Pressable onPress={() => EnvioDados(item.codigoTurma ,item.curso, item.nomeTurma)}>
-              <View style={style.turma}>
-                <Text
-                  style={{
-                    fontFamily: "poppinsm",
-                    fontSize: 14,
-                    paddingLeft: 20,
-                    paddingTop: 18,
-                  }}
-                >
-                  {item.curso} - {item.nomeTurma}
-                </Text>
-              </View>
-            </Pressable>
-          )}
-          >
-        </FlatList>
-      </View>
-
-      <View style={style.botao}>
-        <Pressables
-          iconeFA5="users"
-          texto="Criar uma turma"
-          click={() => setModalActive3(true)}
-        />
-      </View>
-
-      <Modal visible={modalActive2} animationType="fade" transparent={true}>
-        <View style={style.fundoModal}>
-          <LinearGradient
-            start={[1.0, 0.5]}
-            style={style.modal2}
-            colors={["#2C5E7A", "#338995"]}
-          >
-            <Text
-              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", paddingBottom: 50 }}
+        <View style={style.lista}>
+          <FlatList
+            data={DADOS}
+            ListEmptyComponent={EmptyListMessage}
+            renderItem={({ item }) => (
+              <Pressable onPress={() => EnvioDados(item.codigoTurma ,item.curso, item.nomeTurma)}>
+                <View style={style.turma}>
+                  <Text
+                    style={{
+                      fontFamily: "poppinsm",
+                      fontSize: 14,
+                      paddingLeft: 20,
+                      paddingTop: 18,
+                    }}
+                  >
+                    {item.curso} - {item.nomeTurma}
+                  </Text>
+                </View>
+              </Pressable>
+            )}
             >
-              Deseja mesmo sair?
-            </Text>
-            <View style={style.alinhamento}>
-              <PressablesModal
-                texto="Sim"
-                click={() => handleCloseAndRoute()}
-              />
-              <PressablesModal2
-                texto="Não"
-                click={() => setModalActive2(false)}
-              />
-            </View>
-          </LinearGradient>
+          </FlatList>
         </View>
-      </Modal>
 
-      <Modal visible={modalActive3} animationType="fade" transparent={true}>
-        <View style={style.fundoModal}>
-          <LinearGradient
-            colors={["#2C5E7A", "#338995"]}
-            start={[1.0, 0.5]}
-            style={style.modal}
-          >
-            <IconX
-              style={style.close}
-              name="close-circle"
-              size={30}
-              onPress={() => setModalActive3(false)}
-            />
-            <View style={{alignItems: 'center'}}>
+        <View style={style.botao}>
+          <Pressables
+            iconeFA5="users"
+            texto="Criar uma turma"
+            click={() => setModalActive3(true)}
+          />
+        </View>
+
+        <Modal visible={modalActive2} animationType="fade" transparent={true}>
+          <View style={style.fundoModal}>
+            <LinearGradient
+              start={[1.0, 0.5]}
+              style={style.modal2}
+              colors={["#2C5E7A", "#338995"]}
+            >
               <Text
-                style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", marginTop:5}}
+                style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", paddingBottom: 50 }}
               >
-                Crie sua turma
+                Deseja mesmo sair?
               </Text>
-
-              {message && (
-                <>
-                  <View style={{display:'flex' , flexDirection:'row'}}>
-                  <IconA name='alert-triangle' size={20} style={{marginRight:10, color:'#fff'}}/>
-                  <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message}</Text>
-                  </View>
-                </>
-              )}
-              
-              {message2 && (
-                <>
-                  <View style={{display:'flex' , flexDirection:'row'}}>
-                  <IconC name='check-circle-o' size={20} style={{marginRight:10, color:'#fff'}}/>
-                  <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message2}</Text>
-                  </View>
-                </>
-              )}
-                      
-              <Inputs place="Matéria" iconeF="book" onChange={(text) => setMateria(text)} />
-              <Inputs place="Turma" iconeO="people" onChange={(text) => setNomeTurma(text)} />
-            </View>
-
-            <View style={{marginTop:15}}>
-              {isLoading && (
-                <Image style={style.loading} source={require('../../assets/videos/LoadingApp.gif')}/>
-              )}
-              {!isLoading && (
+              <View style={style.alinhamento}>
                 <PressablesModal
-                  texto="Criar"
-                  click={CriarTurma}
+                  texto="Sim"
+                  click={() => handleCloseAndRoute()}
                 />
-              )}
-            </View>   
-          </LinearGradient>
-        </View>
-      </Modal>
-    </SafeAreaView>
+                <PressablesModal2
+                  texto="Não"
+                  click={() => setModalActive2(false)}
+                />
+              </View>
+            </LinearGradient>
+          </View>
+        </Modal>
+
+        <Modal visible={modalActive3} animationType="fade" transparent={true}>
+          <View style={style.fundoModal}>
+            <LinearGradient
+              colors={["#2C5E7A", "#338995"]}
+              start={[1.0, 0.5]}
+              style={style.modal}
+            >
+              <IconX
+                style={style.close}
+                name="close-circle"
+                size={30}
+                onPress={() => setModalActive3(false)}
+              />
+              <View style={{alignItems: 'center'}}>
+                <Text
+                  style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", marginTop:5}}
+                >
+                  Crie sua turma
+                </Text>
+
+                {message && (
+                  <>
+                    <View style={{display:'flex' , flexDirection:'row'}}>
+                    <IconA name='alert-triangle' size={20} style={{marginRight:10, color:'#fff'}}/>
+                    <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message}</Text>
+                    </View>
+                  </>
+                )}
+                
+                {message2 && (
+                  <>
+                    <View style={{display:'flex' , flexDirection:'row'}}>
+                    <IconC name='check-circle-o' size={20} style={{marginRight:10, color:'#fff'}}/>
+                    <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message2}</Text>
+                    </View>
+                  </>
+                )}
+                        
+                <Inputs place="Matéria" iconeF="book" onChange={(text) => setMateria(text)} />
+                <Inputs place="Turma" iconeO="people" onChange={(text) => setNomeTurma(text)} />
+              </View>
+
+              <View style={{marginTop:15}}>
+                {isLoading && (
+                  <Image style={style.loading} source={require('../../assets/videos/LoadingApp.gif')}/>
+                )}
+                {!isLoading && (
+                  <PressablesModal
+                    texto="Criar"
+                    click={CriarTurma}
+                  />
+                )}
+              </View>   
+            </LinearGradient>
+          </View>
+        </Modal>
+      </SafeAreaView>
+    </ImageBackground>
   );
 }
 // =========================================================
@@ -365,7 +367,6 @@ const style = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     height: "100%",
-    backgroundColor: "#fff",
   },
   fundoModal: {
     flex: 1,

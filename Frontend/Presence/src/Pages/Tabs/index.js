@@ -3,28 +3,36 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import Creditos from '../Creditos'
 import Tecnologias from '../Tecnologias';
 import Aplicativo from '../Aplicativo';
+import VerdePantano from '../VerdePantano';
 
 const Tab = createMaterialTopTabNavigator();
 
 export default function Tabs() {
   return (
-    <Tab.Navigator
+    <Tab.Navigator tabBar={() => null}
       tabBarOptions={{
-        showLabel: false
+        tabStyle: {height: 35},
       }}
-      initialRouteName="Creditos"
+      screenOptions={{
+        "tabBarShowLabel": false
+      }}
+      initialRouteName="VerdePantano"
     >
+      <Tab.Screen
+        name="VerdePantano"
+        component={VerdePantano}
+      />
       <Tab.Screen
         name="Aplicativo"
         component={Aplicativo}
       />
       <Tab.Screen
-        name="Desenvolvedores"
-        component={Creditos}
-      />
-      <Tab.Screen
         name="Tecnologias"
         component={Tecnologias}
+      />
+            <Tab.Screen
+        name="Desenvolvedores"
+        component={Creditos}
       />
     </Tab.Navigator>
   )
