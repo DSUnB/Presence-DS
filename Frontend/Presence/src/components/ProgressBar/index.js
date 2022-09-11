@@ -2,6 +2,17 @@ import React from 'react';
 import { Text, View, Animated } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
+// Banco de dados fake
+let Alunospres = 100
+let AlunosTotal = 100
+
+
+function Porcent(Alunosp,Alunosi){
+  return (Alunosp/Alunosi)*100;
+}
+
+let P = Math.round(Porcent (Alunospres,AlunosTotal))
+
 
 const Progress = ({Alunosp, Alunosi, height}) => {
     const [width, setWidth] = React.useState(0);
@@ -70,9 +81,9 @@ export default function ProgressBar(props){
         <View>
           <View style={{flexDirection:'row', justifyContent:'space-between', marginBottom:2}}>
             <Text style={{fontFamily:'poppinsm', fontSize: 12}}> {props.titulo} </Text>
-            <Text style={{fontFamily:'poppinsm', fontSize: 12 , color:'#4CB69A'}}>{props.texto}%</Text>
+            <Text style={{fontFamily:'poppinsm', fontSize: 12 , color:'#4CB69A'}}>{P}%</Text>
           </View>
-            <Progress Alunosp={100} Alunosi={100} height={20}/>
+            <Progress Alunosp={Alunospres} Alunosi={AlunosTotal} height={20}/>
         </View>
     )}
 

@@ -320,7 +320,19 @@ app.post('/professor/turma/atualizar', async (req,res) =>{
             }
         });
     if(reqs){
-        res.status(403).send(reqs);
+        let reqs2 = await model.EntrarTurmas.update({
+            'curso': req.body.materia,
+            'nomeTurma': req.body.turma,
+            'updatedAt': new Date()
+        },
+        {
+            where: {
+                'codigoTurma': req.body.codigoTurma
+            }
+        });
+        if (reqs2){
+            res.status(202).send(reqs);
+        }
     }
     }
     catch {

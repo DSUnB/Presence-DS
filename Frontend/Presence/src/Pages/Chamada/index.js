@@ -50,13 +50,6 @@ export default function Chamada({navigation}){
   const {mesNominalChamada, setMesNominalChamada} = useContext(Context);
   const {respostaChamada, setRespostaChamada} = useContext(Context);
 
-
-  function Porcent(Alunosp,Alunosi){
-    return (Alunosp/Alunosi)*100;
-  }
-  
-  let P = Math.round(Porcent (100,100))
-
   // =========================================================
   // FUNÇÃO PARA ALTERAR ESTADO PARA DESATIVAR CHAMADA:
   async function DesativarChamada(method){
@@ -197,7 +190,7 @@ export default function Chamada({navigation}){
       <Pressablesee click={() => setModalActive1(true)}></Pressablesee>
       </View>  
       <View style={style.progress}>
-        <ProgressBar texto={P} titulo='Presença Geral'/>
+        <ProgressBar titulo='Presença Geral'/>
       </View>
 
       <View style={style.closeturma}>

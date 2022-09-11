@@ -262,7 +262,7 @@ export default function CriarChamada({ navigation }) {
       let res= await reqs.json();
       if (res){
         if (res == '403'){
-          console.log('Deu merda!')
+          null;
         }
         else if (res){
           setRespostaChamada(res);
