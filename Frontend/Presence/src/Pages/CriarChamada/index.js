@@ -299,6 +299,32 @@ export default function CriarChamada({ navigation }) {
 // =========================================================
 
   // =========================================================
+  // FUNÇÃO PARA AJUSTAR A PORCENTAGEM DA PRÓXIMA PÁGINA:
+  async function PorcentagemPresenca(){
+    let reqs = await fetch(config.urlRootNode+'professor/porcentagem/chamada', {
+      method: 'POST',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        codigoTurma: codTurma,
+      })
+    });
+    let res= await reqs.json();
+    if (res) {
+      if (res == '403'){
+        null
+      }
+      else {
+        setAlunosTurma(res);
+        navigation.navigate('Turma')
+      }
+    }
+}
+// =========================================================
+
+  // =========================================================
   // FUNÇÃO PARA MOSTRAR CHAMADA ESPECÍFICA:
   async function EnvioDados(dado1, dado2, dado3, dado4){
     if (dado1 == 0){
