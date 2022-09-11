@@ -29,6 +29,23 @@ export default function Turma({ navigation }) {
 
   // =============================================
 
+
+  const DADOS = [
+    // {AlunoP: 'Leandro Almeida'},
+    // {AlunoP: 'Alana Gabriele'},
+    // {AlunoP: 'Rafaela Lopes'},
+    // {AlunoP: 'Doan FIlho'},
+    // {AlunoP: 'Harleny Angelica'},
+    // {AlunoP: 'Daniel Rodrigues'},
+    // {AlunoP: 'Danielle Rodrigues'},
+    // {AlunoP: 'Davi Rodrigues'},
+    // {AlunoP: 'Renan Araújo'},
+    // {AlunoP: 'Felipe de Sousa'},
+    // {AlunoP: 'Dara Cristina'},
+    // {AlunoP: 'Rafaela Lopes'},
+  ];
+
+
   return (
     <ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
       <SafeAreaView style={style.container}>
@@ -45,7 +62,7 @@ export default function Turma({ navigation }) {
           </View>
           <View style={style.lista}>
           <FlatList
-            data={alunosTurma}
+            data={DADOS}
             ListEmptyComponent={EmptyListMessage}
             renderItem={({ item }) => (
               <Pressable onPress={() => navigation.navigate('CriarChamada')}>
@@ -60,7 +77,7 @@ export default function Turma({ navigation }) {
                       paddingTop: 18,
                     }}
                   >
-                  {item.nome}
+                  {item.AlunoP}
                   </Text>
                   </View>
                 </View>

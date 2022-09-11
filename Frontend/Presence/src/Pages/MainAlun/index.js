@@ -63,7 +63,6 @@ export default function MainAlun({ navigation }) {
   const {DADOS, setDADOS} = useContext(Context);
   const {setNomeCurso} = useContext(Context);
   const {setCodTurma} = useContext(Context);
-  const {setFalta} = useContext(Context);
 
   // =========================================================
 
@@ -166,43 +165,12 @@ export default function MainAlun({ navigation }) {
       }
     }
   // =========================================================
-    // =========================================================
-    // FUNÇÃO PARA CALCULAR FALTAS:
-    async function FaltaAluno(chamada){
-      let response = await AsyncStorage.getItem('userData');
-      let json = JSON.parse(response);
-      let reqs = await fetch(config.urlRootNode+'aluno/falta/obter', {
-        method: 'POST',
-        headers:{
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          aluno: json.matricula,
-          codigoTurma: chamada,
-        })
-      });
-      let res= await reqs.json();
-      if (res){
-        if (res == '404'){
-          navigation.navigate('Login');
-        }
-        else if (res == '403'){
-          navigate.navigate('Login');
-        }
-        else {
-          setFalta(res[0] - res[1])
-          navigation.navigate('ValidarChamada');
-        }
-      }
-    }
-  // =========================================================
 
   // =========================================================
   function EnvioDados(dado1, dado2, dado3){
     setNomeCurso(dado1 + " - " + dado2);
     setCodTurma(dado3);
-    FaltaAluno(dado3);
+    navigation.navigate('ValidarChamada');
   }
   // =========================================================
 

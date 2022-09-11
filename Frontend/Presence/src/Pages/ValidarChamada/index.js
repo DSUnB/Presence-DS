@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable, FlatList,  ScrollView, ImageBackground} from "react-native";
 import PressableBtnBack from "../../components/PressableBtnBack";
 import PressablesConf from "../../components/pressablesConf";
@@ -28,10 +28,9 @@ export default function ValidarChamada({ navigation }, pr) {
   const [modalActive1, setModalActive1] = useState(false);
   const [codigoChamada, setCodigoChamada] = useState(false);
   const [message, setMessage] = useState(false);
+  const [faltas, setfaltas] = useState('2');
   const {nomeCurso, setNomeCurso} = useContext(Context);
   const {codTurma} = useContext(Context);
-  const {falta, setFalta} = useContext(Context);
-  const {setDADOS} = useContext(Context);
 
   // ================================================================
   // FUNÇÃO PARA REALIZAR CHAMADA:
@@ -96,7 +95,6 @@ export default function ValidarChamada({ navigation }, pr) {
         else if (res == '202'){
           setMessage('Presença Registrada!')
           setCodigoChamada(null);
-          FaltaAluno();
           setTimeout(() => {
             setMessage(null);
             setModalActive3(false);
@@ -108,67 +106,6 @@ export default function ValidarChamada({ navigation }, pr) {
   }
 
    // ================================================================
-
-     // =========================================================
-    // =========================================================
-    // FUNÇÃO PARA CALCULAR FALTAS:
-    async function FaltaAluno(){
-      let response = await AsyncStorage.getItem('userData');
-      let json = JSON.parse(response);
-      let reqs = await fetch(config.urlRootNode+'aluno/falta/obter', {
-        method: 'POST',
-        headers:{
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          aluno: json.matricula,
-          codigoTurma: codigoChamada,
-        })
-      });
-      let res= await reqs.json();
-      if (res){
-        if (res == '404'){
-          navigation.navigate('Login');
-        }
-        else if (res == '403'){
-          navigate.navigate('Login');
-        }
-        else {
-          setFalta(res[0] - res[1])
-        }
-      }
-    }
-  // =========================================================
-
-  // =========================================================
-    // FUNÇÃO PARA REQUISITAR 'MOSTRAR TURMA' DO ALUNO AO BACKEND:
-    async function ObterTurmaAlun(){
-      let response = await AsyncStorage.getItem('userData');
-      let json = JSON.parse(response);
-      let reqs = await fetch(config.urlRootNode+'aluno/turma/obter', {
-        method: 'POST',
-        headers:{
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            aluno: json.matricula,
-        })
-      });
-      let res= await reqs.json();
-      if (res === '404'){
-          navigation.navigate('Login');
-      }
-      if (res === '403'){
-        navigation.navigate('Login');
-      }
-      else if (res){
-        setDADOS(res);
-        navigation.navigate('MainAlun');
-        }
-    };
-  // =========================================================
 
   const DADOS = [
     {ChamadaRealizada: '08 de Fevereiro'},
@@ -207,7 +144,7 @@ export default function ValidarChamada({ navigation }, pr) {
           </View>
           <View style={style.voltar}>
             <PressableBtnBack
-              click={() => ObterTurmaAlun()}
+              click={() => navigation.navigate("MainAlun")}
               iconeIo="chevron-back"
             />
           </View>
@@ -287,7 +224,7 @@ export default function ValidarChamada({ navigation }, pr) {
           </View>
           <View style={{paddingBottom: 20}}>
             <PressableCircle
-              click={() => setModalActive3(true)}
+              click={() => navigation.navigate("MainProf")}
               iconeMCI="calendar-multiple-check"/>
           </View>
           <View style={{width: 27, height: 27}}>
@@ -332,8 +269,8 @@ export default function ValidarChamada({ navigation }, pr) {
                 size={20}
                 onPress={() => setModalActive1(false)}/>
               <Text style={{ fontFamily: "poppinsm", fontSize: 14, color: "white", alignSelf:'center', paddingTop:45, marginBottom:-5}}>Você possui</Text>
-              <Text style={{ fontFamily: "poppinsm", fontSize: 48, color: "white", alignSelf:'center', marginBottom:-15 }}>{falta}</Text>
-              <Text style={{ fontFamily: "poppinsm", fontSize: 14, color: "white", alignSelf:'center'}}>Falta(s)!</Text>
+              <Text style={{ fontFamily: "poppinsm", fontSize: 48, color: "white", alignSelf:'center', marginBottom:-15 }}>{faltas}</Text>
+              <Text style={{ fontFamily: "poppinsm", fontSize: 14, color: "white", alignSelf:'center'}}>Faltas!</Text>
             </LinearGradient>
           </View>
         </Modal>
