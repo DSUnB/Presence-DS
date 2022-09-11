@@ -12,7 +12,7 @@ import Inputs from "../../components/inputs";
 import ProgressBarIP from "../../components/ProgressBarIP";
 import IconCa from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function ValidarChamada({ navigation }) {
+export default function ValidarChamada({ navigation }, pr) {
 
   const handleCloseAndRoute = () => {
     setModalActive2(false);
@@ -51,12 +51,6 @@ export default function ValidarChamada({ navigation }) {
     { label: 'Dezembro'},
 ];
 
-  function Porcent(Alunosp,Alunosi){
-    return (Alunosp/Alunosi)*100;
-  }
-  
-  let P = Math.round(Porcent (100,100))
-
   return (
     <ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
       <SafeAreaView style={style.container}>
@@ -76,24 +70,27 @@ export default function ValidarChamada({ navigation }) {
 
         {/* Barra de progresso */}
         <View style={style.progress}>
-            <ProgressBarIP texto={P} titulo='Índice de Presença'/>
+            <ProgressBarIP titulo='Índice de Presença'/>
         </View>
         
         {/* FlatList dos meses */}
         <View  style={{marginTop: 100, marginBottom: 75, width:'100%' ,height:'100%', justifyContent: "space-around", alignItems: 'center'}}>
-          <View style={{backgroundColor:'#F7F8F8', zIndex:2 , width:315, height:60, borderRadius:30, position:'absolute', marginTop:210}}>
+          <View style={{backgroundColor:'#F7F8F8', zIndex:2 , width:315, height:60, borderRadius:30, position:'absolute', marginTop:210, shadowColor: 'black',
+                      shadowOpacity: 1,
+                      shadowRadius: 4,
+                      elevation: 2.0 }}>
             <View style={{width:286, display:"flex", justifyContent:'center', marginTop:10, marginLeft:15 }}>
               <FlatList
                 showsHorizontalScrollIndicator={false}
                 data={options}
                 horizontal
                 renderItem={({item}) =>(
-                <Pressable style={{ paddingRight:24}} onPress={() => navigation.navigate('CriarChamada')}>
+                <Pressable style={{ paddingRight:24 }} onPress={() => navigation.navigate('CriarChamada')}>
                   <View>
                     <LinearGradient
                       colors = {['#2C5E7A' , '#338995']}
                       start = {[1.0 , 0.5]}
-                      style={{width:130, height:40, borderRadius:30}}>
+                      style={{width:130, height:40, borderRadius:30,}}>
                       <View style={{flexDirection: "row", justifyContent:'center'}}>
                         <Text
                           style={{
@@ -117,7 +114,7 @@ export default function ValidarChamada({ navigation }) {
             <FlatList
               data={DADOS}
               renderItem={({ item }) => (
-                <Pressable onPress={() => navigation.navigate('CriarChamada')}>
+                <Pressable onPress={() => navigate.navigation('ValidarChamada')}>
                   <View style={style.alunos}>
                     <View style={{flexDirection: "row", justifyContent:'space-between'}}>
                       <IconCa style={{position:'absolute', alignSelf:'center', marginLeft:14, paddingTop:12, }} name='calendar-range-outline' size={18}/>
@@ -330,7 +327,7 @@ const style = StyleSheet.create({
     elevation: 3.5, 
   },
   lista: {
-    marginTop: 305,
-    marginBottom: 190,
+    marginTop: 285,
+    marginBottom: 150,
   },
 });
