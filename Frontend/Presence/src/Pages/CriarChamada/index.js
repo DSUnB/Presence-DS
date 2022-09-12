@@ -114,6 +114,7 @@ export default function CriarChamada({ navigation }) {
   const {setMesNominalChamada} = useContext(Context);
   const {setRespostaChamada} = useContext(Context);
   const {setAlunosTurma} = useContext(Context);
+  const {setPorcentagem1} = useContext(Context);
 
   // ====================================================================
   // FUNÇÃO PARA CRIAR UMA CHAMADA:
@@ -267,14 +268,14 @@ export default function CriarChamada({ navigation }) {
         }
         else if (res){
           setRespostaChamada(res);
-          navigation.navigate('Chamada')
+          PorcentagemPresenca(chamada);
         }
       }
   }
   // =========================================================
 
   // =========================================================
-  // FUNÇÃO PARA PESQUISAR ALUNOS DA CHAMADA:
+  // FUNÇÃO PARA PESQUISAR ALUNOS DA TURMA:
   async function PesquisarAlunos(){
     let reqs = await fetch(config.urlRootNode+'professor/turma/alunos', {
       method: 'POST',
@@ -300,8 +301,8 @@ export default function CriarChamada({ navigation }) {
 // =========================================================
 
   // =========================================================
-  // FUNÇÃO PARA AJUSTAR A PORCENTAGEM DA PRÓXIMA PÁGINA:
-  async function PorcentagemPresenca(){
+  // FUNÇÃO PARA AJUSTAR A PORCENTAGEM DA CHAMADA:
+  async function PorcentagemPresenca(chamada){
     let reqs = await fetch(config.urlRootNode+'professor/porcentagem/chamada', {
       method: 'POST',
       headers:{
@@ -310,17 +311,13 @@ export default function CriarChamada({ navigation }) {
       },
       body: JSON.stringify({
         codigoTurma: codTurma,
+        codigoChamada: chamada,
       })
     });
     let res= await reqs.json();
     if (res) {
-      if (res == '403'){
-        null
-      }
-      else {
-        setAlunosTurma(res);
-        navigation.navigate('Turma')
-      }
+      setPorcentagem1(res);
+      navigation.navigate('Chamada');
     }
 }
 // =========================================================

@@ -481,6 +481,74 @@ app.post('/professor/turma/alunos', async (req,res) => {
 })
 
 // ====================================================
+// ====================================================
+// PESQUISA DA QUNATIDADE DE ALUNOS EM UMA TURMA PARA PORCENTAGEM: (REALIZARCHAMADA)
+
+app.post('/professor/porcentagem/chamada', async (req,res) => {
+    try{
+        let reqs = await model.EntrarTurmas.findAndCountAll({
+            where: {
+                'codigoTurma': req.body.codigoTurma
+            },
+            raw: true,
+        });
+        if(reqs){
+            let reqs2 = await model.ResponderChamadas.findAndCountAll({
+                where: {
+                    'codigoChamada': req.body.codigoChamada
+                },
+                raw: true,
+            });
+            if(reqs){
+                res.status(403).send([reqs.count, reqs2.count]);
+            }
+        }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+})
+
+// ====================================================
+// ====================================================
+// PESQUISAR QUANTIDADE DE FALTAS: (MAINALUN)
+app.post('/aluno/falta/obter', async (req,res)=>{
+    try {        
+        let reqs = await model.Alunos.findOne({
+            where: {
+                matricula: req.body.aluno,
+            }
+        });
+        if (reqs == null){
+            res.status(404).send(JSON.stringify('404'))
+        }
+        else {
+            let reqs1 = await model.Chamadas.findAndCountAll({
+                where: {
+                    codigoTurma: req.body.codigoTurma,
+                } 
+            });
+            if (reqs1){
+                let reqs2 = await model.ResponderChamadas.findAndCountAll({
+                    where: {
+                        idAluno: reqs.idAluno,
+                        codigoTurma: req.body.codigoTurma,
+                    } 
+                });
+                if (reqs2){
+                    res.status(202).send([reqs1.count, reqs2.count]);
+                }
+                else{
+                    res.status(403).send(JSON.stringify('403'));
+                }
+            }
+        }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+});
+// ====================================================
 
 // ==================================================================
 // ==================================================================
