@@ -47,7 +47,7 @@ export default function Chamada({navigation}){
   let P = Math.round(Porcent (100,100))
 
   return (
-    <ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
+    <ImageBackground source={require('../../assets/images/VetorChamada2.png')} resizeMode="cover">
       <SafeAreaView style={style.container}>
           <View style={style.header}>
               <View>

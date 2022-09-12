@@ -122,8 +122,9 @@ export default function CriarChamada({ navigation }) {
   // Início da criação da página
 
   return (
-    <ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
-      <SafeAreaView style={style.container}>
+  <ImageBackground source={require('../../assets/images/VetorChamada.png')} resizeMode="cover">
+    <SafeAreaView style={style.container}>
+      
         <View style={style.header}>
           <View>
             <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>{turma}</Text>

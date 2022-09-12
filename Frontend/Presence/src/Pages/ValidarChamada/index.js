@@ -52,7 +52,7 @@ export default function ValidarChamada({ navigation }) {
 ];
 
   return (
-    <ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
+    <ImageBackground source={require('../../assets/images/VetorChamada2.png')} resizeMode="cover">
       <SafeAreaView style={style.container}>
 
         {/* Header */}

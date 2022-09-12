@@ -37,7 +37,7 @@ export default function Turma({ navigation }) {
 
 
   return (
-    <ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
+    <ImageBackground source={require('../../assets/images/VetorMain.png')} resizeMode="cover">
       <SafeAreaView style={style.container}>
         <View style={style.header}>
               <View>
