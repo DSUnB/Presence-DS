@@ -1,16 +1,36 @@
-import React, { useState } from "react";
-import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable, FlatList, ImageBackground} from "react-native";
+
+import React, { useState, useContext } from "react";
+import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable, FlatList,  ScrollView, ImageBackground} from "react-native";
 import PressableBtnBack from "../../components/PressableBtnBack";
+import PressablesConf from "../../components/pressablesConf";
 import PressableCircle from "../../components/pressableCircle";
 import IconO from 'react-native-vector-icons/Octicons';
 import IconLo from 'react-native-vector-icons/MaterialIcons';
 import { LinearGradient } from "expo-linear-gradient";
 import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
+import config from "../../config/config.json";
 import IconX from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Inputs from "../../components/inputs";
+import { Context } from '../../context/Provider';
 import ProgressBarIP from "../../components/ProgressBarIP";
 import IconCa from 'react-native-vector-icons/MaterialCommunityIcons';
+
+const EmptyListMessage = ({item}) => {
+  return (
+    // Flat List Item
+    <View>
+      <Text style={{ fontFamily: "poppinsr", fontSize: 18, textAlign: 'center',}}>
+        Você não respondeu nenhuma chamada!
+      </Text>
+      <Text style={{ fontFamily: "poppinsr", fontSize: 13, textAlign: 'center'}}>
+        Tente inserir o código da Chamada para marcar sua presença!
+      </Text>
+    </View>   
+  );
+};
+
 
 export default function ValidarChamada({ navigation }) {
 
@@ -19,22 +39,156 @@ export default function ValidarChamada({ navigation }) {
     navigation.navigate('MainAlun')
   }
 
+  
+
   const [modalActive3, setModalActive3] = useState(false);
   const [modalActive2, setModalActive2] = useState(false);
   const [modalActive1, setModalActive1] = useState(false);
-  const [turma, setTurma] = useState('Física 1 - A');
-  const [faltas, setfaltas] = useState('2');
+  const [codigoChamada, setCodigoChamada] = useState(false);
+  const [message, setMessage] = useState(false);
+  const {nomeCurso, setNomeCurso} = useContext(Context);
+  const {codTurma} = useContext(Context);
+  const {falta, setFalta} = useContext(Context);
+  const {setDADOS} = useContext(Context);
+  const {chamadasFeita} = useContext(Context);
 
-  const DADOS = [
-    {ChamadaRealizada: '08 de Fevereiro'},
-    {ChamadaRealizada: '12 de Abril'},
-    {ChamadaRealizada: '01 de Junho'},
-    {ChamadaRealizada: '04 de Junho'},
-    {ChamadaRealizada: '10 de Novembro'},
-    {ChamadaRealizada: '29 de Julho'},
-    {ChamadaRealizada: '30 de Dezembro'},
-    {ChamadaRealizada: '07 de Janeiro'},
-  ];
+  // ================================================================
+  // FUNÇÃO PARA REALIZAR CHAMADA:
+  async function RealizarPresenca(){
+    let response = await AsyncStorage.getItem('userData');
+    let json = JSON.parse(response);
+    if (codigoChamada == '' || codigoChamada == null){
+      setMessage('Preencha o Campo!')
+      setTimeout(() => {
+        setMessage(null);
+    }, 2000);
+    }
+    else{
+      let reqs = await fetch(config.urlRootNode+'aluno/chamada/realizar', {
+        method: 'POST',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          aluno: json.matricula,
+          nomeAluno: json.nome,
+          codigoTurma: codTurma,
+          codigoChamada: codigoChamada.toUpperCase(),
+        })
+      });
+      let res= await reqs.json();
+      if (res){
+        if (res == '404.01'){
+          setMessage('Esta turma foi excluída pelo professor!')
+          setTimeout(() => {
+            setMessage(null);
+            ObterTurmaAlun();
+          }, 2000);
+        }
+        if (res == '403'){
+          setMessage('Você já fez esta chamada!')
+          setTimeout(() => {
+            setMessage(null);
+          }, 2000);
+        }
+        else if (res == '404'){
+          setMessage('Erro de Autenticação!');
+            setTimeout(() => {
+                setMessage(null);
+                AsyncStorage.clear();
+                navigation.navigate('Login')
+            }, 2000);
+        }
+        else if (res == '404.1'){
+          setMessage('Código Inválido!')
+          setTimeout(() => {
+            setMessage(null);
+          }, 2000);
+        }
+        else if (res == '202.0'){
+          setMessage('Esta chamada foi fechada!')
+          setTimeout(() => {
+            setMessage(null);
+          }, 2000);
+        }
+        else if (res == '202'){
+          setMessage('Presença Registrada!')
+          setCodigoChamada(null);
+          FaltaAluno();
+          setTimeout(() => {
+            setMessage(null);
+            setModalActive3(false);
+          }, 1000);
+        }
+      }
+    }
+    
+  }
+
+   // ================================================================
+
+     // =========================================================
+    // =========================================================
+    // FUNÇÃO PARA CALCULAR FALTAS:
+    async function FaltaAluno(){
+      let response = await AsyncStorage.getItem('userData');
+      let json = JSON.parse(response);
+      let reqs = await fetch(config.urlRootNode+'aluno/falta/obter', {
+        method: 'POST',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          aluno: json.matricula,
+          codigoTurma: codTurma,
+        })
+      });
+      let res= await reqs.json();
+      if (res){
+        if (res == '404'){
+          navigation.navigate('Login');
+        }
+        else if (res == '403'){
+          navigate.navigate('Login');
+        }
+        else {
+          setFalta(res[0] - res[1])
+        }
+      }
+    }
+  // =========================================================
+
+  // =========================================================
+    // FUNÇÃO PARA REQUISITAR 'MOSTRAR TURMA' DO ALUNO AO BACKEND:
+    async function ObterTurmaAlun(){
+      let response = await AsyncStorage.getItem('userData');
+      let json = JSON.parse(response);
+      let reqs = await fetch(config.urlRootNode+'aluno/turma/obter', {
+        method: 'POST',
+        headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            aluno: json.matricula,
+        })
+      });
+      let res= await reqs.json();
+      if (res === '404'){
+          navigation.navigate('Login');
+      }
+      if (res === '403'){
+        navigation.navigate('Login');
+      }
+      else if (res){
+        setDADOS(res);
+        navigation.navigate('MainAlun');
+        }
+    };
+  // =========================================================
+
 
   const options = [
     { label: 'Janeiro'},
@@ -52,17 +206,18 @@ export default function ValidarChamada({ navigation }) {
 ];
 
   return (
+  
     <ImageBackground source={require('../../assets/images/VetorChamada2.png')} resizeMode="cover">
       <SafeAreaView style={style.container}>
 
         {/* Header */}
         <View style={style.header}>
           <View>
-            <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>{turma}</Text>
+            <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>{nomeCurso}</Text>
           </View>
           <View style={style.voltar}>
             <PressableBtnBack
-              click={() => navigation.navigate("MainAlun")}
+              click={() => ObterTurmaAlun()}
               iconeIo="chevron-back"
             />
           </View>
@@ -112,7 +267,8 @@ export default function ValidarChamada({ navigation }) {
           {/* FlatList das chamadas realizadas */}
           <View style={style.lista}> 
             <FlatList
-              data={DADOS}
+              data={chamadasFeita}
+              ListEmptyComponent={EmptyListMessage}
               renderItem={({ item }) => (
                 <Pressable onPress={() => navigate.navigation('ValidarChamada')}>
                   <View style={style.alunos}>
@@ -125,7 +281,7 @@ export default function ValidarChamada({ navigation }) {
                           paddingLeft: 38,
                           paddingTop: 18,
                         }}>
-                          {item.ChamadaRealizada}
+                          {item.dia} de {item.mesNominal[0].toUpperCase() + item.mesNominal.substring(1)}
                       </Text>
                     </View>
                   </View>
@@ -142,7 +298,7 @@ export default function ValidarChamada({ navigation }) {
           </View>
           <View style={{paddingBottom: 20}}>
             <PressableCircle
-              click={() => navigation.navigate("MainProf")}
+              click={() => setModalActive3(true)}
               iconeMCI="calendar-multiple-check"/>
           </View>
           <View style={{width: 27, height: 27}}>
@@ -187,8 +343,8 @@ export default function ValidarChamada({ navigation }) {
                 size={20}
                 onPress={() => setModalActive1(false)}/>
               <Text style={{ fontFamily: "poppinsm", fontSize: 14, color: "white", alignSelf:'center', paddingTop:45, marginBottom:-5}}>Você possui</Text>
-              <Text style={{ fontFamily: "poppinsm", fontSize: 48, color: "white", alignSelf:'center', marginBottom:-15 }}>{faltas}</Text>
-              <Text style={{ fontFamily: "poppinsm", fontSize: 14, color: "white", alignSelf:'center'}}>Faltas!</Text>
+              <Text style={{ fontFamily: "poppinsm", fontSize: 48, color: "white", alignSelf:'center', marginBottom:-15 }}>{falta}</Text>
+              <Text style={{ fontFamily: "poppinsm", fontSize: 14, color: "white", alignSelf:'center'}}>Falta(s)!</Text>
             </LinearGradient>
           </View>
         </Modal>
@@ -208,10 +364,13 @@ export default function ValidarChamada({ navigation }) {
               <Text style={{ fontFamily: "poppinsb", fontSize: 15, color: "white" }}>
                 Insira o código da chamada
               </Text>
-              <Inputs place="Código" iconeF="check" />
+              {message && (
+                <Text>{message}</Text>
+              )}
+              <Inputs place="Código da chamada" iconeF="check" onChange={(text) => setCodigoChamada(text)}/>
               <PressablesModal
                 texto="Validar"
-                click={() => setModalActive3(false)}/>
+                click={() => RealizarPresenca()}/>
             </LinearGradient>
           </View>
         </Modal>

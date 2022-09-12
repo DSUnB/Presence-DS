@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { SafeAreaView, Text, StyleSheet, View, FlatList, Pressable, ImageBackground } from 'react-native';
 import PressableBtnBack from '../../components/PressableBtnBack';
 import IconP from 'react-native-vector-icons/Ionicons';
+import config from "../../config/config.json";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Context } from '../../context/Provider';
 
 const EmptyListMessage = ({item}) => {
   return (
@@ -19,22 +22,12 @@ const EmptyListMessage = ({item}) => {
 
 export default function Turma({ navigation }) {
 
+  // =============================================
+  // DECLARAÇÕES DE STATES E CONTEXTOS:
 
-  const DADOS = [
-    {AlunoP: 'Leandro Almeida'},
-    {AlunoP: 'Alana Gabriele'},
-    {AlunoP: 'Rafaela Lopes'},
-    {AlunoP: 'Doan FIlho'},
-    {AlunoP: 'Harleny Angelica'},
-    {AlunoP: 'Daniel Rodrigues'},
-    {AlunoP: 'Danielle Rodrigues'},
-    {AlunoP: 'Davi Rodrigues'},
-    {AlunoP: 'Renan Araújo'},
-    {AlunoP: 'Felipe de Sousa'},
-    {AlunoP: 'Dara Cristina'},
-    {AlunoP: 'Rafaela Lopes'},
-  ];
+  const {alunosTurma} = useContext(Context);
 
+  // =============================================
 
   return (
     <ImageBackground source={require('../../assets/images/VetorMain.png')} resizeMode="cover">
@@ -52,7 +45,7 @@ export default function Turma({ navigation }) {
           </View>
           <View style={style.lista}>
           <FlatList
-            data={DADOS}
+            data={alunosTurma}
             ListEmptyComponent={EmptyListMessage}
             renderItem={({ item }) => (
               <Pressable onPress={() => navigation.navigate('StatusAlun')}>
@@ -67,7 +60,7 @@ export default function Turma({ navigation }) {
                       paddingTop: 18,
                     }}
                   >
-                  {item.AlunoP}
+                  {item.nome}
                   </Text>
                   </View>
                 </View>
