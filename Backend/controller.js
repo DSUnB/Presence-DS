@@ -424,6 +424,8 @@ app.post('/aluno/chamada/realizar', async (req,res) => {
                                 'codigoChamada': req.body.codigoChamada,
                                 'codigoTurma': req.body.codigoTurma,
                                 'aluno': req.body.nomeAluno,
+                                'dia': reqs1.dia,
+                                'mesNominal': reqs1.mesNominal,
                                 'createAt': new Date(),
                                 'updatedAt': new Date()
                             });
@@ -559,6 +561,32 @@ app.post('/aluno/falta/obter', async (req,res)=>{
     }
 });
 // ====================================================
+
+app.post('/aluno/chamada/pesquisar', async (req,res)=>{
+    try {        
+
+        let reqs = await model.Alunos.findOne({
+            where: {
+                matricula: req.body.aluno,
+            },
+            raw: true
+        });
+        if (reqs) {
+            let reqs1 = await model.ResponderChamadas.findAll({
+                where: {
+                    idAluno: reqs.idAluno,
+                    codigoTurma: req.body.codigoTurma
+                }
+            });
+            if (reqs1){
+                res.status(202).send(reqs1);
+            }
+        }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+});
 
 // ==================================================================
 // ==================================================================

@@ -16,6 +16,7 @@ export default function Provider({children}) {
     const [alunosTurma, setAlunosTurma] = useState(null);
     const [Porcentagem1, setPorcentagem1] = useState([1,0]);
     const [falta, setFalta] = useState(null);
+    const [chamadasFeita , setChamadasFeita] = useState(null);
 
     return(
         <Context.Provider
@@ -31,7 +32,8 @@ export default function Provider({children}) {
                 respostaChamada, setRespostaChamada,
                 alunosTurma, setAlunosTurma,
                 Porcentagem1, setPorcentagem1,
-                falta, setFalta
+                falta, setFalta,
+                chamadasFeita , setChamadasFeita
             }}>
             {children}
         </Context.Provider>

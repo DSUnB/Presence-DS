@@ -64,6 +64,7 @@ export default function MainAlun({ navigation }) {
   const {setNomeCurso} = useContext(Context);
   const {setCodTurma} = useContext(Context);
   const {setFalta} = useContext(Context);
+  const {setChamadasFeita} = useContext(Context);
 
   // =========================================================
 
@@ -141,6 +142,29 @@ export default function MainAlun({ navigation }) {
         }
   }
   // =========================================================
+
+  // =========================================================
+  // FUNÇÃO PARA PESQUISAR QUAIS CHAMADAS FOI REALIZADO:
+  async function PesquisarChamadas(chamada){
+        let response = await AsyncStorage.getItem('userData');
+        let json = JSON.parse(response);
+          let reqs = await fetch(config.urlRootNode+'aluno/chamada/pesquisar', {
+              method: 'POST',
+              headers:{
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  aluno: json.matricula,
+                  codigoTurma: chamada
+              })                 
+          });
+          let res= await reqs.json();
+          if (res) {
+            setChamadasFeita(res);
+            navigation.navigate('ValidarChamada');
+          }
+    }
   
   // =========================================================
     // FUNÇÃO PARA ATUALIZAR A LISTA DE TURMAS:
@@ -191,8 +215,8 @@ export default function MainAlun({ navigation }) {
           navigate.navigate('Login');
         }
         else {
-          setFalta(res[0] - res[1])
-          navigation.navigate('ValidarChamada');
+          setFalta(res[0] - res[1]);
+          PesquisarChamadas(chamada);
         }
       }
     }

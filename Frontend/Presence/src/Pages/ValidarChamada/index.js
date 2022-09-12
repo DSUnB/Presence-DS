@@ -16,12 +16,30 @@ import { Context } from '../../context/Provider';
 import ProgressBarIP from "../../components/ProgressBarIP";
 import IconCa from 'react-native-vector-icons/MaterialCommunityIcons';
 
+
+const EmptyListMessage = ({item}) => {
+  return (
+    // Flat List Item
+    <View>
+      <Text style={{ fontFamily: "poppinsr", fontSize: 18, textAlign: 'center',}}>
+        Você não respondeu nenhuma chamada!
+      </Text>
+      <Text style={{ fontFamily: "poppinsr", fontSize: 13, textAlign: 'center'}}>
+        Tente inserir o código da Chamada para marcar sua presença!
+      </Text>
+    </View>   
+  );
+};
+
+
 export default function ValidarChamada({ navigation }, pr) {
 
   const handleCloseAndRoute = () => {
     setModalActive2(false);
     navigation.navigate('MainAlun')
   }
+
+  
 
   const [modalActive3, setModalActive3] = useState(false);
   const [modalActive2, setModalActive2] = useState(false);
@@ -32,6 +50,7 @@ export default function ValidarChamada({ navigation }, pr) {
   const {codTurma} = useContext(Context);
   const {falta, setFalta} = useContext(Context);
   const {setDADOS} = useContext(Context);
+  const {chamadasFeita} = useContext(Context);
 
   // ================================================================
   // FUNÇÃO PARA REALIZAR CHAMADA:
@@ -170,16 +189,6 @@ export default function ValidarChamada({ navigation }, pr) {
     };
   // =========================================================
 
-  const DADOS = [
-    {ChamadaRealizada: '08 de Fevereiro'},
-    {ChamadaRealizada: '12 de Abril'},
-    {ChamadaRealizada: '01 de Junho'},
-    {ChamadaRealizada: '04 de Junho'},
-    {ChamadaRealizada: '10 de Novembro'},
-    {ChamadaRealizada: '29 de Julho'},
-    {ChamadaRealizada: '30 de Dezembro'},
-    {ChamadaRealizada: '07 de Janeiro'},
-  ];
 
   const options = [
     { label: 'Janeiro'},
@@ -257,7 +266,8 @@ export default function ValidarChamada({ navigation }, pr) {
           {/* FlatList das chamadas realizadas */}
           <View style={style.lista}> 
             <FlatList
-              data={DADOS}
+              data={chamadasFeita}
+              ListEmptyComponent={EmptyListMessage}
               renderItem={({ item }) => (
                 <Pressable onPress={() => navigate.navigation('ValidarChamada')}>
                   <View style={style.alunos}>
@@ -270,7 +280,7 @@ export default function ValidarChamada({ navigation }, pr) {
                           paddingLeft: 38,
                           paddingTop: 18,
                         }}>
-                          {item.ChamadaRealizada}
+                          {item.dia} de {item.mesNominal[0].toUpperCase() + item.mesNominal.substring(1)}
                       </Text>
                     </View>
                   </View>
