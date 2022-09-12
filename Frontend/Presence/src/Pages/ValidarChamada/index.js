@@ -142,7 +142,7 @@ export default function ValidarChamada({ navigation }, pr) {
         },
         body: JSON.stringify({
           aluno: json.matricula,
-          codigoTurma: codigoChamada,
+          codigoTurma: codTurma,
         })
       });
       let res= await reqs.json();
