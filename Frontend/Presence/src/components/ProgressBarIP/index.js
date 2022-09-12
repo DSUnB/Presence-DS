@@ -2,11 +2,10 @@
 
 import React, { useState } from 'react';
 import { Text, View, Animated } from 'react-native';
-import Pressables from '../pressables';
 import { LinearGradient } from 'expo-linear-gradient';
 
 // Banco de dados fake
-let PresEft = 75
+let PresEft = 100
 let PresTot = 100
 
 // PresEft: Presenças efetivadas;
@@ -148,7 +147,6 @@ export default function ProgressBar(props){
 
           </View>
             <Progress Alunosp={PresEft} Alunosi={PresTot} height={20} />
-            <Pressables iconeM='login' texto='Login' click={() => Condicao()}/>
         </View>
     )}
 

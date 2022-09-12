@@ -55,7 +55,7 @@ export default function Turma({ navigation }) {
             data={DADOS}
             ListEmptyComponent={EmptyListMessage}
             renderItem={({ item }) => (
-              <Pressable onPress={() => navigation.navigate('CriarChamada')}>
+              <Pressable onPress={() => navigation.navigate('StatusAlun')}>
                 <View style={style.alunos}>
                   <View style={{flexDirection: "row", justifyContent:'space-between'}}>
                   <IconP style={{position:'absolute', alignSelf:'center', marginLeft:14, paddingTop:12, color:'#7B6F72'}} name='person-outline' size={18}/>

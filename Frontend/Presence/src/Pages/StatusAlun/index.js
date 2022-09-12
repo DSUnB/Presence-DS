@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable, FlatList, ImageBackground} from "react-native";
 import PressableBtnBack from "../../components/PressableBtnBack";
-import PressableCircle from "../../components/pressableCircle";
-import IconO from 'react-native-vector-icons/Octicons';
-import IconLo from 'react-native-vector-icons/MaterialIcons';
 import { LinearGradient } from "expo-linear-gradient";
 import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
@@ -12,7 +9,7 @@ import Inputs from "../../components/inputs";
 import ProgressBarIP from "../../components/ProgressBarIP";
 import IconCa from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function ValidarChamada({ navigation }) {
+export default function ValidarChamada({ navigation }, pr) {
 
   const handleCloseAndRoute = () => {
     setModalActive2(false);
@@ -22,8 +19,9 @@ export default function ValidarChamada({ navigation }) {
   const [modalActive3, setModalActive3] = useState(false);
   const [modalActive2, setModalActive2] = useState(false);
   const [modalActive1, setModalActive1] = useState(false);
-  const [turma, setTurma] = useState('Física 1 - A');
   const [faltas, setfaltas] = useState('2');
+  const [alunx, setAlunx] = useState('Alana Gabriele Amorim Silva');
+  const [materia, setMateria] = useState('Cálculo 2');
 
   const DADOS = [
     {ChamadaRealizada: '08 de Fevereiro'},
@@ -58,13 +56,28 @@ export default function ValidarChamada({ navigation }) {
         {/* Header */}
         <View style={style.header}>
           <View>
-            <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>{turma}</Text>
+            <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}>Perfil Aluno</Text>
           </View>
           <View style={style.voltar}>
             <PressableBtnBack
-              click={() => navigation.navigate("MainAlun")}
+              click={() => navigation.navigate("Turma")}
               iconeIo="chevron-back"
             />
+          </View>
+        </View>
+
+        {/* Aluno(a) Selecionado */}
+        <View style={{ position: "absolute", top:115, left:40, width:"90%", flex:1, flexDirection:"row", alignItems: "center"}}>
+          <View style={{backgroundColor:"#dff1f1", borderRadius: 70, width:70, height:70}}>
+            <IconCa style={{ alignSelf:"center", padding:12 }} name='school-outline' size={45}/>
+          </View>
+            <View style={{flex:1, flexDirection:"column", alignContent:"center", left:25}}>
+              <Text style={{ fontFamily: "poppinsm", fontSize: 16, color:'black'}}>
+              {alunx}
+            </Text>
+            <Text style={{ fontFamily: "poppinsm", fontSize: 14, paddingTop: 5, color:'#7B6F72'}}>
+              Registro de {materia}
+            </Text>
           </View>
         </View>
 
@@ -75,7 +88,7 @@ export default function ValidarChamada({ navigation }) {
         
         {/* FlatList dos meses */}
         <View  style={{marginTop: 100, marginBottom: 75, width:'100%' ,height:'100%', justifyContent: "space-around", alignItems: 'center'}}>
-          <View style={{backgroundColor:'#F7F8F8', zIndex:2 , width:315, height:60, borderRadius:30, position:'absolute', marginTop:210, shadowColor: 'black',
+          <View style={{backgroundColor:'#F7F8F8', zIndex:2 , width:315, height:60, borderRadius:30, position:'absolute', marginTop:295, shadowColor: 'black',
                       shadowOpacity: 1,
                       shadowRadius: 4,
                       elevation: 2.0 }}>
@@ -132,21 +145,6 @@ export default function ValidarChamada({ navigation }) {
                 </Pressable>
               )}>
             </FlatList>
-          </View>
-        </View>
-
-        {/* Fotter */}
-        <View style={style.footer}>
-          <View style={{width: 24, height: 24,}}>
-            <IconO style={{alignSelf: 'center', color: '#ADA4A5'}} name='megaphone' size={23.5} onPress={() => setModalActive1(true)}/>
-          </View>
-          <View style={{paddingBottom: 20}}>
-            <PressableCircle
-              click={() => navigation.navigate("MainProf")}
-              iconeMCI="calendar-multiple-check"/>
-          </View>
-          <View style={{width: 27, height: 27}}>
-            <IconLo style={{alignSelf: 'center', color: '#DB4E4E'}} name='logout' size={27} onPress={() => setModalActive2(true)}/>
           </View>
         </View>
 
@@ -313,7 +311,7 @@ const style = StyleSheet.create({
   progress:{
     width:345,
     position:'absolute',
-    top:130,
+    top:215,
   },
   alunos: {
     height: 57,
@@ -327,7 +325,7 @@ const style = StyleSheet.create({
     elevation: 3.5, 
   },
   lista: {
-    marginTop: 285,
-    marginBottom: 150,
+    marginTop: 390,
+    marginBottom: 40,
   },
 });

@@ -63,40 +63,40 @@ export default function CriarChamada({ navigation }) {
   function DiaMes(mes){
     switch (date.slice(5,7)){
       case "01":
-        mes = "Janeiro de " + date.slice(0,5);
+        mes = "Janeiro de " + date.slice(0,4);
         break;
       case "02":
-        mes = "Fevereiro de " + date.slice(0,5);
+        mes = "Fevereiro de " + date.slice(0,4);
         break;
       case "03":
-        mes = "Março de " + date.slice(0,5);
+        mes = "Março de " + date.slice(0,4);
         break;
       case "04":
-        mes = "Abril de " + date.slice(0,5);
+        mes = "Abril de " + date.slice(0,4);
         break;
       case "05":
-        mes = "Maio de " + date.slice(0,5);
+        mes = "Maio de " + date.slice(0,4);
         break;
       case "06":
-        mes = "Junho de " + date.slice(0,5);
+        mes = "Junho de " + date.slice(0,4);
         break;
       case "07":
-        mes = "Julho de " + date.slice(0,5);
+        mes = "Julho de " + date.slice(0,4);
         break;
       case "08":
-        mes = "Agosto de " + date.slice(0,5);
+        mes = "Agosto de " + date.slice(0,4);
         break;
       case "09":
-        mes = "Setembro de " + date.slice(0,5);
+        mes = "Setembro de " + date.slice(0,4);
         break;
       case "10":
-        mes = "Outubro de " + date.slice(0,5);
+        mes = "Outubro de " + date.slice(0,4);
         break;
       case "11":
-        mes = "Novembro de " + date.slice(0,5);
+        mes = "Novembro de " + date.slice(0,4);
         break;
       case "12":
-        mes = "Dezembro de " + date.slice(0,5);
+        mes = "Dezembro de " + date.slice(0,4);
         break;
     }
     return mes
