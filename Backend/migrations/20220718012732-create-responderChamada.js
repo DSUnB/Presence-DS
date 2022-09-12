@@ -36,6 +36,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      dia: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      mesNominal: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

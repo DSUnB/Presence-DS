@@ -19,7 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     idAluno: DataTypes.INTEGER,
     codigoChamada: DataTypes.STRING,
     codigoTurma: DataTypes.STRING,
-    aluno: DataTypes.STRING
+    aluno: DataTypes.STRING,
+    dia: DataTypes.STRING,
+    mesNominal: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'ResponderChamadas',
