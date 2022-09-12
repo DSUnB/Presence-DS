@@ -1,25 +1,12 @@
 import React, { useState } from "react";
-import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable, FlatList, ImageBackground} from "react-native";
+import { SafeAreaView, View, Text, StyleSheet, Pressable, FlatList, ImageBackground} from "react-native";
 import PressableBtnBack from "../../components/PressableBtnBack";
 import { LinearGradient } from "expo-linear-gradient";
-import PressablesModal from "../../components/pressablesModalS";
-import PressablesModal2 from "../../components/pressableModalN";
-import IconX from 'react-native-vector-icons/Ionicons';
-import Inputs from "../../components/inputs";
 import ProgressBarIP from "../../components/ProgressBarIP";
 import IconCa from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function ValidarChamada({ navigation }, pr) {
+export default function ValidarChamada({ navigation }) {
 
-  const handleCloseAndRoute = () => {
-    setModalActive2(false);
-    navigation.navigate('MainAlun')
-  }
-
-  const [modalActive3, setModalActive3] = useState(false);
-  const [modalActive2, setModalActive2] = useState(false);
-  const [modalActive1, setModalActive1] = useState(false);
-  const [faltas, setfaltas] = useState('2');
   const [alunx, setAlunx] = useState('Alana Gabriele Amorim Silva');
   const [materia, setMateria] = useState('Cálculo 2');
 
@@ -88,7 +75,7 @@ export default function ValidarChamada({ navigation }, pr) {
         
         {/* FlatList dos meses */}
         <View  style={{marginTop: 100, marginBottom: 75, width:'100%' ,height:'100%', justifyContent: "space-around", alignItems: 'center'}}>
-          <View style={{backgroundColor:'#F7F8F8', zIndex:2 , width:315, height:60, borderRadius:30, position:'absolute', marginTop:295, shadowColor: 'black',
+          <View style={{backgroundColor:'#F7F8F8', zIndex:2 , width:315, height:60, borderRadius:30, position:'absolute', marginTop:296, shadowColor: 'black',
                       shadowOpacity: 1,
                       shadowRadius: 4,
                       elevation: 2.0 }}>
@@ -148,71 +135,6 @@ export default function ValidarChamada({ navigation }, pr) {
           </View>
         </View>
 
-        {/* -- Início dos Modais -- */}
-
-        {/* Modal sair turma */}
-        <Modal visible={modalActive2} animationType="fade" transparent={true}>
-          <View style={style.fundoModal}>
-            <LinearGradient
-              colors={["#2C5E7A", "#338995"]}
-              start={[1.0, 0.5]}
-              style={style.modal2}>
-              <Text style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", paddingBottom: 50 }}>
-                Deseja sair dessa turma?
-              </Text>
-              <View style={style.alinhamento}>
-                <PressablesModal
-                  texto="Sim"
-                  click={() => handleCloseAndRoute()}/>
-                <PressablesModal2
-                  texto="Não"
-                  click={() => setModalActive2(false)}/>
-              </View>
-            </LinearGradient>
-          </View>
-        </Modal>
-
-        {/* Modal nº de faltas */}
-        <Modal visible={modalActive1} animationType="fade" transparent={true}>
-          <View style={style.fundoModal}>
-            <LinearGradient
-              colors={["#2C5E7A", "#338995"]}
-              start={[1.0, 0.5]}
-              style={style.modal1}>
-              <IconX
-                style={style.close}
-                name="close-circle"
-                size={20}
-                onPress={() => setModalActive1(false)}/>
-              <Text style={{ fontFamily: "poppinsm", fontSize: 14, color: "white", alignSelf:'center', paddingTop:45, marginBottom:-5}}>Você possui</Text>
-              <Text style={{ fontFamily: "poppinsm", fontSize: 48, color: "white", alignSelf:'center', marginBottom:-15 }}>{faltas}</Text>
-              <Text style={{ fontFamily: "poppinsm", fontSize: 14, color: "white", alignSelf:'center'}}>Faltas!</Text>
-            </LinearGradient>
-          </View>
-        </Modal>
-
-        {/* Código chamada */}
-        <Modal visible={modalActive3} animationType="fade" transparent={true}>
-          <View style={style.fundoModal}>
-            <LinearGradient
-              colors={["#2C5E7A", "#338995"]}
-              start={[1.0, 0.5]}
-              style={style.modal}>
-              <IconX
-                style={style.close}
-                name="close-circle"
-                size={30}
-                onPress={() => setModalActive3(false)}/>
-              <Text style={{ fontFamily: "poppinsb", fontSize: 15, color: "white" }}>
-                Insira o código da chamada
-              </Text>
-              <Inputs place="Código" iconeF="check" />
-              <PressablesModal
-                texto="Validar"
-                click={() => setModalActive3(false)}/>
-            </LinearGradient>
-          </View>
-        </Modal>
       </SafeAreaView>
     </ImageBackground>
   );
