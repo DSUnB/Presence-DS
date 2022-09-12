@@ -1,0 +1,40 @@
+diff --git a/node_modules/react-native-modern-datepicker/src/utils.js b/node_modules/react-native-modern-datepicker/src/utils.js
+index c9f0cce..7683ea1 100644
+--- a/node_modules/react-native-modern-datepicker/src/utils.js
++++ b/node_modules/react-native-modern-datepicker/src/utils.js
+@@ -30,21 +30,21 @@ const jalaaliConfigs = {
+   timeClose: 'بستن',
+ };
+ const gregorianConfigs = {
+-  dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+-  dayNamesShort: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
++  dayNames: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
++  dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+   monthNames: [
+-    'January',
+-    'February',
+-    'March',
+-    'April',
+-    'May',
+-    'June',
+-    'July',
+-    'August',
+-    'September',
+-    'October',
+-    'November',
+-    'December',
++    'Janeiro',
++    'Fevereiro',
++    'Março',
++    'Abril',
++    'Maio',
++    'Junho',
++    'Julho',
++    'Agosto',
++    'Setembro',
++    'Outubro',
++    'Novembro',
++    'Dezembro',
+   ],
+   selectedFormat: 'YYYY/MM/DD',
+   dateFormat: 'YYYY/MM/DD',

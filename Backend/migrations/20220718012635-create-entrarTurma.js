@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('EntrarTurma', {
+    await queryInterface.createTable('EntrarTurmas', {
       id: {
         allowNull: true,
         type: Sequelize.STRING
@@ -28,6 +28,14 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
+      curso: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
+      nomeTurma: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -39,6 +47,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('EntrarTurma');
+    await queryInterface.dropTable('EntrarTurmas');
   }
 };

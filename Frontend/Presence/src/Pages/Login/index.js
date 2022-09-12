@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Div } from "./styled";
-import { Text, View, StyleSheet, ImageBackground } from "react-native";
+import config from "../../config/config.json";
+import { Text, View, StyleSheet, ImageBackground, Keyboard } from "react-native";
 import Inputs from "../../components/inputs";
 import Pressables from "../../components/pressables";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import InputsS from "../../components/inputsenha";
+import { Context } from "../../context/Provider";
+import IconA from 'react-native-vector-icons/Feather';
 
 
 export default function Login({ navigation }) {
@@ -16,12 +19,14 @@ export default function Login({ navigation }) {
   const [message, setMessage]=useState(null);
   const [matToken, setMatToken]=useState(null);
   const [senhaToken, setSenhaToken]=useState(null);
+  const {setDADOS} = useContext(Context);
   // =========================================================
 
   // =========================================================
   // FUNÇÃO PARA ENVIAR 'LOGIN' AO BACKEND:
   async function envLogin(){
-    let reqs = await fetch('http://192.168.0.10:3000/log', {
+    Keyboard.dismiss();
+    let reqs = await fetch(config.urlRootNode+'usuario/logar', {
       method: 'POST',
       headers:{
         Accept: 'application/json',
@@ -33,34 +38,100 @@ export default function Login({ navigation }) {
       })
     });
     let res= await reqs.json();
-    if(res === 'error'){
+    if(res === '404'){
       setMessage('Matrícula ou Senha incorreta!');
       setTimeout(() => {
       setMessage(null);
     }, 5000);
       await AsyncStorage.clear();
     }
-    else{
+    else if(res === '403'){
+      setMessage('Preencha Todos os Campos!');
+      setTimeout(() => {
+      setMessage(null);
+    }, 5000);
+      await AsyncStorage.clear();
+    }
+    else {
       await AsyncStorage.setItem('userData', JSON.stringify(res));
       let response = await AsyncStorage.getItem('userData');
       let json = JSON.parse(response);
 
-      if (json.tipoUsuario === false){
-        await AsyncStorage.setItem('userData', JSON.stringify(res));
-        navigation.navigate('MainAlun');
-      }
-      else {
-        await AsyncStorage.setItem('userData', JSON.stringify(res));
-        navigation.navigate('MainProf');
+        if (json.tipoUsuario === false){
+          ObterTurmaAlun();
+        }
+        else{
+          ObterTurma();
       }
     }
   }
+    // =========================================================
+    // FUNÇÃO PARA REQUISITAR 'MOSTRAR TURMA' DO ALUNO AO BACKEND:
+    async function ObterTurmaAlun(){
+      let response = await AsyncStorage.getItem('userData');
+      let json = JSON.parse(response);
+      let reqs = await fetch(config.urlRootNode+'aluno/turma/obter', {
+        method: 'POST',
+        headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            aluno: json.matricula,
+        })
+      });
+      let res= await reqs.json();
+      if (res === '403'){
+        setMessage('Erro de Autenticação!');
+        setTimeout(() => {
+          setMessage(null);
+          AsyncStorage.clear();
+      }, 2000);
+      }
+      else if (res){
+        setDADOS(res)
+        Keyboard.dismiss();
+        navigation.navigate('MainAlun');
+        }
+    };
+  // =========================================================
+  // =========================================================
+  // FUNÇÃO PARA REQUISITAR 'MOSTRAR TURMA' DO PROFESSOR AO BACKEND:
+  async function ObterTurma(){
+      let response = await AsyncStorage.getItem('userData');
+      let json = JSON.parse(response);
+      let reqs = await fetch(config.urlRootNode+'professor/turma/obter', {
+        method: 'POST',
+        headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            professor: json.matricula,
+        })
+    });
+    let res= await reqs.json();
+    if (res === '403'){
+      setMessage('Erro de Autenticação!');
+      setTimeout(() => {
+        setMessage(null);
+        AsyncStorage.clear();
+    }, 2000);
+    }
+    else if (res){
+      setDADOS(res)
+      Keyboard.dismiss();
+      navigation.navigate('MainProf');
+      }
+  };
   // =========================================================
 
   // =========================================================
-  // FUNÇÃO PARA EFETUAR 'LOGIN AUTOMÁTICO' AO BACKEND:
+  
+  // =========================================================
+  // FUNÇÃO PARA EFETUAR 'LOGIN AUTOMÁTICO' AO BACKEND: (DESATIVADO)
   async function AutoLogin(){
-    let reqs = await fetch('http://192.168.0.10:3000/Autolog', {
+    let reqs = await fetch(config.urlRootNode+'usuario/autologar', {
       method: 'POST',
       headers:{
         Accept: 'application/json',
@@ -72,7 +143,7 @@ export default function Login({ navigation }) {
       })
     });
     let res= await reqs.json();
-    if(res === 'error'){
+    if(res === '404' || res === '204'){
       AsyncStorage.clear();
     }
     else{
@@ -81,10 +152,12 @@ export default function Login({ navigation }) {
       let json = JSON.parse(response);
 
       if (json.tipoUsuario === false){
+        Keyboard.dismiss();
         await AsyncStorage.setItem('userData', JSON.stringify(res));
         navigation.navigate('MainAlun');
       }
       else {
+        Keyboard.dismiss();
         await AsyncStorage.setItem('userData', JSON.stringify(res));
         navigation.navigate('MainProf');
       }
@@ -94,21 +167,24 @@ export default function Login({ navigation }) {
 
   // =========================================================
   // TENTATIVA DE REQUISIÇÃO AUTOMÁTICA AO LOGIN COM O BACKEND:
-  useEffect(() => {
-    AsyncStorage.getItem('userData').then((userData) => {
-      if (userData != null){
-        let json = JSON.parse(userData);
-        setMatToken(json.matricula);
-        setSenhaToken(json.senha);
-        AutoLogin();
-      }
-    })
-  })
+  // useEffect(() => {
+  //   AsyncStorage.getItem('userData').then((userData) => {
+  //     if (userData != null){
+  //       let json = JSON.parse(userData);
+  //       setMatToken(json.matricula);
+  //       setSenhaToken(json.senha);
+  //       AutoLogin();
+  //     }
+  //     else {null}
+  //   })
+  // })
   // =========================================================
+
 
 // =========================================================
 // ARQUITETURA DA SCREEN DA APLICAÇÃO:
 return (
+
 <ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
 <Div>
 
@@ -116,7 +192,10 @@ return (
   <Text style={{fontFamily:'poppinsr', fontSize:16, marginBottom:50}}>ao Presence!</Text>
 
   {message && (
-    <Text>{message}</Text>
+    <View style={{display:'flex' , flexDirection:'row'}}  >
+    <IconA name='alert-triangle' size={25} style={{marginRight:10, color:'#900020'}}/>
+    <Text style={{fontFamily:'poppinsr', fontSize:17, color:'#900020'}}>{message}</Text>
+    </View>
   )}
 
   <Inputs place='Matrícula' iconeF='mail' onChange={(text) => setMatricula(text)}/>
@@ -141,6 +220,9 @@ return (
         <Text style={styles.hypertexto} onPress={() => navigation.navigate('Form')}> 
           Registre-se
         </Text> 
+      </Text>
+      <Text style={{fontFamily:'poppinsr', fontSize: 12, marginTop: 25, color: '#0D5354'}} onPress={() => navigation.navigate('Tabs')} >
+          Saiba mais sobre o Presence
       </Text>
 </Div>
 </ImageBackground>

@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Div } from "./styled";
-import { Text, View, StyleSheet, ImageBackground } from "react-native";
+import { Text, View, StyleSheet, ImageBackground, Keyboard } from "react-native";
+import config from "../../config/config.json";
 import { Checkbox } from 'react-native-paper';
 import Inputs from "../../components/inputs";
 import Pressables from "../../components/pressables";
 import InputsS from "../../components/inputsenha";
 import PressableBtnBack from "../../components/PressableBtnBack";
+import IconA from 'react-native-vector-icons/Feather';
+import IconC from 'react-native-vector-icons/FontAwesome';
+import { Context } from "../../context/Provider";
 
 
 export default function Form({ navigation }) {
 
-  // Criação das States para serem enviadas ao Banco de Dados:
+  // ==================================================================
+  // CRIAÇÃO DE STATES:
   const [name, setName]=useState(null);
   const [matricula, setMatricula]=useState(null);
   const [email, setEmail]=useState(null);
@@ -18,11 +23,15 @@ export default function Form({ navigation }) {
   const [passwordConfirm, setPasswordConfirm]=useState(null);
   const [checked, setChecked]=useState(false);
   const [message, setMessage]=useState(null);
+  const [message2, setMessage2]=useState(null);
+  // ==================================================================
 
-  // Criação da função para envio para o Backend:
+  // ==================================================================
+  // FUNÇÃO PARA ENVIO DE CADASTRO AO BACKEND:
   async function Registro(){
-    if (password === passwordConfirm && name != '' && matricula != '' && email != '' && password != ''){
-      let reqs = await fetch('http://192.168.0.10:3000/cad', {
+    Keyboard.dismiss();
+    if (password === passwordConfirm && name != '' && matricula != '' && email != '' && password != '' && name != null && matricula != null && email != null && password != null){
+      let reqs = await fetch(config.urlRootNode+'usuario/cadastrar', {
       method: 'POST',
       headers:{
         'Accept': 'application/json',
@@ -38,16 +47,16 @@ export default function Form({ navigation }) {
       })
     });
     let res= await reqs.json();
-    if (res === 'error'){
-      setMessage('Preencha os Campos corretamente!');
+    if (res === '403'){
+      setMessage('Matrícula já existe!');
       setTimeout(() => {
       setMessage(null);
     }, 5000);
     }
     else{
-      setMessage(res);
+      setMessage2("Usuário Criado com Sucesso!");
     setTimeout(() => {
-      setMessage(null);
+      setMessage2(null);
       navigation.navigate('Login');
     }, 2000);
     }
@@ -59,28 +68,47 @@ export default function Form({ navigation }) {
         setMessage(null);
       }, 5000);
     }
-    else{
-      setMessage('Todos os campos são obrigatórios!');
+    else if (name === null && matricula === null && email === null && password === null) {
+      setMessage('Preencha todos os Campos!');
       setTimeout(() => {
         setMessage(null);
       }, 5000);
     }
-
+    else{
+      setMessage('Preencha todos os Campos!');
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
+    }
   }
+  // ==================================================================
 
+  // ==================================================================
+  // ARQUITETURA DA SCREEN FORM DA APLICAÇÃO:
 return (
 
 <ImageBackground source={require('../../assets/images/VetorCad.png')} resizeMode="cover">
-  <View>
+  <View style={{top: 45, left: 15}}>
     <PressableBtnBack click={() => navigation.navigate('Login')}  iconeIo="chevron-back"/>
   </View>
   <Div>
 
-  {message && (
-    <Text>{message}</Text>
-  )}
   <Text style={{fontFamily:'poppinsr', fontSize:16, marginTop:40}}>Ei!</Text>
   <Text style={{fontFamily:'poppinsb', fontSize:20, marginBottom:20}}>Crie uma conta</Text>
+  {message && (
+    <View style={{display:'flex' , flexDirection:'row'}}  >
+      <IconA name='alert-triangle' size={25} style={{marginRight:10, color:'#900020'}}/>
+      <Text style={{fontFamily:'poppinsr', fontSize:17, color:'#900020'}}>{message}</Text> 
+    </View>
+  )}
+
+  {message2 && (
+    <View style={{display:'flex' , flexDirection:'row'}}  >
+    <IconC name='check-circle-o' size={25} style={{marginRight:10, color:'#42D742'}}/>
+    <Text style={{fontFamily:'poppinsr', fontSize:17, color:'#42D742'}}>{message2}</Text> 
+    </View>
+  )}
+  
   <Inputs place='Nome' iconeO='person' onChange={(text) => setName(text)}/>
   <Inputs place="Matrícula" iconeMC='smart-card-outline' onChange={(text) => setMatricula(text)}/>
   <Inputs place="Email" iconeF='mail' onChange={(text) => setEmail(text)}/>
@@ -107,7 +135,10 @@ return (
 </ImageBackground>
 );
 }
+// ==================================================================
 
+// ==================================================================
+// ESTILIZAÇÕES:
 const styles = StyleSheet.create({
   container: {
     marginTop: 2,
@@ -120,4 +151,4 @@ const styles = StyleSheet.create({
     position: "absolute",
   }
 })
-
+// ==================================================================
