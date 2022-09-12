@@ -5,7 +5,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import ProgressBarIP from "../../components/ProgressBarIP";
 import IconCa from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function ValidarChamada({ navigation }) {
+export default function StatusAlun({ navigation }) {
 
   const [alunx, setAlunx] = useState('Alana Gabriele Amorim Silva');
   const [materia, setMateria] = useState('Cálculo 2');
