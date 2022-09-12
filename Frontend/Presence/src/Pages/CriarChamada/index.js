@@ -142,12 +142,14 @@ export default function CriarChamada({ navigation }) {
             setCodChamada(res.codigoChamada);
             setSituation(true);
             setModalActive4(false);
+            setPorcentagem1([1,0]);
             navigation.navigate('Chamada')
         }
         else if (res.situation == false){
             setCodChamada(res.codigoChamada);
             setSituation(false);
             setModalActive4(false);
+            setPorcentagem1([1,0]);
             navigation.navigate('Chamada')
         }
       }
@@ -292,10 +294,10 @@ export default function CriarChamada({ navigation }) {
       if (res == '403'){
         null
       }
-      else {
-        setAlunosTurma(res);
-        navigation.navigate('Turma')
-      }
+        else{
+          setAlunosTurma(res);
+          navigation.navigate('Turma');
+        }
     }
 }
 // =========================================================
@@ -316,8 +318,17 @@ export default function CriarChamada({ navigation }) {
     });
     let res= await reqs.json();
     if (res) {
-      setPorcentagem1(res);
-      navigation.navigate('Chamada');
+      console.log(res);
+      if (res[1] == 0){
+        setAlunosTurma([1,0]);
+        console.log('Condição 1');
+        navigation.navigate('Chamada');
+      }
+      else {
+        setPorcentagem1(res);
+        console.log('Condição 2');
+        navigation.navigate('Chamada');
+      }
     }
 }
 // =========================================================

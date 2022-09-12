@@ -137,9 +137,6 @@ export default function Chamada({navigation}){
       setChamadas(res);
       navigation.navigate('CriarChamada');
     }
-    else {
-      null
-    }
   }
   // =========================================================
   return (
@@ -150,12 +147,7 @@ export default function Chamada({navigation}){
                 <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}> Lista de chamada</Text>
                 <Text style={{ fontFamily:'poppinsr', fontSize:14, color:'#ADA4A5' , alignSelf:'center' }}>{diaChamada} {mesNominalChamada}</Text>
             </View>
-            <View style={style.voltar}>
-                <PressableBtnBack
-                    click={() => PesquisaChamadas()}
-                    iconeIo="chevron-back"
-                />
-            </View>
+
         </View>
         <View style={style.lista}>
           <FlatList
@@ -184,7 +176,7 @@ export default function Chamada({navigation}){
 
         <View style={style.voltar}>
             <PressableBtnBack
-                click={() => navigation.navigate("CriarChamada")}
+                click={() => PesquisaChamadas()}
                 iconeIo="chevron-back"
             />
         </View>

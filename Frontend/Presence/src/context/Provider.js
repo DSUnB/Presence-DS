@@ -14,7 +14,7 @@ export default function Provider({children}) {
     const [mesNominalChamada, setMesNominalChamada] = useState(null);
     const [respostaChamada, setRespostaChamada] = useState(null);
     const [alunosTurma, setAlunosTurma] = useState(null);
-    const [Porcentagem1, setPorcentagem1] = useState(null);
+    const [Porcentagem1, setPorcentagem1] = useState([1,0]);
     const [falta, setFalta] = useState(null);
 
     return(
