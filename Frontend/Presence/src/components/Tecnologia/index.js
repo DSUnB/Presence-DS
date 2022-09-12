@@ -11,8 +11,8 @@ export default function Tecnologia(props) {
 }
 const style = StyleSheet.create({
     container: {
-        width: 135,
-        height: 135,
+        width: 125,
+        height: 125,
         backgroundColor: '#40C7CB',
         borderWidth: 7,
         borderColor: '#3B8A8C',
@@ -21,8 +21,8 @@ const style = StyleSheet.create({
         alignItems: 'center'
     },
     img: {
-        height: 80,
-        width: 80,
+        height: 70,
+        width: 70,
         borderRadius: 15,
         marginTop: 10
     }

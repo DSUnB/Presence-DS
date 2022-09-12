@@ -11,6 +11,7 @@ import Chamada from './src/Pages/Chamada';
 import Turma from './src/Pages/Turma';
 import MainAlun from './src/Pages/MainAlun';
 import ValidarChamada from './src/Pages/ValidarChamada';
+import StatusAlun from './src/Pages/StatusAlun'
 import Provider from './src/context/Provider';
 import Tabs from './src/Pages/Tabs';
 import VerdePantano from './src/Pages/VerdePantano';
@@ -57,6 +58,7 @@ export default function App() {
         <Stack.Screen name="Turma" component={Turma} />
         <Stack.Screen name="MainAlun" component={MainAlun} />
         <Stack.Screen name="ValidarChamada" component={ValidarChamada} />
+        <Stack.Screen name="StatusAlun" component={StatusAlun} />
         <Stack.Screen name="Tabs" component={Tabs} />
         <Stack.Screen name="VerdePantano" component={VerdePantano} />
         <Stack.Screen name="Creditos" component={Creditos} />

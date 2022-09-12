@@ -1,13 +1,25 @@
-import React from 'react'
-import { View, Text, StyleSheet, Image, ImageBackground } from 'react-native'
-import logo from '../../assets/images/VerdePantano.png'
+import React from 'react';
+import { View, Text, StyleSheet, Image, ImageBackground, Pressable } from 'react-native';
+import logo from '../../assets/images/VerdePantano.png';
 import * as Linking from 'expo-linking';
+import IconIo from 'react-native-vector-icons/Ionicons';
 
 
-export default function VerdePantano() {
+export default function VerdePantano({ navigation }) {
   return (
     <ImageBackground source={require('../../assets/images/Tabs-01.png')} resizeMode="cover">
       <View style={style.container}>
+
+        <View style={{position: 'absolute', top: 35, width: '105%', flexDirection: 'row', justifyContent: 'space-between'}}>
+          <Pressable style={style.button} onPress={() => navigation.navigate('Login')}>
+          <IconIo style={style.icone} name={'chevron-back'} size={23}/>
+          </Pressable>
+
+          <Pressable style={style.button} onPress={() => navigation.jumpTo('Aplicativo')}>
+          <IconIo style={style.icone} name={'chevron-forward'} size={23}/>
+          </Pressable>
+        </View>
+
         <Text style={{fontFamily:'poppinsb', fontSize:25}}>Verde Pântano</Text>
           <Image source={logo} style={{width: 250, height: 250}}></Image>
             <View>
@@ -26,6 +38,19 @@ const style = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         height: '100%',
-        padding: 30
-    }
+        padding: 30,
+    },
+    button:{
+      width: 33,
+      height: 33,
+      borderRadius: 8,
+      zIndex: 2,
+      backgroundColor:'rgba(247, 248, 248, 1)',
+    },
+    icone:{
+      color:"black",
+      position: 'absolute',
+      left:5,
+      top:4,
+  },
 })

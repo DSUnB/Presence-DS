@@ -233,7 +233,7 @@ export default function MainAlun({ navigation }) {
   // =========================================================
   // ARQUITETURA DA SCREEN DA APLICAÇÃO:
   return (
-    <ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
+    <ImageBackground source={require('../../assets/images/VetorMain.png')} resizeMode="cover">
       <SafeAreaView style={style.container}>
         <View style={style.logout}>
           <PressablesConf iconeLo="logout" click={() => setModalActive2(true)} />

@@ -1,3 +1,4 @@
+
 import React, { useState, useContext } from "react";
 import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable, FlatList,  ScrollView, ImageBackground} from "react-native";
 import PressableBtnBack from "../../components/PressableBtnBack";
@@ -16,7 +17,6 @@ import { Context } from '../../context/Provider';
 import ProgressBarIP from "../../components/ProgressBarIP";
 import IconCa from 'react-native-vector-icons/MaterialCommunityIcons';
 
-
 const EmptyListMessage = ({item}) => {
   return (
     // Flat List Item
@@ -32,7 +32,7 @@ const EmptyListMessage = ({item}) => {
 };
 
 
-export default function ValidarChamada({ navigation }, pr) {
+export default function ValidarChamada({ navigation }) {
 
   const handleCloseAndRoute = () => {
     setModalActive2(false);
@@ -206,7 +206,8 @@ export default function ValidarChamada({ navigation }, pr) {
 ];
 
   return (
-<ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
+  
+    <ImageBackground source={require('../../assets/images/VetorChamada2.png')} resizeMode="cover">
       <SafeAreaView style={style.container}>
 
         {/* Header */}

@@ -140,14 +140,13 @@ export default function Chamada({navigation}){
   }
   // =========================================================
   return (
-  <ImageBackground source={require('../../assets/images/VetorLogin.png')} resizeMode="cover">
+  <ImageBackground source={require('../../assets/images/VetorChamada2.png')} resizeMode="cover">
     <SafeAreaView style={style.container}>
         <View style={style.header}>
             <View>
                 <Text style={{ fontFamily: "poppinsb", fontSize: 18 }}> Lista de chamada</Text>
                 <Text style={{ fontFamily:'poppinsr', fontSize:14, color:'#ADA4A5' , alignSelf:'center' }}>{diaChamada} {mesNominalChamada}</Text>
             </View>
-
         </View>
         <View style={style.lista}>
           <FlatList
