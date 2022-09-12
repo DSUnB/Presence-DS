@@ -45,7 +45,7 @@ export default function App() {
   <Provider>
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName="StatusAlun" 
+        initialRouteName="Login" 
         screenOptions={{
           headerShown: false
         }}
