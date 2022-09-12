@@ -21,18 +21,18 @@ export default function Turma({ navigation }) {
 
 
   const DADOS = [
-    // {AlunoP: 'Leandro Almeida'},
-    // {AlunoP: 'Alana Gabriele'},
-    // {AlunoP: 'Rafaela Lopes'},
-    // {AlunoP: 'Doan FIlho'},
-    // {AlunoP: 'Harleny Angelica'},
-    // {AlunoP: 'Daniel Rodrigues'},
-    // {AlunoP: 'Danielle Rodrigues'},
-    // {AlunoP: 'Davi Rodrigues'},
-    // {AlunoP: 'Renan Araújo'},
-    // {AlunoP: 'Felipe de Sousa'},
-    // {AlunoP: 'Dara Cristina'},
-    // {AlunoP: 'Rafaela Lopes'},
+    {AlunoP: 'Leandro Almeida'},
+    {AlunoP: 'Alana Gabriele'},
+    {AlunoP: 'Rafaela Lopes'},
+    {AlunoP: 'Doan FIlho'},
+    {AlunoP: 'Harleny Angelica'},
+    {AlunoP: 'Daniel Rodrigues'},
+    {AlunoP: 'Danielle Rodrigues'},
+    {AlunoP: 'Davi Rodrigues'},
+    {AlunoP: 'Renan Araújo'},
+    {AlunoP: 'Felipe de Sousa'},
+    {AlunoP: 'Dara Cristina'},
+    {AlunoP: 'Rafaela Lopes'},
   ];
 
 
