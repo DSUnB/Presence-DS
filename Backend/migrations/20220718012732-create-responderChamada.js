@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('ResponderChamadas', {
+    await queryInterface.createTable('ResponderChamada', {
       id: {
         allowNull: true,
         type: Sequelize.STRING
@@ -17,32 +17,16 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
-      codigoChamada: {
+      idChamada: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         references: {
           model: 'chamadas',
-          key: 'codigoChamada'
+          key: 'idChamada'
         },
         onUpdate: 'cascade',
         onDelete: 'cascade'
-      },
-      codigoTurma: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      aluno: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      dia: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      mesNominal: {
-        allowNull: false,
-        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -55,6 +39,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('ResponderChamadas');
+    await queryInterface.dropTable('ResponderChamada');
   }
 };

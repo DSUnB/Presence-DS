@@ -17,10 +17,6 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
-      nome: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
       codigoTurma: {
         allowNull: false,
         primaryKey: true,

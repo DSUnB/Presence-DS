@@ -81,15 +81,8 @@ export default function Login({ navigation }) {
         })
       });
       let res= await reqs.json();
-      if (res === '404'){
-          setMessage('Erro de Autenticação!');
-          setTimeout(() => {
-            setMessage(null);
-            AsyncStorage.clear();
-        }, 2000);
-      }
       if (res === '403'){
-        setMessage('Erro inesperado!');
+        setMessage('Erro de Autenticação!');
         setTimeout(() => {
           setMessage(null);
           AsyncStorage.clear();
@@ -118,15 +111,8 @@ export default function Login({ navigation }) {
         })
     });
     let res= await reqs.json();
-    if (res === '404'){
-      setMessage('Erro de Autenticação!');
-      setTimeout(() => {
-        setMessage(null);
-        AsyncStorage.clear();
-    }, 2000);
-  }
     if (res === '403'){
-      setMessage('Erro Inesperado');
+      setMessage('Erro de Autenticação!');
       setTimeout(() => {
         setMessage(null);
         AsyncStorage.clear();

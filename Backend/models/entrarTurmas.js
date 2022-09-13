@@ -20,7 +20,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   EntrarTurmas.init({
     idAluno: DataTypes.INTEGER,
-    nome: DataTypes.STRING,
     codigoTurma: DataTypes.STRING,
     curso: DataTypes.STRING,
     nomeTurma: DataTypes.STRING

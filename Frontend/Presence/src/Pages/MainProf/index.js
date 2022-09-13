@@ -12,14 +12,6 @@ import { Context } from '../../context/Provider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import IconC from 'react-native-vector-icons/FontAwesome';
 import IconA from 'react-native-vector-icons/Feather';
-import moment from 'moment';
-import 'moment/locale/pt-br'
-
-// =========================================================
-// GERAÇÃO DA DATA EM PORTUGUES:
-moment().format();
-moment.locale('pt-br');
-// =========================================================
 
 
 const EmptyListMessage = ({item}) => {
@@ -85,9 +77,6 @@ export default function MainProf({ navigation }) {
     const [message2, setMessage2]=useState(null);
     const [isLoading, setIsLoading]=useState(false);
     const {DADOS, setDADOS} = useContext(Context);
-    const {setNomeCurso} = useContext(Context);
-    const {setCodTurma} = useContext(Context);
-    const {setChamadas} = useContext(Context);
     // =========================================================
 
     // =========================================================
@@ -144,7 +133,7 @@ export default function MainProf({ navigation }) {
                 setMessage2('Turma Criada!');
                 setIsLoading(false);
                 setTimeout(() => {
-                    setMessage2(null);
+                    setMessage(null);
                     setMateria(null);
                     setNomeTurma(null);
                     setModalActive3(false);
@@ -187,42 +176,6 @@ export default function MainProf({ navigation }) {
     }
     // =========================================================
 
-    // =========================================================
-    // FUNÇÃO PARA ENVIAR DADOS DA TURMA:
-    function EnvioDados(dado1, dado2, dado3){
-      setCodTurma(dado1);
-      setNomeCurso(dado2 + " - " + dado3);
-      PesquisaChamadas(dado1);
-    } 
-    // =========================================================
-
-    // =========================================================
-    // FUNÇÃO PARA PESQUISAR REGISTRO DE CHAMADAS:
-    async function PesquisaChamadas(codigoTurma){
-      let reqs = await fetch(config.urlRootNode+'professor/chamada/obter', {
-        method: 'POST',
-        headers:{
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          codigoTurma: codigoTurma,
-          mes: moment().format('MM'),
-          ano: moment().format('YYYY'),
-        })
-      });
-      let res= await reqs.json();
-      if (res){
-        setChamadas(res);
-        navigation.navigate('CriarChamada');
-      }
-      else {
-        null
-      }
-    }
-     // =========================================================
-
-
 // =========================================================
 // ARQUITETURA DA SCREEN DA APLICAÇÃO:
   return (
@@ -244,7 +197,7 @@ export default function MainProf({ navigation }) {
             data={DADOS}
             ListEmptyComponent={EmptyListMessage}
             renderItem={({ item }) => (
-              <Pressable onPress={() => EnvioDados(item.codigoTurma ,item.curso, item.nomeTurma)}>
+              <Pressable onPress={() => navigation.navigate('CriarChamada')}>
                 <View style={style.turma}>
                   <Text
                     style={{

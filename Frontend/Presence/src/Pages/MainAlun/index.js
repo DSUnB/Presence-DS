@@ -61,10 +61,6 @@ export default function MainAlun({ navigation }) {
   const [message2, setMessage2] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const {DADOS, setDADOS} = useContext(Context);
-  const {setNomeCurso} = useContext(Context);
-  const {setCodTurma} = useContext(Context);
-  const {setFalta} = useContext(Context);
-  const {setChamadasFeita} = useContext(Context);
 
   // =========================================================
 
@@ -84,7 +80,7 @@ export default function MainAlun({ navigation }) {
       setIsLoading(true);
         let response = await AsyncStorage.getItem('userData');
         let json = JSON.parse(response);
-        if (codigo != '' && codigo != null){
+        if (codigo != '' ){
           let reqs = await fetch(config.urlRootNode+'aluno/turma/entrar', {
               method: 'POST',
               headers:{
@@ -93,13 +89,12 @@ export default function MainAlun({ navigation }) {
               },
               body: JSON.stringify({
                   aluno: json.matricula,
-                  nome: json.nome,
                   codigoTurma: codigo.toUpperCase(),
               })                 
           });
           let res= await reqs.json();
           if(res === '403'){
-              setMessage('Turma já existe!');
+              setMessage('Turma já existente!');
               setIsLoading(false);
               setTimeout(() => {
                   setMessage(null);
@@ -114,17 +109,9 @@ export default function MainAlun({ navigation }) {
                 navigation.navigate('Login')
             }, 2000);
           }
-          else if(res === '404.1'){
-            setMessage('Turma não encontrada!');
-            setIsLoading(false);
-            setTimeout(() => {
-                setMessage(null);
-            }, 2000);
-          }
           else{
             AtualizarTurma()
             setMessage2('Turma Encontrada!');
-            setCodigo(null)
             setIsLoading(false);
             setTimeout(() => {
                 setMessage2(null);
@@ -142,29 +129,6 @@ export default function MainAlun({ navigation }) {
         }
   }
   // =========================================================
-
-  // =========================================================
-  // FUNÇÃO PARA PESQUISAR QUAIS CHAMADAS FOI REALIZADO:
-  async function PesquisarChamadas(chamada){
-        let response = await AsyncStorage.getItem('userData');
-        let json = JSON.parse(response);
-          let reqs = await fetch(config.urlRootNode+'aluno/chamada/pesquisar', {
-              method: 'POST',
-              headers:{
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                  aluno: json.matricula,
-                  codigoTurma: chamada
-              })                 
-          });
-          let res= await reqs.json();
-          if (res) {
-            setChamadasFeita(res);
-            navigation.navigate('ValidarChamada');
-          }
-    }
   
   // =========================================================
     // FUNÇÃO PARA ATUALIZAR A LISTA DE TURMAS:
@@ -190,46 +154,6 @@ export default function MainAlun({ navigation }) {
       }
     }
   // =========================================================
-    // =========================================================
-    // FUNÇÃO PARA CALCULAR FALTAS:
-    async function FaltaAluno(chamada){
-      let response = await AsyncStorage.getItem('userData');
-      let json = JSON.parse(response);
-      let reqs = await fetch(config.urlRootNode+'aluno/falta/obter', {
-        method: 'POST',
-        headers:{
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          aluno: json.matricula,
-          codigoTurma: chamada,
-        })
-      });
-      let res= await reqs.json();
-      if (res){
-        if (res == '404'){
-          navigation.navigate('Login');
-        }
-        else if (res == '403'){
-          navigate.navigate('Login');
-        }
-        else {
-          setFalta(res[0] - res[1]);
-          PesquisarChamadas(chamada);
-        }
-      }
-    }
-  // =========================================================
-
-  // =========================================================
-  function EnvioDados(dado1, dado2, dado3){
-    setNomeCurso(dado1 + " - " + dado2);
-    setCodTurma(dado3);
-    FaltaAluno(dado3);
-  }
-  // =========================================================
-
   // =========================================================
   // ARQUITETURA DA SCREEN DA APLICAÇÃO:
   return (
@@ -250,7 +174,7 @@ export default function MainAlun({ navigation }) {
             data={DADOS}
             ListEmptyComponent={EmptyListMessage}
             renderItem={({ item }) => (
-              <Pressable onPress={() => EnvioDados(item.curso, item.nomeTurma, item.codigoTurma)}>
+              <Pressable onPress={() => navigation.navigate('ValidarChamada')}>
                 <View style={style.turma}>
                   <Text
                     style={{
