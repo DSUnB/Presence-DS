@@ -50,7 +50,8 @@ export default function ValidarChamada({ navigation }) {
   const {codTurma} = useContext(Context);
   const {falta, setFalta} = useContext(Context);
   const {setDADOS} = useContext(Context);
-  const {chamadasFeita} = useContext(Context);
+  const {chamadasFeita, setChamadasFeita} = useContext(Context);
+  const {setPorcentagem1} = useContext(Context);
 
   // ================================================================
   // FUNÇÃO PARA REALIZAR CHAMADA:
@@ -118,7 +119,6 @@ export default function ValidarChamada({ navigation }) {
           FaltaAluno();
           setTimeout(() => {
             setMessage(null);
-            setModalActive3(false);
           }, 1000);
         }
       }
@@ -155,6 +155,7 @@ export default function ValidarChamada({ navigation }) {
         }
         else {
           setFalta(res[0] - res[1])
+          PesquisarChamadas();
         }
       }
     }
@@ -188,6 +189,55 @@ export default function ValidarChamada({ navigation }) {
         }
     };
   // =========================================================
+
+   // =========================================================
+  // FUNÇÃO PARA PESQUISAR QUAIS CHAMADAS FOI REALIZADO:
+  async function PesquisarChamadas(){
+    let response = await AsyncStorage.getItem('userData');
+    let json = JSON.parse(response);
+      let reqs = await fetch(config.urlRootNode+'aluno/chamada/pesquisar', {
+          method: 'POST',
+          headers:{
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              aluno: json.matricula,
+              codigoTurma: codTurma,
+          })                 
+      });
+      let res= await reqs.json();
+      if (res) {
+        setChamadasFeita(res);
+        PorcentagemAluno();
+      }
+}
+
+// =========================================================
+
+// =========================================================
+  // FUNÇÃO PARA AJUSTAR A PORCENTAGEM DA CHAMADA:
+  async function PorcentagemAluno(){
+    let response = await AsyncStorage.getItem('userData');
+      let json = JSON.parse(response);
+    let reqs = await fetch(config.urlRootNode+'aluno/porcentagem/chamada', {
+      method: 'POST',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        aluno: json.matricula,
+        codigoTurma: codTurma,
+      })
+    });
+    let res= await reqs.json();
+    if (res) {
+        setPorcentagem1(res);
+        setModalActive3(false);
+    }
+}
+  // ========================================================= 
 
 
   const options = [

@@ -120,9 +120,9 @@ export default function Form({ navigation }) {
         setMessage(null);
       }, 3000);
     }
-    else if(name.length <= 10){
+    else if(name.length <= 18){
       setMessage(null);
-      setMessage('Insira o nome e sobrenome!');
+      setMessage('Insira o Nome Completo!');
       setTimeout(() => {
         setMessage(null);
       }, 3000);

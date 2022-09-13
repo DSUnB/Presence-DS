@@ -26,8 +26,18 @@ export default function Turma({ navigation }) {
   // DECLARAÇÕES DE STATES E CONTEXTOS:
 
   const {alunosTurma} = useContext(Context);
+  const {codTurma} = useContext(Context);
 
   // =============================================
+
+    // =========================================================
+  // FUNÇÃO PARA ENVIAR DADOS PARA A PRÓXIMA PÁGINA:
+  function EnvioDados(dado1, dado2, dado3){
+    setNomeCurso(dado1 + " - " + dado2);
+    setCodTurma(dado3);
+    FaltaAluno(dado3);
+  }
+  // =========================================================
 
   return (
     <ImageBackground source={require('../../assets/images/VetorMain.png')} resizeMode="cover">

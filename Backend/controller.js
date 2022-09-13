@@ -561,7 +561,7 @@ app.post('/aluno/falta/obter', async (req,res)=>{
     }
 });
 // ====================================================
-
+// PESQUISAR QUAIS CHAMADAS O ALUNO JÁ REALIZOU: (VALIDARCHAMADA)
 app.post('/aluno/chamada/pesquisar', async (req,res)=>{
     try {        
 
@@ -589,6 +589,46 @@ app.post('/aluno/chamada/pesquisar', async (req,res)=>{
 });
 
 // ==================================================================
+
+// ====================================================
+// PESQUISA DA QUNATIDADE DE ALUNOS EM UMA TURMA PARA PORCENTAGEM: (REALIZARCHAMADA)
+
+app.post('/aluno/porcentagem/chamada', async (req,res) => {
+    try{
+        let reqs = await model.Alunos.findOne({
+            where: {
+                matricula: req.body.aluno,
+            },
+            raw: true
+        });
+        if (reqs) {
+            let reqs1 = await model.ResponderChamadas.findAndCountAll({
+                where: {
+                    'idAluno': reqs.idAluno,
+                    'codigoTurma': req.body.codigoTurma
+                },
+                raw: true,
+            });
+            if(reqs1){
+                let reqs2 = await model.Chamadas.findAndCountAll({
+                    where: {
+                        'codigoTurma': req.body.codigoTurma
+                    },
+                    raw: true,
+                });
+                if(reqs2){
+                    res.status(202).send([reqs1.count, reqs2.count]);
+                }
+        }
+        }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+})
+
+// ====================================================
+
 // ==================================================================
 // ==================================================================
 // ==================================================================

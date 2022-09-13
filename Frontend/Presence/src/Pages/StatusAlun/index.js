@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { SafeAreaView, View, Text, StyleSheet, Pressable, FlatList, ImageBackground} from "react-native";
 import PressableBtnBack from "../../components/PressableBtnBack";
 import { LinearGradient } from "expo-linear-gradient";
-import ProgressBarIP from "../../components/ProgressBarIP";
+import ProgressBarIP2 from "../../components/ProgressBarlP2";
 import IconCa from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function StatusAlun({ navigation }) {
@@ -70,7 +70,7 @@ export default function StatusAlun({ navigation }) {
 
         {/* Barra de progresso */}
         <View style={style.progress}>
-            <ProgressBarIP titulo='Índice de Presença'/>
+            <ProgressBarIP2 titulo='Índice de Presença'/>
         </View>
         
         {/* FlatList dos meses */}
