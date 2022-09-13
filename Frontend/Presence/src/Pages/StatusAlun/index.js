@@ -90,7 +90,7 @@ export default function StatusAlun({ navigation }) {
                 data={options}
                 horizontal
                 renderItem={({item}) =>(
-                <Pressable style={{ paddingRight:24 }} onPress={() => navigation.navigate('CriarChamada')}>
+                <Pressable style={{ paddingRight:24 }}>
                   <View>
                     <LinearGradient
                       colors = {['#2C5E7A' , '#338995']}
