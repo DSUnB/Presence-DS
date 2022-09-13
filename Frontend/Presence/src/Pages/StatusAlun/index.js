@@ -56,7 +56,7 @@ export default function StatusAlun({ navigation }) {
         {/* Aluno(a) Selecionado */}
         <View style={{ position: "absolute", top:115, left:40, width:"90%", flex:1, flexDirection:"row", alignItems: "center"}}>
           <View style={{backgroundColor:"#dff1f1", borderRadius: 70, width:70, height:70}}>
-            <IconCa style={{ alignSelf:"center", padding:12 }} name='school-outline' size={45}/>
+            <IconCa style={{ alignSelf:"center", padding:17 }} name='school-outline' size={35}/>
           </View>
             <View style={{flex:1, flexDirection:"column", alignContent:"center", left:25}}>
               <Text style={{ fontFamily: "poppinsm", fontSize: 16, color:'black'}}>

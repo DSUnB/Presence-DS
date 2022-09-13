@@ -660,7 +660,7 @@ const style = StyleSheet.create({
     width:315,
     backgroundColor:'white',
     zIndex:4,
-    borderBottomColor:"#2F7286",
+    borderColor:"#2F7286",
     borderWidth:1,
     flexDirection: "row",
   },
