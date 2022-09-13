@@ -318,15 +318,12 @@ export default function CriarChamada({ navigation }) {
     });
     let res= await reqs.json();
     if (res) {
-      console.log(res);
       if (res[1] == 0){
         setAlunosTurma([1,0]);
-        console.log('Condição 1');
         navigation.navigate('Chamada');
       }
       else {
         setPorcentagem1(res);
-        console.log('Condição 2');
         navigation.navigate('Chamada');
       }
     }

@@ -1,25 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { SafeAreaView, View, Text, StyleSheet, Pressable, FlatList, ImageBackground} from "react-native";
 import PressableBtnBack from "../../components/PressableBtnBack";
 import { LinearGradient } from "expo-linear-gradient";
 import ProgressBarIP2 from "../../components/ProgressBarlP2";
 import IconCa from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Context } from '../../context/Provider';
+
+const EmptyListMessage = ({item}) => {
+  return (
+    // Flat List Item
+    <View>
+      <Text style={{ fontFamily: "poppinsr", fontSize: 18, textAlign: 'center',}}>
+        O aluno não respondeu nenhuma chamada
+      </Text>
+      <Text style={{ fontFamily: "poppinsr", fontSize: 13, textAlign: 'center'}}>
+        Não esqueça de mostrar o código de suas chamadas
+      </Text>
+    </View>   
+  );
+};
 
 export default function StatusAlun({ navigation }) {
 
-  const [alunx, setAlunx] = useState('Alana Gabriele Amorim Silva');
-  const [materia, setMateria] = useState('Cálculo 2');
-
-  const DADOS = [
-    {ChamadaRealizada: '08 de Fevereiro'},
-    {ChamadaRealizada: '12 de Abril'},
-    {ChamadaRealizada: '01 de Junho'},
-    {ChamadaRealizada: '04 de Junho'},
-    {ChamadaRealizada: '10 de Novembro'},
-    {ChamadaRealizada: '29 de Julho'},
-    {ChamadaRealizada: '30 de Dezembro'},
-    {ChamadaRealizada: '07 de Janeiro'},
-  ];
+  const {curso} = useContext(Context);
+  const {nome} = useContext(Context);
+  const {chamadasFeita} = useContext(Context);
 
   const options = [
     { label: 'Janeiro'},
@@ -60,10 +65,10 @@ export default function StatusAlun({ navigation }) {
           </View>
             <View style={{flex:1, flexDirection:"column", alignContent:"center", left:25}}>
               <Text style={{ fontFamily: "poppinsm", fontSize: 16, color:'black'}}>
-              {alunx}
+              {nome}
             </Text>
             <Text style={{ fontFamily: "poppinsm", fontSize: 14, paddingTop: 5, color:'#7B6F72'}}>
-              Registro de {materia}
+              Registro de {curso}
             </Text>
           </View>
         </View>
@@ -112,7 +117,8 @@ export default function StatusAlun({ navigation }) {
           {/* FlatList das chamadas realizadas */}
           <View style={style.lista}> 
             <FlatList
-              data={DADOS}
+              data={chamadasFeita}
+              ListEmptyComponent={EmptyListMessage}
               renderItem={({ item }) => (
                 <Pressable onPress={() => navigate.navigation('ValidarChamada')}>
                   <View style={style.alunos}>
@@ -125,7 +131,7 @@ export default function StatusAlun({ navigation }) {
                           paddingLeft: 38,
                           paddingTop: 18,
                         }}>
-                          {item.ChamadaRealizada}
+                          {item.dia} de {item.mesNominal[0].toUpperCase() + item.mesNominal.substring(1)}
                       </Text>
                     </View>
                   </View>

@@ -10,11 +10,11 @@ import config from "../../config/config.json";
 
 export default function ProgressBarIP2(props){
   
-  const {Porcentagem2} = useContext(Context);
+  const {Porcentagem1} = useContext(Context);
 
   // Banco de dados fake
-  let PresEft = 100;
-  let PresTot = 100;
+  let PresEft = Porcentagem1[0];
+  let PresTot = Porcentagem1[1];
   
   // PresEft: Presenças efetivadas;
   // PresTot: Pfesença Total

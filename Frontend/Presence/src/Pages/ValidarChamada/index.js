@@ -190,6 +190,29 @@ export default function ValidarChamada({ navigation }) {
     };
   // =========================================================
 
+  // ====================================================================
+  // FUNÇÃO PARA EXCUIR TURMA:
+  async function SairTurma(){
+    let response = await AsyncStorage.getItem('userData');
+      let json = JSON.parse(response);
+    let reqs = await fetch(config.urlRootNode+'aluno/turma/sair', {
+        method: 'DELETE',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          aluno: json.matricula,
+          codigoTurma: codTurma
+        })
+      });
+      let res= await reqs.json();
+      if (res) {
+         ObterTurmaAlun();
+      }
+}
+  // ====================================================================
+
    // =========================================================
   // FUNÇÃO PARA PESQUISAR QUAIS CHAMADAS FOI REALIZADO:
   async function PesquisarChamadas(){
@@ -371,7 +394,7 @@ export default function ValidarChamada({ navigation }) {
               <View style={style.alinhamento}>
                 <PressablesModal
                   texto="Sim"
-                  click={() => handleCloseAndRoute()}/>
+                  click={() => SairTurma()}/>
                 <PressablesModal2
                   texto="Não"
                   click={() => setModalActive2(false)}/>

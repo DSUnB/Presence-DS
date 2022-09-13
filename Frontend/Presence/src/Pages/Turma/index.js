@@ -27,15 +27,70 @@ export default function Turma({ navigation }) {
 
   const {alunosTurma} = useContext(Context);
   const {codTurma} = useContext(Context);
+  const {setNome} = useContext(Context);
+  const {setCurso} = useContext(Context);
+  const {setChamadasFeita} = useContext(Context);
+  const {setPorcentagem1} = useContext(Context);
 
   // =============================================
 
     // =========================================================
+  // FUNÇÃO PARA MOSTRAR AS CHAMADAS REALIZADAS PELO ALUNO NA PRÓXIMA PÁGINA:
+  async function ChamadasAluno(aluno){
+    let reqs = await fetch(config.urlRootNode+'professor/chamada/aluno', {
+      method: 'POST',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        aluno: aluno,
+        codigoTurma: codTurma,
+      })
+    });
+    let res= await reqs.json();
+    if (res){
+      setChamadasFeita(res);
+      PorcentagemAluno(aluno);
+    }
+}
+  // =========================================================
+
+      // =========================================================
+  // FUNÇÃO PARA ORGANIZAR A PORCENTAGEM DO ALUNO:
+  async function PorcentagemAluno(aluno){
+    let reqs = await fetch(config.urlRootNode+'professor/porcentagem/aluno', {
+      method: 'POST',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        aluno: aluno,
+        codigoTurma: codTurma,
+      })
+    });
+    let res= await reqs.json();
+    if (res){
+      if (res[1] == 0) {
+        setPorcentagem1([1,1]);
+        navigation.navigate('StatusAlun');
+      }
+      else {
+        setPorcentagem1(res);
+        navigation.navigate('StatusAlun');
+      }
+    }
+}
+  // ========================================================= 
+
+    // =========================================================
   // FUNÇÃO PARA ENVIAR DADOS PARA A PRÓXIMA PÁGINA:
   function EnvioDados(dado1, dado2, dado3){
-    setNomeCurso(dado1 + " - " + dado2);
-    setCodTurma(dado3);
-    FaltaAluno(dado3);
+    setCurso(dado1);
+    setNome(dado2);
+    ChamadasAluno(dado3);
+    // navigation.navigate('StatusAlun');
   }
   // =========================================================
 
@@ -58,7 +113,7 @@ export default function Turma({ navigation }) {
             data={alunosTurma}
             ListEmptyComponent={EmptyListMessage}
             renderItem={({ item }) => (
-              <Pressable onPress={() => navigation.navigate('StatusAlun')}>
+              <Pressable onPress={() => EnvioDados(item.curso, item.nome, item.idAluno)}>
                 <View style={style.alunos}>
                   <View style={{flexDirection: "row", justifyContent:'space-between'}}>
                   <IconP style={{position:'absolute', alignSelf:'center', marginLeft:14, paddingTop:12, color:'#7B6F72'}} name='person-outline' size={18}/>

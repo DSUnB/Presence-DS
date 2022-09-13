@@ -30,14 +30,14 @@ export default function Form({ navigation }) {
   // FUNÇÃO PARA ENVIO DE CADASTRO AO BACKEND:
   async function Registro(){
     Keyboard.dismiss();
-    if (name === null && matricula === null && email === null && password === null) {
+    if (name == null || matricula == null || email == null || password == null) {
       setMessage(null);
       setMessage('Preencha todos os Campos!');
       setTimeout(() => {
         setMessage(null);
       }, 3000);
     }
-    else if (name === '' && matricula === '' && email === '' && password === '') {
+    else if (name == '' || matricula == '' || email == '' || password == '') {
       setMessage(null);
       setMessage('Preencha todos os Campos!');
       setTimeout(() => {
@@ -69,10 +69,24 @@ export default function Form({ navigation }) {
       setMessage(null);
       setMessage('Insira o email institucional de aluno!');
         setTimeout(() => {
+          setMessage(null);
+        }, 3000);
+      }
+      else if(name.length <= 17){
         setMessage(null);
-      }, 3000);
-    }
-    else if (password === passwordConfirm && name != '' && matricula != '' && email != '' && password != '' && name != null && matricula != null && email != null && password != null && matricula.length >= 9 && name.length > 10){
+        setMessage('Insira o Nome Completo!');
+        setTimeout(() => {
+          setMessage(null);
+        }, 3000);
+      }
+      else if(matricula.length < 9){
+        setMessage(null);
+        setMessage('Insira a sua matrícula!');
+        setTimeout(() => {
+          setMessage(null);
+        }, 3000);
+      }
+      else if (password === passwordConfirm && name != '' && matricula != '' && email != '' && password != '' && name != null && matricula != null && email != null && password != null && matricula.length >= 9 && name.length > 10){
       let reqs = await fetch(config.urlRootNode+'usuario/cadastrar', {
       method: 'POST',
       headers:{
@@ -101,28 +115,16 @@ export default function Form({ navigation }) {
       setMessage2("Usuário Criado com Sucesso!");
     setTimeout(() => {
       setMessage2(null);
+      setPassword(null);
+      setEmail(null);
+      setMatricula(null);
+      setName(null);
       navigation.navigate('Login');
     }, 2000);
-    }
-    
-    }
+    }}
     else if (password != passwordConfirm) {
       setMessage(null);
       setMessage('Senhas Diferentes!');
-      setTimeout(() => {
-        setMessage(null);
-      }, 3000);
-    }
-    else if(matricula.length < 9){
-      setMessage(null);
-      setMessage('Insira a sua matrícula!');
-      setTimeout(() => {
-        setMessage(null);
-      }, 3000);
-    }
-    else if(name.length <= 18){
-      setMessage(null);
-      setMessage('Insira o Nome Completo!');
       setTimeout(() => {
         setMessage(null);
       }, 3000);

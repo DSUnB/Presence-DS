@@ -629,6 +629,86 @@ app.post('/aluno/porcentagem/chamada', async (req,res) => {
 
 // ====================================================
 
+// ====================================================
+// PESQUISAR QUAIS CHAMADAS O ALUNO JÁ REALIZOU: (VALIDARCHAMADA)
+app.post('/professor/chamada/aluno', async (req,res)=>{
+    try {        
+        let reqs = await model.ResponderChamadas.findAll({
+            where: {
+                idAluno: req.body.aluno,
+                codigoTurma: req.body.codigoTurma
+            }
+        });
+        if (reqs){
+            res.status(202).send(reqs);
+        }}
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+});
+
+// ==================================================================
+
+// ====================================================
+// PESQUISA DA QUNATIDADE DE ALUNOS EM UMA TURMA PARA PORCENTAGEM: (REALIZARCHAMADA)
+
+app.post('/professor/porcentagem/aluno', async (req,res) => {
+    try{
+        let reqs = await model.ResponderChamadas.findAndCountAll({
+            where: {
+                'idAluno': req.body.aluno,
+                'codigoTurma': req.body.codigoTurma
+            },
+            raw: true,
+        });
+        if(reqs){
+            let reqs2 = await model.Chamadas.findAndCountAll({
+                where: {
+                    'codigoTurma': req.body.codigoTurma
+                },
+                raw: true,
+            });
+            if(reqs2){
+                res.status(202).send([reqs.count, reqs2.count]);
+            }
+        }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+})
+
+// ====================================================
+
+// ====================================================
+// EXCLUIR TURMA: (CRIARCHAMADA)
+app.delete('/aluno/turma/sair', async (req,res) =>{
+    try {
+        let reqs = await model.Alunos.findOne({
+            where: {
+                matricula: req.body.aluno,
+            },
+            raw: true
+        });
+        if (reqs) {
+            let reqs1 = await model.EntrarTurmas.destroy({
+                where: {
+                    'idAluno': reqs.idAluno,
+                    'codigoTurma': req.body.codigoTurma
+                }
+            });
+            if(reqs1){
+                res.status(403).send(reqs1);
+            }
+        }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+})
+
+// ====================================================
+
 // ==================================================================
 // ==================================================================
 // ==================================================================
