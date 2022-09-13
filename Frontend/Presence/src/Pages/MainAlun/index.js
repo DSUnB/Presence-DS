@@ -13,6 +13,14 @@ import { Context } from '../../context/Provider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import IconC from 'react-native-vector-icons/FontAwesome';
 import IconA from 'react-native-vector-icons/Feather';
+import moment from 'moment';
+import 'moment/locale/pt-br';
+
+// =========================================================
+// GERAÇÃO DA DATA EM PORTUGUES:
+moment().format();
+moment.locale('pt-br');
+// =========================================================
 
 const EmptyListMessage = ({item}) => {
   return (
@@ -158,7 +166,8 @@ export default function MainAlun({ navigation }) {
               },
               body: JSON.stringify({
                   aluno: json.matricula,
-                  codigoTurma: chamada
+                  codigoTurma: chamada,
+                  mes: moment().format('MMMM'),
               })                 
           });
           let res= await reqs.json();

@@ -37,7 +37,7 @@ export default function Provider({children}) {
                 falta, setFalta,
                 chamadasFeita, setChamadasFeita,
                 nome, setNome,
-                curso, setCurso
+                curso, setCurso,
             }}>
             {children}
         </Context.Provider>

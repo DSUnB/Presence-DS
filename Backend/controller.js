@@ -575,7 +575,8 @@ app.post('/aluno/chamada/pesquisar', async (req,res)=>{
             let reqs1 = await model.ResponderChamadas.findAll({
                 where: {
                     idAluno: reqs.idAluno,
-                    codigoTurma: req.body.codigoTurma
+                    codigoTurma: req.body.codigoTurma,
+                    mesNominal: req.body.mes
                 }
             });
             if (reqs1){
@@ -636,7 +637,8 @@ app.post('/professor/chamada/aluno', async (req,res)=>{
         let reqs = await model.ResponderChamadas.findAll({
             where: {
                 idAluno: req.body.aluno,
-                codigoTurma: req.body.codigoTurma
+                codigoTurma: req.body.codigoTurma,
+                mesNominal: req.body.mes
             }
         });
         if (reqs){
@@ -708,6 +710,25 @@ app.delete('/aluno/turma/sair', async (req,res) =>{
 })
 
 // ====================================================
+
+app.post('/professor/chamada/filtrar', async (req,res) => {
+    try{
+        let reqs = await model.Chamadas.findAll({
+            where: {
+                'codigoTurma': req.body.codigoTurma,
+                'mes': req.body.mes,
+                'ano': req.body.ano,
+            },
+            raw: true,
+        });
+        if(reqs){
+            res.status(403).send(reqs);
+        }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+})
 
 // ==================================================================
 // ==================================================================

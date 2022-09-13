@@ -11,10 +11,10 @@ const EmptyListMessage = ({item}) => {
     // Flat List Item
     <View>
       <Text style={{ fontFamily: "poppinsr", fontSize: 18, textAlign: 'center',}}>
-        O aluno não respondeu nenhuma chamada
+        O aluno não marcou presença este mês
       </Text>
       <Text style={{ fontFamily: "poppinsr", fontSize: 13, textAlign: 'center'}}>
-        Não esqueça de mostrar o código de suas chamadas
+        Tente filtrar o mês ou mande os códigos de suas chamadas
       </Text>
     </View>   
   );

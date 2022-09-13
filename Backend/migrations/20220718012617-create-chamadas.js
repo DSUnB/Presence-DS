@@ -35,7 +35,7 @@ module.exports = {
       },
       mes: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       mesNominal: {
         allowNull: false,

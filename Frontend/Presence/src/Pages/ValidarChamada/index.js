@@ -16,6 +16,14 @@ import Inputs from "../../components/inputs";
 import { Context } from '../../context/Provider';
 import ProgressBarIP from "../../components/ProgressBarIP";
 import IconCa from 'react-native-vector-icons/MaterialCommunityIcons';
+import moment from 'moment';
+import 'moment/locale/pt-br';
+
+// =========================================================
+// GERAÇÃO DA DATA EM PORTUGUES:
+moment().format();
+moment.locale('pt-br');
+// =========================================================
 
 const EmptyListMessage = ({item}) => {
   return (
@@ -227,6 +235,7 @@ export default function ValidarChamada({ navigation }) {
           body: JSON.stringify({
               aluno: json.matricula,
               codigoTurma: codTurma,
+              mes: moment().format('MMMM'),
           })                 
       });
       let res= await reqs.json();

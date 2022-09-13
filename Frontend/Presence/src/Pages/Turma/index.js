@@ -5,6 +5,14 @@ import IconP from 'react-native-vector-icons/Ionicons';
 import config from "../../config/config.json";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Context } from '../../context/Provider';
+import moment from 'moment';
+import 'moment/locale/pt-br';
+
+// =========================================================
+// GERAÇÃO DA DATA EM PORTUGUES:
+moment().format();
+moment.locale('pt-br');
+// =========================================================
 
 const EmptyListMessage = ({item}) => {
   return (
@@ -46,6 +54,7 @@ export default function Turma({ navigation }) {
       body: JSON.stringify({
         aluno: aluno,
         codigoTurma: codTurma,
+        mes: moment().format('MMMM')
       })
     });
     let res= await reqs.json();
