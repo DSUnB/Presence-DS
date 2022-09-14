@@ -108,6 +108,7 @@ export default function MainProf({ navigation }) {
         let response = await AsyncStorage.getItem('userData');
         let json = JSON.parse(response);
         if (materia != '' && nomeTurma != ''){
+          if (materia != null && nomeTurma != null){
             let reqs = await fetch(config.urlRootNode+'professor/turma/criar', {
                 method: 'POST',
                 headers:{
@@ -151,6 +152,14 @@ export default function MainProf({ navigation }) {
                 }, 1000);
                 
             }
+          }
+          else{
+            setIsLoading(false);
+            setMessage('Preencha os Campos!');
+                setTimeout(() => {
+                    setMessage(null);
+                }, 2000);
+          }
         }
         else{
             setIsLoading(false);
@@ -182,7 +191,7 @@ export default function MainProf({ navigation }) {
         null
       }
       else{
-        setDADOS(res)
+        setDADOS(res.sort(res.curso));
       }
     }
     // =========================================================

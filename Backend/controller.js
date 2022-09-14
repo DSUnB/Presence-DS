@@ -128,7 +128,10 @@ app.post('/professor/turma/criar', async (req,res)=>{
                 'nomeTurma': req.body.nomeTurma,
                 'idProfessor': reqs.idProfessor,
                 'createdAt': new Date(),
-                'updatedAt': new Date()
+                'updatedAt': new Date(),
+                order: [
+                    ['curso', 'ASC'],
+                ],
             });
             if (reqs1){
                 res.status(202).send(reqs1);
@@ -162,6 +165,9 @@ app.post('/professor/turma/obter', async (req,res) => {
                 where: {
                     idProfessor: reqs.idProfessor
                 },
+                order: [
+                    ['curso', 'ASC'],
+                ],
                 raw: true,
             });
            if (reqs1){
@@ -198,6 +204,9 @@ app.post('/aluno/turma/obter', async (req,res) => {
                 where: {
                     idAluno: reqs.idAluno
                 },
+                order: [
+                    ['curso', 'ASC'],
+                ],
                 raw: true,
             });
             if (reqs1){
@@ -241,7 +250,10 @@ app.post('/aluno/turma/entrar', async (req,res)=>{
                 'curso': reqs1.curso,
                 "nomeTurma": reqs1.nomeTurma,
                 'createdAt': new Date(),
-                'updatedAt': new Date()
+                'updatedAt': new Date(),
+                order: [
+                    ['curso', 'ASC'],
+                ],
             });
             if (reqs2){
                 res.status(202).send(reqs2);
@@ -683,7 +695,7 @@ app.post('/professor/porcentagem/aluno', async (req,res) => {
 // ====================================================
 
 // ====================================================
-// EXCLUIR TURMA: (CRIARCHAMADA)
+// ALUNO SAIR DA TIRMA: (VALIDARCHAMADA)
 app.delete('/aluno/turma/sair', async (req,res) =>{
     try {
         let reqs = await model.Alunos.findOne({
@@ -700,7 +712,15 @@ app.delete('/aluno/turma/sair', async (req,res) =>{
                 }
             });
             if(reqs1){
-                res.status(403).send(reqs1);
+                let reqs2 = await model.ResponderChamadas.destroy({
+                    where: {
+                        'idAluno': reqs.idAluno,
+                        'codigoTurma': req.body.codigoTurma
+                    }
+                });
+                if (reqs2) {
+                    res.status(202).send(res);
+                }
             }
         }
     }
@@ -710,7 +730,7 @@ app.delete('/aluno/turma/sair', async (req,res) =>{
 })
 
 // ====================================================
-
+// FUNÇÃO PARA LEVANTAR A PORCENTAGEM DE PRESENÇA DO ALUNO ESPECÍFICO AO PROFESSOR:
 app.post('/professor/chamada/filtrar', async (req,res) => {
     try{
         let reqs = await model.Chamadas.findAll({

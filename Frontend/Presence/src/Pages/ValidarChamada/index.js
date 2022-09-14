@@ -52,7 +52,7 @@ export default function ValidarChamada({ navigation }) {
   const [modalActive3, setModalActive3] = useState(false);
   const [modalActive2, setModalActive2] = useState(false);
   const [modalActive1, setModalActive1] = useState(false);
-  const [codigoChamada, setCodigoChamada] = useState(false);
+  const [codigoChamada, setCodigoChamada] = useState(null);
   const [message, setMessage] = useState(false);
   const {nomeCurso, setNomeCurso} = useContext(Context);
   const {codTurma} = useContext(Context);
@@ -127,6 +127,7 @@ export default function ValidarChamada({ navigation }) {
           FaltaAluno();
           setTimeout(() => {
             setMessage(null);
+            setCodigoChamada(null);
           }, 1000);
         }
       }
@@ -270,6 +271,11 @@ export default function ValidarChamada({ navigation }) {
     }
 }
   // ========================================================= 
+
+  function FecharModal(){
+    setCodigoChamada(null);
+    setModalActive3(false);
+  }
 
 
   const options = [
@@ -442,7 +448,7 @@ export default function ValidarChamada({ navigation }) {
                 style={style.close}
                 name="close-circle"
                 size={30}
-                onPress={() => setModalActive3(false)}/>
+                onPress={() => FecharModal()}/>
               <Text style={{ fontFamily: "poppinsb", fontSize: 15, color: "white" }}>
                 Insira o código da chamada
               </Text>
