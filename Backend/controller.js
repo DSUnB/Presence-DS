@@ -228,7 +228,6 @@ app.post('/aluno/turma/obter', async (req,res) => {
 // CRIAR DADO EM ENTRAR TURMA: (MAINALUN)
 app.post('/aluno/turma/entrar', async (req,res)=>{
     try {        
-
         let reqs = await model.Alunos.findOne({
             where: {
                 matricula: req.body.aluno,
@@ -273,21 +272,34 @@ app.post('/aluno/turma/entrar', async (req,res)=>{
 // CRIAR CHAMADA: (CRIARCHAMADA)
 app.post('/professor/chamada/criar', async (req,res) =>{
     try {
-        let reqs = await model.Chamadas.create({
-            'id': req.body.codigoChamada,
-            'codigoChamada': req.body.codigoChamada,
-            'codigoTurma': req.body.codigoTurma,
-            'situation': true,
-            'dia': req.body.dia,
-            'diaNominal': req.body.diaNominal,
-            'mes': req.body.mes,
-            'mesNominal': req.body.mesNominal,
-            'ano': req.body.ano,
-            'createAt': new Date(),
-            'updatedAt': new Date()
+        let reqs0 = await model.Chamadas.findOne({
+            where: {
+                codigoTurma: req.body.codigoTurma,
+                dia: req.body.dia,
+                mes: req.body.mes,
+                ano: req.body.ano
+            } 
         });
-        if(reqs){
-            res.status(202).send(reqs);
+        if (reqs0 != null){
+            res.status(202).send(JSON.stringify('202.1'));
+        }
+        else {
+            let reqs = await model.Chamadas.create({
+                'id': req.body.codigoChamada,
+                'codigoChamada': req.body.codigoChamada,
+                'codigoTurma': req.body.codigoTurma,
+                'situation': true,
+                'dia': req.body.dia,
+                'diaNominal': req.body.diaNominal,
+                'mes': req.body.mes,
+                'mesNominal': req.body.mesNominal,
+                'ano': req.body.ano,
+                'createAt': new Date(),
+                'updatedAt': new Date()
+            });
+            if(reqs){
+                res.status(202).send(reqs);
+            }
         }
     }
     catch{

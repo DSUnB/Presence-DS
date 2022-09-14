@@ -70,14 +70,15 @@ export default function CriarChamada({ navigation }) {
     });
     let res= await reqs.json();
     if(res){
-      setMesFiltrada(DistribMes(res.mes));
+      setMesFiltrada(DistribMes());
       setAnoFiltrada(date.slice(0,4));
       setChamadas(res);
       setModalActive3(false);
     }
   }
 
-  function DistribMes(mes){
+  function DistribMes(){
+    var mes
     switch (date.slice(5,7)){
       case "01":
         mes = "Janeiro";
@@ -128,6 +129,7 @@ export default function CriarChamada({ navigation }) {
   const [materia, setMateria] = useState(false);
   const [message, setMessage]=useState(null);
   const [message2, setMessage2]=useState(null);
+  const [message3, setMessage3]=useState(null);
   const {nomeCurso, setNomeCurso} = useContext(Context);
   const {codTurma} = useContext(Context);
   const {setCodChamada, codChamada} = useContext(Context);
@@ -165,19 +167,34 @@ export default function CriarChamada({ navigation }) {
       
       let res= await reqs.json();
       if(res){
+        if (res == '202.1'){
+            setMessage3('Você já realizou uma chamada hoje!');
+            setTimeout(() => {
+              setMessage3(null);
+              setModalActive4(false);
+            }, 2000);
+        }
         if (res.situation == true){
             setCodChamada(res.codigoChamada);
             setSituation(true);
-            setModalActive4(false);
+            setMessage3('Chamada criada!');
             setPorcentagem1([1,0]);
-            navigation.navigate('Chamada')
+            setTimeout(() => {
+              setMessage3(null);
+              setModalActive4(false);
+              navigation.navigate('Chamada');
+            }, 2000);
         }
         else if (res.situation == false){
             setCodChamada(res.codigoChamada);
             setSituation(false);
-            setModalActive4(false);
+            setMessage3('Chamada criada!');
             setPorcentagem1([1,0]);
-            navigation.navigate('Chamada')
+            setTimeout(() => {
+              setMessage3(null);
+              setModalActive4(false);
+              navigation.navigate('Chamada');
+            }, 2000);
         }
       }
   }
@@ -510,7 +527,7 @@ export default function CriarChamada({ navigation }) {
             </Text>
 
               {message2 && (
-                <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message}</Text>
+                <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message2}</Text>
               )}
             <View style={style.alinhamento}>
               <PressablesModal
@@ -576,9 +593,13 @@ export default function CriarChamada({ navigation }) {
           >
             <Text
               style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", paddingBottom: 50 }}
-            >
+              >
               Deseja criar uma chamada?
             </Text>
+                {message3 && (
+                    <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message3}</Text>
+                  )}
+
               <View style={style.alinhamento}>
                 <PressablesModal
                   texto="Sim"

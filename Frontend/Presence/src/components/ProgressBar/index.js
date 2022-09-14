@@ -7,8 +7,7 @@ import { Context } from '../../context/Provider';
 export default function ProgressBar(props){
   
   const {Porcentagem1 , setPorcentagem1} = useContext(Context);
-  console.log(Porcentagem1);
-  // Banco de dados fake
+  // Banco de dados real oficial
   function Porcent(){
     return (Porcentagem1[1]/Porcentagem1[0])*100;
   }
