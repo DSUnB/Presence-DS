@@ -70,11 +70,12 @@ const Progress = ({Alunosp, Alunosi, height}) => {
             borderRadius: height,
             position:'absolute',
             display:"flex",
+            alignContent:'center',
             alignItems:"flex-end",
             left:0,
-            top:0,}}
+            top:0}}
           >
-            <Text style={{fontFamily:'poppinsm', marginRight:3, fontSize: 13 , color:'white'}}>{P}%</Text>
+            <Text style={{fontFamily:'poppinsm', marginRight:3, fontSize: 13, color:'white'}}>{P}%</Text>
           </LinearGradient>
         </Animated.View>
         </View>

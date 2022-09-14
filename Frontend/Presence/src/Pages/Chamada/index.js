@@ -193,7 +193,7 @@ export default function Chamada({navigation}){
 
         <View style={style.closeturma}>
           {situation && (
-            <BtnClose iconeMCI="sort-variant-lock" texto="Fechar chamada" click={() => setModalActive2(true)}/>
+            <BtnClose iconeMCI="sort-variant-lock" texto="Fechar chamada" click={() => setModalActive2(true)}/>    
           )}
           {!situation && (
             <BtnOpen iconeMCI="sort-variant-lock-open" texto="Reabrir Chamada" click={() => setModalActive3(true)} />
@@ -242,7 +242,7 @@ export default function Chamada({navigation}){
             <Text
               style={{ fontFamily: "poppinsr", fontSize: 8.7, color: "#FEF5F5", paddingBottom: 60 }}
             >
-              (Isso impedirá o aluno de efetuar a presença desta chamada)
+              (Isso irá bloquear a realização desta chamada)
             </Text>
             <View style={style.alinhamento}>
               <PressablesModal
@@ -274,7 +274,7 @@ export default function Chamada({navigation}){
             <Text
               style={{ fontFamily: "poppinsr", fontSize: 8.7, color: "#FEF5F5", paddingBottom: 60 }}
             >
-              (Isso permitirá ao aluno efetuar a presença desta chamada)
+              (Isso irá desbloquar a realização desta chamada)
             </Text>
             <View style={style.alinhamento}>
               <PressablesModal
