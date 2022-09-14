@@ -46,7 +46,6 @@ export default function StatusAlun({ navigation }) {
     });
     let res= await reqs.json();
     if (res) {
-        console.log(res);
         setChamadasFeita(res);
     }
 }
