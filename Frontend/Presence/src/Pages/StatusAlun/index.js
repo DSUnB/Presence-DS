@@ -3,6 +3,7 @@ import { SafeAreaView, View, Text, StyleSheet, Pressable, FlatList, ImageBackgro
 import PressableBtnBack from "../../components/PressableBtnBack";
 import { LinearGradient } from "expo-linear-gradient";
 import ProgressBarIP2 from "../../components/ProgressBarlP2";
+import config from "../../config/config.json";
 import IconCa from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Context } from '../../context/Provider';
 
@@ -24,7 +25,32 @@ export default function StatusAlun({ navigation }) {
 
   const {curso} = useContext(Context);
   const {nome} = useContext(Context);
-  const {chamadasFeita} = useContext(Context);
+  const {idAlun} = useContext(Context);
+  const {codTurma} = useContext(Context);
+  const {chamadasFeita, setChamadasFeita} = useContext(Context);
+
+    // =========================================================
+  // FUNÇÃO PARA FILTRAR CHAMADAS RESPONDIDAS PELO ALUNO:
+  async function FiltrarChamada(mes){
+    let reqs = await fetch(config.urlRootNode+'professor/filtrar/chamada', {
+      method: 'POST',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        aluno: idAlun,
+        codigoTurma: codTurma,
+        mesNominal: mes,
+      })
+    });
+    let res= await reqs.json();
+    if (res) {
+        console.log(res);
+        setChamadasFeita(res);
+    }
+}
+  // ===============================================================
 
   const options = [
     { label: 'Janeiro'},
@@ -90,7 +116,7 @@ export default function StatusAlun({ navigation }) {
                 data={options}
                 horizontal
                 renderItem={({item}) =>(
-                <Pressable style={{ paddingRight:24 }}>
+                <Pressable style={{ paddingRight:24 }} onPress={() => FiltrarChamada(item.label.toLowerCase())}>
                   <View>
                     <LinearGradient
                       colors = {['#2C5E7A' , '#338995']}

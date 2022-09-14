@@ -39,6 +39,7 @@ export default function Turma({ navigation }) {
   const {setCurso} = useContext(Context);
   const {setChamadasFeita} = useContext(Context);
   const {setPorcentagem1} = useContext(Context);
+  const {setIdAlun} = useContext(Context);
 
   // =============================================
 
@@ -98,6 +99,7 @@ export default function Turma({ navigation }) {
   function EnvioDados(dado1, dado2, dado3){
     setCurso(dado1);
     setNome(dado2);
+    setIdAlun(dado3);
     ChamadasAluno(dado3);
     // navigation.navigate('StatusAlun');
   }

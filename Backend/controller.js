@@ -763,6 +763,64 @@ app.post('/professor/chamada/filtrar', async (req,res) => {
 })
 
 // ==================================================================
+
+// FILTRAGEM DAS CHAMADAS RESPONDIDAS PELO ALUNO:
+
+app.post('/filtrar/chamada', async (req,res) => {
+    try{
+        let reqs = await model.Alunos.findOne({
+            where: {
+                matricula: req.body.aluno,
+            },
+            raw: true
+        });
+        if (reqs) {
+            let reqs1 = await model.ResponderChamadas.findAll({
+                where: {
+                    'idAluno': reqs.idAluno,
+                    'codigoTurma': req.body.codigoTurma,
+                    'mesNominal': req.body.mesNominal,
+                },
+                raw: true,
+            });
+            if(reqs1){
+                res.status(202).send(reqs1);
+            }
+        }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+})
+
+// ====================================================
+
+// ==================================================================
+
+// FILTRAGEM DAS CHAMADAS RESPONDIDAS PELO ALUNO:
+
+app.post('/professor/filtrar/chamada', async (req,res) => {
+    try{
+        let reqs = await model.ResponderChamadas.findAll({
+            where: {
+                'idAluno': req.body.aluno,
+                'codigoTurma': req.body.codigoTurma,
+                'mesNominal': req.body.mesNominal,
+            },
+            raw: true,
+        });
+        if(reqs){
+            res.status(202).send(reqs);
+        }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+})
+
+// ====================================================
+
+
 // ==================================================================
 // ==================================================================
 

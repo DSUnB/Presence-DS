@@ -272,6 +272,30 @@ export default function ValidarChamada({ navigation }) {
 }
   // ========================================================= 
 
+  // =========================================================
+  // FUNÇÃO PARA FILTRAR CHAMADAS RESPONDIDAS PELO ALUNO:
+  async function FiltrarChamada(mes){
+    let response = await AsyncStorage.getItem('userData');
+      let json = JSON.parse(response);
+    let reqs = await fetch(config.urlRootNode+'filtrar/chamada', {
+      method: 'POST',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        aluno: json.matricula,
+        codigoTurma: codTurma,
+        mesNominal: mes,
+      })
+    });
+    let res= await reqs.json();
+    if (res) {
+        setChamadasFeita(res);
+    }
+}
+  // ========================================================= 
+
   function FecharModal(){
     setCodigoChamada(null);
     setModalActive3(false);
@@ -328,7 +352,7 @@ export default function ValidarChamada({ navigation }) {
                 data={options}
                 horizontal
                 renderItem={({item}) =>(
-                <Pressable style={{ paddingRight:24 }}>
+                <Pressable style={{ paddingRight:24 }} onPress={() => FiltrarChamada(item.label.toLowerCase())}>
                   <View>
                     <LinearGradient
                       colors = {['#2C5E7A' , '#338995']}
