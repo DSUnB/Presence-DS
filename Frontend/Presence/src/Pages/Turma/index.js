@@ -32,7 +32,7 @@ export default function Turma({ navigation }) {
 
   const onRefreshSeach = () => {
     setResfreshing(true);
-    console.log('onrefresh');
+    console.log('Back, façam a função de vcs aqui para recarregarem a flatlist');
     setResfreshing(false);
   }
 
