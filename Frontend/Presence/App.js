@@ -45,7 +45,7 @@ export default function App() {
   <Provider>
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName="Turma" 
+        initialRouteName="Chamada" 
         screenOptions={{
           headerShown: false
         }}

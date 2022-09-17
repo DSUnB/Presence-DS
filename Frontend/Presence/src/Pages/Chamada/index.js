@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { SafeAreaView, Text, StyleSheet, View, Animated, Modal, FlatList, Pressable, ImageBackground } from 'react-native';
+import { SafeAreaView, Text, StyleSheet, View, Modal, FlatList, Pressable, ImageBackground, RefreshControl } from 'react-native';
 import PressableBtnBack from '../../components/PressableBtnBack';
 import ProgressBar from '../../components/ProgressBar';
 import IconO from 'react-native-vector-icons/Octicons';
@@ -43,6 +43,8 @@ export default function Chamada({navigation}){
   const [modalActive2, setModalActive2] = useState(false);
   const [modalActive3, setModalActive3] = useState(false);
   const [message, setMessage] = useState(null);
+  const [isRefreshing, setResfreshing] = useState(false);
+  const [lastSearchParams, setSearchParams] = useState('');
 
   const {codChamada} = useContext(Context);
   const {situation, setSituation} = useContext(Context);
@@ -140,6 +142,13 @@ export default function Chamada({navigation}){
       navigation.navigate('CriarChamada');
     }
   }
+
+  const onRefreshSeach = () => {
+    setResfreshing(true);
+    console.log('Back, façam a função de vcs aqui para recarregarem a flatlist');
+    setResfreshing(false);
+  }
+
   // =========================================================
   return (
   <ImageBackground source={require('../../assets/images/VetorChamada2.png')} resizeMode="cover">
@@ -172,7 +181,9 @@ export default function Chamada({navigation}){
                     </View>
                   </View>
                 </Pressable>
-          )} />
+            )}
+            refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefreshSeach} />}
+          />
         </View>
 
         <View style={style.voltar}>
