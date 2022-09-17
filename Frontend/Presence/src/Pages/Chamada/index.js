@@ -13,7 +13,9 @@ import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
 import { Context } from "../../context/Provider";
 import moment from 'moment';
-import 'moment/locale/pt-br'
+import 'moment/locale/pt-br';
+import PressableCircle from "../../components/pressableCircle";
+import PressableCircleRed from "../../components/pressableCircleRed";
 
 // =========================================================
 // GERAÇÃO DA DATA EM PORTUGUES:
@@ -191,13 +193,21 @@ export default function Chamada({navigation}){
           <ProgressBar titulo='Presença Geral'/>
         </View>
 
-        <View style={style.closeturma}>
+        <View style={style.footer}>
+          <View style={{paddingBottom: 35}}>
           {situation && (
-            <BtnClose iconeMCI="sort-variant-lock" texto="Fechar chamada" click={() => setModalActive2(true)}/>    
+            <PressableCircle
+              iconeF="unlock"
+              click={() => setModalActive2(true)}
+            />
           )}
           {!situation && (
-            <BtnOpen iconeMCI="sort-variant-lock-open" texto="Reabrir Chamada" click={() => setModalActive3(true)} />
+            <PressableCircleRed
+            iconeF="lock"
+            click={() => setModalActive3(true)}
+          />
           )}
+          </View>
         </View>
 
         {/* Modais */}
@@ -349,15 +359,6 @@ const style = StyleSheet.create({
         top: 55,
         left: 20,
     },
-
-    closeturma:{
-      position:"absolute",
-      display: "flex",
-      zIndex: 2,
-      bottom: 65,
-      left: 50,
-    },
-
     opcoes: {
         position:"absolute",
         zIndex: 2,
@@ -413,5 +414,23 @@ const style = StyleSheet.create({
         shadowRadius: 5,
         elevation: 3.5,
       },
-
+      footer:{
+        zIndex: 2,
+        position: "absolute",
+        flexDirection: "row",
+        bottom: 0,
+        width: 450,
+        height: 65,
+        backgroundColor: "#fff",
+        alignItems: "center",
+        justifyContent: "space-around",
+        borderWidth: 0,
+        borderRadius: 2,
+        borderColor: 'rgba(221,221,221)',
+        borderTopWidth: 0.2,
+        shadowColor: 'rgb(221,221,221)',
+        shadowOpacity: 0.8,
+        shadowRadius: 5,
+        elevation: 0.3,
+      },
 })
