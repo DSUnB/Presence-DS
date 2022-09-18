@@ -164,7 +164,7 @@ export default function Chamada({navigation}){
             ListEmptyComponent={EmptyListMessage}
             data={respostaChamada}
             renderItem={({ item }) => (
-                <Pressable onPress={() => navigation.navigate('CriarChamada')}>
+                <Pressable>
                   <View style={style.alunos}>
                     <View style={{flexDirection: "row", justifyContent:'space-between'}}>
                       <IconX style={{position:'absolute', alignSelf:'center', marginLeft:14, paddingTop:12, color:'#7B6F72'}} name='person-outline' size={18}/>

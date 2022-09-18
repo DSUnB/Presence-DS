@@ -8,9 +8,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import config from "../../config/config.json";
 
 
-export default function ProgressBarIP(props){
+export default function ProgressBarIP2(props){
   
-  const {Porcentagem1, setPorcentagem1} = useContext(Context);
+  const {Porcentagem1} = useContext(Context);
 
   // Banco de dados fake
   let PresEft = Porcentagem1[0];
@@ -79,7 +79,6 @@ export default function ProgressBarIP(props){
               position:'absolute',
               display:"flex",
               alignItems:"flex-end",
-              alignContent:'center',
               left:0,
               top:0,}}
             >

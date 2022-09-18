@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     codigoTurma: DataTypes.STRING,
     dia: DataTypes.STRING,
     diaNominal: DataTypes.STRING,
-    mes: DataTypes.INTEGER,
+    mes: DataTypes.STRING,
     mesNominal: DataTypes.STRING,
     ano: DataTypes.STRING,
     situation: DataTypes.BOOLEAN,

@@ -16,6 +16,14 @@ import Inputs from "../../components/inputs";
 import { Context } from '../../context/Provider';
 import ProgressBarIP from "../../components/ProgressBarIP";
 import IconCa from 'react-native-vector-icons/MaterialCommunityIcons';
+import moment from 'moment';
+import 'moment/locale/pt-br';
+
+// =========================================================
+// GERAÇÃO DA DATA EM PORTUGUES:
+moment().format();
+moment.locale('pt-br');
+// =========================================================
 
 const EmptyListMessage = ({item}) => {
   return (
@@ -44,13 +52,14 @@ export default function ValidarChamada({ navigation }) {
   const [modalActive3, setModalActive3] = useState(false);
   const [modalActive2, setModalActive2] = useState(false);
   const [modalActive1, setModalActive1] = useState(false);
-  const [codigoChamada, setCodigoChamada] = useState(false);
+  const [codigoChamada, setCodigoChamada] = useState(null);
   const [message, setMessage] = useState(false);
   const {nomeCurso, setNomeCurso} = useContext(Context);
   const {codTurma} = useContext(Context);
   const {falta, setFalta} = useContext(Context);
   const {setDADOS} = useContext(Context);
-  const {chamadasFeita} = useContext(Context);
+  const {chamadasFeita, setChamadasFeita} = useContext(Context);
+  const {setPorcentagem1} = useContext(Context);
 
   // ================================================================
   // FUNÇÃO PARA REALIZAR CHAMADA:
@@ -118,7 +127,7 @@ export default function ValidarChamada({ navigation }) {
           FaltaAluno();
           setTimeout(() => {
             setMessage(null);
-            setModalActive3(false);
+            setCodigoChamada(null);
           }, 1000);
         }
       }
@@ -155,6 +164,7 @@ export default function ValidarChamada({ navigation }) {
         }
         else {
           setFalta(res[0] - res[1])
+          PesquisarChamadas();
         }
       }
     }
@@ -176,18 +186,120 @@ export default function ValidarChamada({ navigation }) {
         })
       });
       let res= await reqs.json();
-      if (res === '404'){
+      if (res == '404'){
           navigation.navigate('Login');
       }
-      if (res === '403'){
+      else if (res == '403'){
         navigation.navigate('Login');
       }
-      else if (res){
+      else{
         setDADOS(res);
         navigation.navigate('MainAlun');
         }
     };
   // =========================================================
+
+  // ====================================================================
+  // FUNÇÃO PARA EXCUIR TURMA:
+  async function SairTurma(){
+    let response = await AsyncStorage.getItem('userData');
+    let json = JSON.parse(response);
+    let reqs = await fetch(config.urlRootNode+'aluno/turma/sair', {
+        method: 'DELETE',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          aluno: json.matricula,
+          codigoTurma: codTurma
+        })
+      });
+      let res= await reqs.json();
+      if (res == '202') {
+        ObterTurmaAlun();
+      }
+  }
+  // ====================================================================
+
+   // =========================================================
+  // FUNÇÃO PARA PESQUISAR QUAIS CHAMADAS FOI REALIZADO:
+  async function PesquisarChamadas(){
+    let response = await AsyncStorage.getItem('userData');
+    let json = JSON.parse(response);
+      let reqs = await fetch(config.urlRootNode+'aluno/chamada/pesquisar', {
+          method: 'POST',
+          headers:{
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              aluno: json.matricula,
+              codigoTurma: codTurma,
+              mes: moment().format('MMMM'),
+          })                 
+      });
+      let res= await reqs.json();
+      if (res) {
+        setChamadasFeita(res);
+        PorcentagemAluno();
+      }
+}
+
+// =========================================================
+
+// =========================================================
+  // FUNÇÃO PARA AJUSTAR A PORCENTAGEM DA CHAMADA:
+  async function PorcentagemAluno(){
+    let response = await AsyncStorage.getItem('userData');
+      let json = JSON.parse(response);
+    let reqs = await fetch(config.urlRootNode+'aluno/porcentagem/chamada', {
+      method: 'POST',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        aluno: json.matricula,
+        codigoTurma: codTurma,
+      })
+    });
+    let res= await reqs.json();
+    if (res) {
+        setPorcentagem1(res);
+        setModalActive3(false);
+    }
+}
+  // ========================================================= 
+
+  // =========================================================
+  // FUNÇÃO PARA FILTRAR CHAMADAS RESPONDIDAS PELO ALUNO:
+  async function FiltrarChamada(mes){
+    let response = await AsyncStorage.getItem('userData');
+      let json = JSON.parse(response);
+    let reqs = await fetch(config.urlRootNode+'filtrar/chamada', {
+      method: 'POST',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        aluno: json.matricula,
+        codigoTurma: codTurma,
+        mesNominal: mes,
+      })
+    });
+    let res= await reqs.json();
+    if (res) {
+        setChamadasFeita(res);
+    }
+}
+  // ========================================================= 
+
+  function FecharModal(){
+    setCodigoChamada(null);
+    setModalActive3(false);
+  }
 
 
   const options = [
@@ -240,7 +352,7 @@ export default function ValidarChamada({ navigation }) {
                 data={options}
                 horizontal
                 renderItem={({item}) =>(
-                <Pressable style={{ paddingRight:24 }}>
+                <Pressable style={{ paddingRight:24 }} onPress={() => FiltrarChamada(item.label.toLowerCase())}>
                   <View>
                     <LinearGradient
                       colors = {['#2C5E7A' , '#338995']}
@@ -321,7 +433,7 @@ export default function ValidarChamada({ navigation }) {
               <View style={style.alinhamento}>
                 <PressablesModal
                   texto="Sim"
-                  click={() => handleCloseAndRoute()}/>
+                  click={() => SairTurma()}/>
                 <PressablesModal2
                   texto="Não"
                   click={() => setModalActive2(false)}/>
@@ -360,7 +472,7 @@ export default function ValidarChamada({ navigation }) {
                 style={style.close}
                 name="close-circle"
                 size={30}
-                onPress={() => setModalActive3(false)}/>
+                onPress={() => FecharModal()}/>
               <Text style={{ fontFamily: "poppinsb", fontSize: 15, color: "white" }}>
                 Insira o código da chamada
               </Text>

@@ -13,6 +13,14 @@ import { Context } from '../../context/Provider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import IconC from 'react-native-vector-icons/FontAwesome';
 import IconA from 'react-native-vector-icons/Feather';
+import moment from 'moment';
+import 'moment/locale/pt-br';
+
+// =========================================================
+// GERAÇÃO DA DATA EM PORTUGUES:
+moment().format();
+moment.locale('pt-br');
+// =========================================================
 
 const EmptyListMessage = ({item}) => {
   return (
@@ -65,6 +73,8 @@ export default function MainAlun({ navigation }) {
   const {setCodTurma} = useContext(Context);
   const {setFalta} = useContext(Context);
   const {setChamadasFeita} = useContext(Context);
+  const {setPorcentagem1} = useContext(Context);
+
 
   // =========================================================
 
@@ -156,13 +166,15 @@ export default function MainAlun({ navigation }) {
               },
               body: JSON.stringify({
                   aluno: json.matricula,
-                  codigoTurma: chamada
+                  codigoTurma: chamada,
+                  mes: moment().format('MMMM'),
               })                 
           });
           let res= await reqs.json();
           if (res) {
             setChamadasFeita(res);
-            navigation.navigate('ValidarChamada');
+            PorcentagemAluno(chamada);
+            // navigation.navigate('ValidarChamada');
           }
     }
   
@@ -223,6 +235,37 @@ export default function MainAlun({ navigation }) {
   // =========================================================
 
   // =========================================================
+  // FUNÇÃO PARA AJUSTAR A PORCENTAGEM DA CHAMADA:
+  async function PorcentagemAluno(turma){
+    let response = await AsyncStorage.getItem('userData');
+      let json = JSON.parse(response);
+    let reqs = await fetch(config.urlRootNode+'aluno/porcentagem/chamada', {
+      method: 'POST',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        aluno: json.matricula,
+        codigoTurma: turma,
+      })
+    });
+    let res= await reqs.json();
+    if (res) {
+      if (res[1] == 0) {
+        setPorcentagem1([1,1]);
+        navigation.navigate('ValidarChamada');
+      }
+      else {
+        setPorcentagem1(res);
+        navigation.navigate('ValidarChamada');
+      }
+    }
+}
+  // ========================================================= 
+
+  // =========================================================
+  // FUNÇÃO PARA ENVIAR DADOS PARA A PRÓXIMA PÁGINA:
   function EnvioDados(dado1, dado2, dado3){
     setNomeCurso(dado1 + " - " + dado2);
     setCodTurma(dado3);

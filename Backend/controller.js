@@ -128,7 +128,10 @@ app.post('/professor/turma/criar', async (req,res)=>{
                 'nomeTurma': req.body.nomeTurma,
                 'idProfessor': reqs.idProfessor,
                 'createdAt': new Date(),
-                'updatedAt': new Date()
+                'updatedAt': new Date(),
+                order: [
+                    ['curso', 'ASC'],
+                ],
             });
             if (reqs1){
                 res.status(202).send(reqs1);
@@ -162,6 +165,9 @@ app.post('/professor/turma/obter', async (req,res) => {
                 where: {
                     idProfessor: reqs.idProfessor
                 },
+                order: [
+                    ['curso', 'ASC'],
+                ],
                 raw: true,
             });
            if (reqs1){
@@ -198,6 +204,9 @@ app.post('/aluno/turma/obter', async (req,res) => {
                 where: {
                     idAluno: reqs.idAluno
                 },
+                order: [
+                    ['curso', 'ASC'],
+                ],
                 raw: true,
             });
             if (reqs1){
@@ -219,7 +228,6 @@ app.post('/aluno/turma/obter', async (req,res) => {
 // CRIAR DADO EM ENTRAR TURMA: (MAINALUN)
 app.post('/aluno/turma/entrar', async (req,res)=>{
     try {        
-
         let reqs = await model.Alunos.findOne({
             where: {
                 matricula: req.body.aluno,
@@ -241,7 +249,10 @@ app.post('/aluno/turma/entrar', async (req,res)=>{
                 'curso': reqs1.curso,
                 "nomeTurma": reqs1.nomeTurma,
                 'createdAt': new Date(),
-                'updatedAt': new Date()
+                'updatedAt': new Date(),
+                order: [
+                    ['curso', 'ASC'],
+                ],
             });
             if (reqs2){
                 res.status(202).send(reqs2);
@@ -261,21 +272,34 @@ app.post('/aluno/turma/entrar', async (req,res)=>{
 // CRIAR CHAMADA: (CRIARCHAMADA)
 app.post('/professor/chamada/criar', async (req,res) =>{
     try {
-        let reqs = await model.Chamadas.create({
-            'id': req.body.codigoChamada,
-            'codigoChamada': req.body.codigoChamada,
-            'codigoTurma': req.body.codigoTurma,
-            'situation': true,
-            'dia': req.body.dia,
-            'diaNominal': req.body.diaNominal,
-            'mes': req.body.mes,
-            'mesNominal': req.body.mesNominal,
-            'ano': req.body.ano,
-            'createAt': new Date(),
-            'updatedAt': new Date()
+        let reqs0 = await model.Chamadas.findOne({
+            where: {
+                codigoTurma: req.body.codigoTurma,
+                dia: req.body.dia,
+                mes: req.body.mes,
+                ano: req.body.ano
+            } 
         });
-        if(reqs){
-            res.status(202).send(reqs);
+        if (reqs0 != null){
+            res.status(202).send(JSON.stringify('202.1'));
+        }
+        else {
+            let reqs = await model.Chamadas.create({
+                'id': req.body.codigoChamada,
+                'codigoChamada': req.body.codigoChamada,
+                'codigoTurma': req.body.codigoTurma,
+                'situation': true,
+                'dia': req.body.dia,
+                'diaNominal': req.body.diaNominal,
+                'mes': req.body.mes,
+                'mesNominal': req.body.mesNominal,
+                'ano': req.body.ano,
+                'createAt': new Date(),
+                'updatedAt': new Date()
+            });
+            if(reqs){
+                res.status(202).send(reqs);
+            }
         }
     }
     catch{
@@ -561,7 +585,7 @@ app.post('/aluno/falta/obter', async (req,res)=>{
     }
 });
 // ====================================================
-
+// PESQUISAR QUAIS CHAMADAS O ALUNO JÁ REALIZOU: (VALIDARCHAMADA)
 app.post('/aluno/chamada/pesquisar', async (req,res)=>{
     try {        
 
@@ -575,7 +599,8 @@ app.post('/aluno/chamada/pesquisar', async (req,res)=>{
             let reqs1 = await model.ResponderChamadas.findAll({
                 where: {
                     idAluno: reqs.idAluno,
-                    codigoTurma: req.body.codigoTurma
+                    codigoTurma: req.body.codigoTurma,
+                    mesNominal: req.body.mes
                 }
             });
             if (reqs1){
@@ -589,7 +614,213 @@ app.post('/aluno/chamada/pesquisar', async (req,res)=>{
 });
 
 // ==================================================================
+
+// ====================================================
+// PESQUISA DA QUNATIDADE DE ALUNOS EM UMA TURMA PARA PORCENTAGEM: (REALIZARCHAMADA)
+
+app.post('/aluno/porcentagem/chamada', async (req,res) => {
+    try{
+        let reqs = await model.Alunos.findOne({
+            where: {
+                matricula: req.body.aluno,
+            },
+            raw: true
+        });
+        if (reqs) {
+            let reqs1 = await model.ResponderChamadas.findAndCountAll({
+                where: {
+                    'idAluno': reqs.idAluno,
+                    'codigoTurma': req.body.codigoTurma
+                },
+                raw: true,
+            });
+            if(reqs1){
+                let reqs2 = await model.Chamadas.findAndCountAll({
+                    where: {
+                        'codigoTurma': req.body.codigoTurma
+                    },
+                    raw: true,
+                });
+                if(reqs2){
+                    res.status(202).send([reqs1.count, reqs2.count]);
+                }
+        }
+        }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+})
+
+// ====================================================
+
+// ====================================================
+// PESQUISAR QUAIS CHAMADAS O ALUNO JÁ REALIZOU: (VALIDARCHAMADA)
+app.post('/professor/chamada/aluno', async (req,res)=>{
+    try {        
+        let reqs = await model.ResponderChamadas.findAll({
+            where: {
+                idAluno: req.body.aluno,
+                codigoTurma: req.body.codigoTurma,
+                mesNominal: req.body.mes
+            }
+        });
+        if (reqs){
+            res.status(202).send(reqs);
+        }}
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+});
+
 // ==================================================================
+
+// ====================================================
+// PESQUISA DA QUNATIDADE DE ALUNOS EM UMA TURMA PARA PORCENTAGEM: (REALIZARCHAMADA)
+
+app.post('/professor/porcentagem/aluno', async (req,res) => {
+    try{
+        let reqs = await model.ResponderChamadas.findAndCountAll({
+            where: {
+                'idAluno': req.body.aluno,
+                'codigoTurma': req.body.codigoTurma
+            },
+            raw: true,
+        });
+        if(reqs){
+            let reqs2 = await model.Chamadas.findAndCountAll({
+                where: {
+                    'codigoTurma': req.body.codigoTurma
+                },
+                raw: true,
+            });
+            if(reqs2){
+                res.status(202).send([reqs.count, reqs2.count]);
+            }
+        }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+})
+
+// ====================================================
+
+// ====================================================
+// ALUNO SAIR DA TIRMA: (VALIDARCHAMADA)
+app.delete('/aluno/turma/sair', async (req,res) =>{
+    try {
+        let reqs = await model.Alunos.findOne({
+            where: {
+                matricula: req.body.aluno,
+            },
+            raw: true
+        });
+        if (reqs) {
+            let reqs1 = await model.EntrarTurmas.destroy({
+                where: {
+                    'idAluno': reqs.idAluno,
+                    'codigoTurma': req.body.codigoTurma
+                }
+            });
+            if(reqs1){
+                let reqs2 = await model.ResponderChamadas.destroy({
+                    where: {
+                        'idAluno': reqs.idAluno,
+                        'codigoTurma': req.body.codigoTurma
+                    }
+                });
+                if (reqs2) {
+                    res.status(202).send(JSON.stringify('202'));
+                }
+            }
+        }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+})
+
+// ====================================================
+// FUNÇÃO PARA LEVANTAR A PORCENTAGEM DE PRESENÇA DO ALUNO ESPECÍFICO AO PROFESSOR:
+app.post('/professor/chamada/filtrar', async (req,res) => {
+    try{
+        let reqs = await model.Chamadas.findAll({
+            where: {
+                'codigoTurma': req.body.codigoTurma,
+                'mes': req.body.mes,
+                'ano': req.body.ano,
+            },
+            raw: true,
+        });
+        if(reqs){
+            res.status(403).send(reqs);
+        }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+})
+
+// ==================================================================
+
+// FILTRAGEM DAS CHAMADAS RESPONDIDAS PELO ALUNO:
+
+app.post('/filtrar/chamada', async (req,res) => {
+    try{
+        let reqs = await model.Alunos.findOne({
+            where: {
+                matricula: req.body.aluno,
+            },
+            raw: true
+        });
+        if (reqs) {
+            let reqs1 = await model.ResponderChamadas.findAll({
+                where: {
+                    'idAluno': reqs.idAluno,
+                    'codigoTurma': req.body.codigoTurma,
+                    'mesNominal': req.body.mesNominal,
+                },
+                raw: true,
+            });
+            if(reqs1){
+                res.status(202).send(reqs1);
+            }
+        }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+})
+
+// ====================================================
+
+// ==================================================================
+
+// FILTRAGEM DAS CHAMADAS RESPONDIDAS PELO ALUNO:
+
+app.post('/professor/filtrar/chamada', async (req,res) => {
+    try{
+        let reqs = await model.ResponderChamadas.findAll({
+            where: {
+                'idAluno': req.body.aluno,
+                'codigoTurma': req.body.codigoTurma,
+                'mesNominal': req.body.mesNominal,
+            },
+            raw: true,
+        });
+        if(reqs){
+            res.status(202).send(reqs);
+        }
+    }
+    catch {
+        res.status(403).send(JSON.stringify('403'));
+    }
+})
+
+// ====================================================
+
+
 // ==================================================================
 // ==================================================================
 

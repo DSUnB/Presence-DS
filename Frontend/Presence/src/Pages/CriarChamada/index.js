@@ -54,46 +54,71 @@ export default function CriarChamada({ navigation }) {
   const [date, setDate] = useState('');
 
   /* Função criada para a atualização do mês de acordo com o calendário*/
-  function DiaMes(mes){
+
+  async function DiaMes(){
+    // console.log(date)
+    let reqs = await fetch(config.urlRootNode+'professor/chamada/filtrar', {
+      method: 'POST',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        codigoTurma: codTurma,
+        mes: date.slice(5,7),
+        ano: date.slice(0,4),
+      })
+    });
+    let res= await reqs.json();
+    if(res){
+      setMesFiltrada(DistribMes());
+      setAnoFiltrada(date.slice(0,4));
+      setChamadas(res);
+      setModalActive3(false);
+    }
+  }
+
+  function DistribMes(){
+    var mes
     switch (date.slice(5,7)){
       case "01":
-        mes = "Janeiro de " + date.slice(0,4);
+        mes = "Janeiro";
         break;
       case "02":
-        mes = "Fevereiro de " + date.slice(0,4);
+        mes = "Fevereiro";
         break;
       case "03":
-        mes = "Março de " + date.slice(0,4);
+        mes = "Março";
         break;
       case "04":
-        mes = "Abril de " + date.slice(0,4);
+        mes = "Abril";
         break;
       case "05":
-        mes = "Maio de " + date.slice(0,4);
+        mes = "Maio";
         break;
       case "06":
-        mes = "Junho de " + date.slice(0,4);
+        mes = "Junho";
         break;
       case "07":
-        mes = "Julho de " + date.slice(0,4);
+        mes = "Julho";
         break;
       case "08":
-        mes = "Agosto de " + date.slice(0,4);
+        mes = "Agosto";
         break;
       case "09":
-        mes = "Setembro de " + date.slice(0,4);
+        mes = "Setembro";
         break;
       case "10":
-        mes = "Outubro de " + date.slice(0,4);
+        mes = "Outubro";
         break;
       case "11":
-        mes = "Novembro de " + date.slice(0,4);
+        mes = "Novembro";
         break;
       case "12":
-        mes = "Dezembro de " + date.slice(0,4);
+        mes = "Dezembro";
         break;
     }
-    return mes
+    return mes;
   }
   //Const's criados para o aparecimento e desaparecimento dos modais
 
@@ -105,17 +130,21 @@ export default function CriarChamada({ navigation }) {
   const [materia, setMateria] = useState(false);
   const [message, setMessage]=useState(null);
   const [message2, setMessage2]=useState(null);
+  const [message3, setMessage3]=useState(null);
   const {nomeCurso, setNomeCurso} = useContext(Context);
   const {codTurma} = useContext(Context);
   const {setCodChamada, codChamada} = useContext(Context);
   const {setDADOS} = useContext(Context);
   const {setSituation} = useContext(Context);
-  const {chamadas} = useContext(Context);
+  const {chamadas, setChamadas} = useContext(Context);
   const {setDiaChamada} = useContext(Context);
   const {setMesNominalChamada} = useContext(Context);
   const {setRespostaChamada} = useContext(Context);
   const {setAlunosTurma} = useContext(Context);
   const {setPorcentagem1} = useContext(Context);
+  const [mesFiltrada, setMesFiltrada] = useState(moment().format('MMMM'));
+  const [anoFiltrada, setAnoFiltrada] = useState(moment().format('YYYY'));
+
 
   // ====================================================================
   // FUNÇÃO PARA CRIAR UMA CHAMADA:
@@ -139,19 +168,34 @@ export default function CriarChamada({ navigation }) {
       
       let res= await reqs.json();
       if(res){
+        if (res == '202.1'){
+            setMessage3('Você já realizou uma chamada hoje!');
+            setTimeout(() => {
+              setMessage3(null);
+              setModalActive4(false);
+            }, 2000);
+        }
         if (res.situation == true){
             setCodChamada(res.codigoChamada);
             setSituation(true);
-            setModalActive4(false);
+            setMessage3('Chamada criada!');
             setPorcentagem1([1,0]);
-            navigation.navigate('Chamada')
+            setTimeout(() => {
+              setMessage3(null);
+              setModalActive4(false);
+              navigation.navigate('Chamada');
+            }, 2000);
         }
         else if (res.situation == false){
             setCodChamada(res.codigoChamada);
             setSituation(false);
-            setModalActive4(false);
+            setMessage3('Chamada criada!');
             setPorcentagem1([1,0]);
-            navigation.navigate('Chamada')
+            setTimeout(() => {
+              setMessage3(null);
+              setModalActive4(false);
+              navigation.navigate('Chamada');
+            }, 2000);
         }
       }
   }
@@ -319,15 +363,12 @@ export default function CriarChamada({ navigation }) {
     });
     let res= await reqs.json();
     if (res) {
-      console.log(res);
       if (res[1] == 0){
         setAlunosTurma([1,0]);
-        console.log('Condição 1');
         navigation.navigate('Chamada');
       }
       else {
         setPorcentagem1(res);
-        console.log('Condição 2');
         navigation.navigate('Chamada');
       }
     }
@@ -336,7 +377,7 @@ export default function CriarChamada({ navigation }) {
 
   // =========================================================
   // FUNÇÃO PARA MOSTRAR CHAMADA ESPECÍFICA:
-  async function EnvioDados(dado1, dado2, dado3, dado4){
+  function EnvioDados(dado1, dado2, dado3, dado4){
     if (dado1 == 0){
       setSituation(false);
     }
@@ -347,6 +388,14 @@ export default function CriarChamada({ navigation }) {
     setDiaChamada(dado3);
     setMesNominalChamada(dado4[0].toUpperCase() + dado4.substring(1))
     PesquisarRespostas(dado2);
+    // navigation.navigate('Chamada');
+  }
+  // =========================================================
+
+  // =========================================================
+  // FUNÇÃO PARA MOSTRAR CHAMADA ESPECÍFICA:
+  function PermanenciaDadoCalendario(){
+    setModalActive3(true);
     // navigation.navigate('Chamada');
   }
   // =========================================================
@@ -378,7 +427,7 @@ export default function CriarChamada({ navigation }) {
           <Text style={{ fontFamily: "poppinsb", fontSize: 24, textAlign: 'center', paddingLeft: 15, marginTop: 14 }}>{codTurma}</Text>
         </View>
 
-          <Pressable onPress={() => setModalActive3(true)}>
+          <Pressable onPress={() => PermanenciaDadoCalendario()}>
             <View style={style.search}>
               <IconLu style={{marginTop:15, marginBottom:15, marginLeft:15, color:'#ADA4A5'}}name='magnifier' size={20}/>
               <Text style={{fontFamily:'poppinsr' , fontSize:16, textAlign:'center', color:"#ADA4A5" , marginTop:13,}}> Procure por um mês </Text>
@@ -386,7 +435,7 @@ export default function CriarChamada({ navigation }) {
           </Pressable>
 
           <View style={{height: 145}}>
-            <Text style={{ fontFamily: "poppinsr", color: '#ADA4A5', textAlign:'center', fontSize: 17, marginBottom: 10}}>{DiaMes('')}</Text>
+            <Text style={{ fontFamily: "poppinsr", color: '#ADA4A5', textAlign:'center', fontSize: 17, marginBottom: 10}}>{mesFiltrada[0].toUpperCase() + mesFiltrada.substring(1)} de {anoFiltrada}</Text>
               <FlatList
                 showsHorizontalScrollIndicator={false}
                 horizontal
@@ -539,7 +588,7 @@ export default function CriarChamada({ navigation }) {
             <View style={{height: 36, width: 91, position: 'absolute', bottom: 38}}>
               <PressablesModal
                 texto="Ok"
-                click={() => setModalActive3(false)}
+                click={() => DiaMes(date)}
               />
             </View>
            </LinearGradient>
@@ -556,9 +605,13 @@ export default function CriarChamada({ navigation }) {
           >
             <Text
               style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", paddingBottom: 50 }}
-            >
+              >
               Deseja criar uma chamada?
             </Text>
+                {message3 && (
+                    <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message3}</Text>
+                  )}
+
               <View style={style.alinhamento}>
                 <PressablesModal
                   texto="Sim"

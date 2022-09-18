@@ -1,25 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { SafeAreaView, View, Text, StyleSheet, Pressable, FlatList, ImageBackground} from "react-native";
 import PressableBtnBack from "../../components/PressableBtnBack";
 import { LinearGradient } from "expo-linear-gradient";
-import ProgressBarIP from "../../components/ProgressBarIP";
+import ProgressBarIP2 from "../../components/ProgressBarlP2";
+import config from "../../config/config.json";
 import IconCa from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Context } from '../../context/Provider';
+
+const EmptyListMessage = ({item}) => {
+  return (
+    // Flat List Item
+    <View>
+      <Text style={{ fontFamily: "poppinsr", fontSize: 18, textAlign: 'center',}}>
+        O aluno não marcou presença este mês
+      </Text>
+      <Text style={{ fontFamily: "poppinsr", fontSize: 13, textAlign: 'center'}}>
+        Tente filtrar o mês ou mande os códigos de suas chamadas
+      </Text>
+    </View>   
+  );
+};
 
 export default function StatusAlun({ navigation }) {
 
-  const [alunx, setAlunx] = useState('GUILHERME D AVILA RODRIGUES CARNEIRO SAMPAIO');
-  const [materia, setMateria] = useState('Cálculo 2');
-
-  const DADOS = [
-    {ChamadaRealizada: '08 de Fevereiro'},
-    {ChamadaRealizada: '12 de Abril'},
-    {ChamadaRealizada: '01 de Junho'},
-    {ChamadaRealizada: '04 de Junho'},
-    {ChamadaRealizada: '10 de Novembro'},
-    {ChamadaRealizada: '29 de Julho'},
-    {ChamadaRealizada: '30 de Dezembro'},
-    {ChamadaRealizada: '07 de Janeiro'},
-  ];
+  const {curso} = useContext(Context);
+  const {nome} = useContext(Context);
+  const {idAlun} = useContext(Context);
+  const {codTurma} = useContext(Context);
+  const {chamadasFeita, setChamadasFeita} = useContext(Context);
+  
+    // =========================================================
+  // FUNÇÃO PARA FILTRAR CHAMADAS RESPONDIDAS PELO ALUNO:
+  async function FiltrarChamada(mes){
+    let reqs = await fetch(config.urlRootNode+'professor/filtrar/chamada', {
+      method: 'POST',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        aluno: idAlun,
+        codigoTurma: codTurma,
+        mesNominal: mes,
+      })
+    });
+    let res= await reqs.json();
+    if (res) {
+        setChamadasFeita(res);
+    }
+}
+  // ===============================================================
 
   const options = [
     { label: 'Janeiro'},
@@ -60,17 +90,17 @@ export default function StatusAlun({ navigation }) {
           </View>
             <View style={{flex:1, flexDirection:"column", alignContent:"center", left:15}}>
               <Text style={{ fontFamily: "poppinsm", fontSize: 16, color:'black'}}>
-              {alunx}
+              {nome}
             </Text>
             <Text style={{ fontFamily: "poppinsm", fontSize: 14, paddingTop: 5, color:'#7B6F72'}}>
-              Registro de {materia}
+              Registro de {curso}
             </Text>
           </View>
         </View>
 
         {/* Barra de progresso */}
         <View style={style.progress}>
-            <ProgressBarIP titulo='Índice de Presença'/>
+            <ProgressBarIP2 titulo='Índice de Presença'/>
         </View>
         
         {/* FlatList dos meses */}
@@ -85,7 +115,7 @@ export default function StatusAlun({ navigation }) {
                 data={options}
                 horizontal
                 renderItem={({item}) =>(
-                <Pressable style={{ paddingRight:24 }}>
+                <Pressable style={{ paddingRight:24 }} onPress={() => FiltrarChamada(item.label.toLowerCase())}>
                   <View>
                     <LinearGradient
                       colors = {['#2C5E7A' , '#338995']}
@@ -112,7 +142,8 @@ export default function StatusAlun({ navigation }) {
           {/* FlatList das chamadas realizadas */}
           <View style={style.lista}> 
             <FlatList
-              data={DADOS}
+              data={chamadasFeita}
+              ListEmptyComponent={EmptyListMessage}
               renderItem={({ item }) => (
                 <Pressable>
                   <View style={style.alunos}>
@@ -125,7 +156,7 @@ export default function StatusAlun({ navigation }) {
                           paddingLeft: 38,
                           paddingTop: 18,
                         }}>
-                          {item.ChamadaRealizada}
+                          {item.dia} de {item.mesNominal[0].toUpperCase() + item.mesNominal.substring(1)}
                       </Text>
                     </View>
                   </View>
