@@ -20,7 +20,7 @@ import IconCa from 'react-native-vector-icons/MaterialCommunityIcons';
 const EmptyListMessage = ({item}) => {
   return (
     // Flat List Item
-    <View>
+    <View style={{padding: 30}}>
       <Text style={{ fontFamily: "poppinsr", fontSize: 18, textAlign: 'center',}}>
         Você não respondeu nenhuma chamada!
       </Text>
@@ -240,7 +240,7 @@ export default function ValidarChamada({ navigation }) {
                 data={options}
                 horizontal
                 renderItem={({item}) =>(
-                <Pressable style={{ paddingRight:24 }} onPress={() => navigation.navigate('CriarChamada')}>
+                <Pressable style={{ paddingRight:24 }}>
                   <View>
                     <LinearGradient
                       colors = {['#2C5E7A' , '#338995']}
@@ -270,7 +270,7 @@ export default function ValidarChamada({ navigation }) {
               data={chamadasFeita}
               ListEmptyComponent={EmptyListMessage}
               renderItem={({ item }) => (
-                <Pressable onPress={() => navigate.navigation('ValidarChamada')}>
+                <Pressable>
                   <View style={style.alunos}>
                     <View style={{flexDirection: "row", justifyContent:'space-between'}}>
                       <IconCa style={{position:'absolute', alignSelf:'center', marginLeft:14, paddingTop:12, }} name='calendar-range-outline' size={18}/>

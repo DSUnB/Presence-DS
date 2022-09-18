@@ -236,12 +236,14 @@ export default function Chamada({navigation}){
                 name="close-circle"
                 size={30}
                 onPress={() => setModalActive1(false)}
-              />  
-          <Text style={{ fontFamily: "poppinsb", fontSize: 16, color: "white" , paddingTop: 50}}>
-            Código da chamada
-          </Text>
-          <View style={{backgroundColor:'#fff', width:258, height:39, borderRadius:14, marginBottom:20 }}>
-            <Text style={{fontFamily:'poppinsr', fontSize:24, marginTop:3, alignSelf:'center' }}>{codChamada}</Text>
+              />
+          <View style={{alignItems: 'center'}}>  
+            <Text style={{fontFamily: "poppinsb", fontSize: 16, color: "white"}}>
+              Código da chamada
+            </Text>
+            <View style={{backgroundColor:'#fff', width:200, height:39, borderRadius:14, marginTop: 5}}>
+              <Text style={{fontFamily:'poppinsr', fontSize:24, alignSelf:'center', marginTop: 3 }}>{codChamada}</Text>
+            </View>
           </View>  
           </LinearGradient>
       </View>
@@ -359,8 +361,8 @@ const style = StyleSheet.create({
     
     close: {
       position: 'absolute',
-      right: 20,
-      top: 20,
+      right: 15,
+      top: 15,
       color: "#ffffff",
     },
 
