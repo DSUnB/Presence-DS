@@ -731,7 +731,7 @@ app.delete('/aluno/turma/sair', async (req,res) =>{
                     }
                 });
                 if (reqs2) {
-                    res.status(202).send(res);
+                    res.status(202).send(JSON.stringify('202'));
                 }
             }
         }

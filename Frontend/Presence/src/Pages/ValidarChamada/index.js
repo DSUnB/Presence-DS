@@ -186,13 +186,13 @@ export default function ValidarChamada({ navigation }) {
         })
       });
       let res= await reqs.json();
-      if (res === '404'){
+      if (res == '404'){
           navigation.navigate('Login');
       }
-      if (res === '403'){
+      else if (res == '403'){
         navigation.navigate('Login');
       }
-      else if (res){
+      else{
         setDADOS(res);
         navigation.navigate('MainAlun');
         }
@@ -203,7 +203,7 @@ export default function ValidarChamada({ navigation }) {
   // FUNÇÃO PARA EXCUIR TURMA:
   async function SairTurma(){
     let response = await AsyncStorage.getItem('userData');
-      let json = JSON.parse(response);
+    let json = JSON.parse(response);
     let reqs = await fetch(config.urlRootNode+'aluno/turma/sair', {
         method: 'DELETE',
         headers:{
@@ -216,10 +216,10 @@ export default function ValidarChamada({ navigation }) {
         })
       });
       let res= await reqs.json();
-      if (res) {
-         ObterTurmaAlun();
+      if (res == '202') {
+        ObterTurmaAlun();
       }
-}
+  }
   // ====================================================================
 
    // =========================================================
