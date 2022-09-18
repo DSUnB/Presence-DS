@@ -79,6 +79,7 @@ export default function ProgressBarIP(props){
               position:'absolute',
               display:"flex",
               alignItems:"flex-end",
+              alignContent:'center',
               left:0,
               top:0,}}
             >

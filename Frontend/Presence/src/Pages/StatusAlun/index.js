@@ -28,7 +28,7 @@ export default function StatusAlun({ navigation }) {
   const {idAlun} = useContext(Context);
   const {codTurma} = useContext(Context);
   const {chamadasFeita, setChamadasFeita} = useContext(Context);
-
+  
     // =========================================================
   // FUNÇÃO PARA FILTRAR CHAMADAS RESPONDIDAS PELO ALUNO:
   async function FiltrarChamada(mes){
@@ -84,11 +84,11 @@ export default function StatusAlun({ navigation }) {
         </View>
 
         {/* Aluno(a) Selecionado */}
-        <View style={{ position: "absolute", top:115, left:40, width:"90%", flex:1, flexDirection:"row", alignItems: "center"}}>
+        <View style={{ position: "absolute", top:115, width:"90%", flex:1, flexDirection:"row", alignItems: "center"}}>
           <View style={{backgroundColor:"#dff1f1", borderRadius: 70, width:70, height:70}}>
-            <IconCa style={{ alignSelf:"center", padding:12 }} name='school-outline' size={45}/>
+            <IconCa style={{ alignSelf:"center", padding:17 }} name='school-outline' size={35}/>
           </View>
-            <View style={{flex:1, flexDirection:"column", alignContent:"center", left:25}}>
+            <View style={{flex:1, flexDirection:"column", alignContent:"center", left:15}}>
               <Text style={{ fontFamily: "poppinsm", fontSize: 16, color:'black'}}>
               {nome}
             </Text>
@@ -145,7 +145,7 @@ export default function StatusAlun({ navigation }) {
               data={chamadasFeita}
               ListEmptyComponent={EmptyListMessage}
               renderItem={({ item }) => (
-                <Pressable onPress={() => navigate.navigation('ValidarChamada')}>
+                <Pressable>
                   <View style={style.alunos}>
                     <View style={{flexDirection: "row", justifyContent:'space-between'}}>
                       <IconCa style={{position:'absolute', alignSelf:'center', marginLeft:14, paddingTop:12, }} name='calendar-range-outline' size={18}/>

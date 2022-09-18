@@ -9,7 +9,7 @@ export default function PressableCircle(props) {
   return (
     <Pressable onPress={props.click}>
         <LinearGradient
-            colors={['#69D498', '#43AC9B']}
+            colors={['#DB4E4E', '#D83434']}
             start={[ 0.9, 1 ]}
             style={style.circle}
         >

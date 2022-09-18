@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { SafeAreaView, Text, StyleSheet, View, Animated, Modal, FlatList, Pressable, ImageBackground } from 'react-native';
+import { SafeAreaView, Text, StyleSheet, View, Modal, FlatList, Pressable, ImageBackground, RefreshControl } from 'react-native';
 import PressableBtnBack from '../../components/PressableBtnBack';
 import ProgressBar from '../../components/ProgressBar';
 import IconO from 'react-native-vector-icons/Octicons';
@@ -13,7 +13,9 @@ import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
 import { Context } from "../../context/Provider";
 import moment from 'moment';
-import 'moment/locale/pt-br'
+import 'moment/locale/pt-br';
+import PressableCircle from "../../components/pressableCircle";
+import PressableCircleRed from "../../components/pressableCircleRed";
 
 // =========================================================
 // GERAÇÃO DA DATA EM PORTUGUES:
@@ -41,6 +43,8 @@ export default function Chamada({navigation}){
   const [modalActive2, setModalActive2] = useState(false);
   const [modalActive3, setModalActive3] = useState(false);
   const [message, setMessage] = useState(null);
+  const [isRefreshing, setResfreshing] = useState(false);
+  const [lastSearchParams, setSearchParams] = useState('');
 
   const {codChamada} = useContext(Context);
   const {situation, setSituation} = useContext(Context);
@@ -138,6 +142,13 @@ export default function Chamada({navigation}){
       navigation.navigate('CriarChamada');
     }
   }
+
+  const onRefreshSeach = () => {
+    setResfreshing(true);
+    console.log('Back, façam a função de vcs aqui para recarregarem a flatlist');
+    setResfreshing(false);
+  }
+
   // =========================================================
   return (
   <ImageBackground source={require('../../assets/images/VetorChamada2.png')} resizeMode="cover">
@@ -170,7 +181,9 @@ export default function Chamada({navigation}){
                     </View>
                   </View>
                 </Pressable>
-          )} />
+            )}
+            refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefreshSeach} />}
+          />
         </View>
 
         <View style={style.voltar}>
@@ -191,13 +204,21 @@ export default function Chamada({navigation}){
           <ProgressBar titulo='Presença Geral'/>
         </View>
 
-        <View style={style.closeturma}>
+        <View style={style.footer}>
+          <View style={{paddingBottom: 35}}>
           {situation && (
-            <BtnClose iconeMCI="sort-variant-lock" texto="Fechar chamada" click={() => setModalActive2(true)}/>
+            <PressableCircle
+              iconeF="unlock"
+              click={() => setModalActive2(true)}
+            />
           )}
           {!situation && (
-            <BtnOpen iconeMCI="sort-variant-lock-open" texto="Reabrir Chamada" click={() => setModalActive3(true)} />
+            <PressableCircleRed
+            iconeF="lock"
+            click={() => setModalActive3(true)}
+          />
           )}
+          </View>
         </View>
 
         {/* Modais */}
@@ -215,12 +236,14 @@ export default function Chamada({navigation}){
                 name="close-circle"
                 size={30}
                 onPress={() => setModalActive1(false)}
-              />  
-          <Text style={{ fontFamily: "poppinsb", fontSize: 16, color: "white" , paddingTop: 50}}>
-            Código da chamada
-          </Text>
-          <View style={{backgroundColor:'#fff', width:258, height:39, borderRadius:14, marginBottom:20 }}>
-            <Text style={{fontFamily:'poppinsr', fontSize:24, marginTop:3, alignSelf:'center' }}>{codChamada}</Text>
+              />
+          <View style={{alignItems: 'center'}}>  
+            <Text style={{fontFamily: "poppinsb", fontSize: 16, color: "white"}}>
+              Código da chamada
+            </Text>
+            <View style={{backgroundColor:'#fff', width:200, height:39, borderRadius:14, marginTop: 5}}>
+              <Text style={{fontFamily:'poppinsr', fontSize:24, alignSelf:'center', marginTop: 3 }}>{codChamada}</Text>
+            </View>
           </View>  
           </LinearGradient>
       </View>
@@ -242,7 +265,7 @@ export default function Chamada({navigation}){
             <Text
               style={{ fontFamily: "poppinsr", fontSize: 8.7, color: "#FEF5F5", paddingBottom: 60 }}
             >
-              (Isso impedirá o aluno de efetuar a presença desta chamada)
+              (Isso irá bloquear a realização desta chamada)
             </Text>
             <View style={style.alinhamento}>
               <PressablesModal
@@ -274,7 +297,7 @@ export default function Chamada({navigation}){
             <Text
               style={{ fontFamily: "poppinsr", fontSize: 8.7, color: "#FEF5F5", paddingBottom: 60 }}
             >
-              (Isso permitirá ao aluno efetuar a presença desta chamada)
+              (Isso irá desbloquar a realização desta chamada)
             </Text>
             <View style={style.alinhamento}>
               <PressablesModal
@@ -338,8 +361,8 @@ const style = StyleSheet.create({
     
     close: {
       position: 'absolute',
-      right: 20,
-      top: 20,
+      right: 15,
+      top: 15,
       color: "#ffffff",
     },
 
@@ -349,15 +372,6 @@ const style = StyleSheet.create({
         top: 55,
         left: 20,
     },
-
-    closeturma:{
-      position:"absolute",
-      display: "flex",
-      zIndex: 2,
-      bottom: 65,
-      left: 50,
-    },
-
     opcoes: {
         position:"absolute",
         zIndex: 2,
@@ -413,5 +427,23 @@ const style = StyleSheet.create({
         shadowRadius: 5,
         elevation: 3.5,
       },
-
+      footer:{
+        zIndex: 2,
+        position: "absolute",
+        flexDirection: "row",
+        bottom: 0,
+        width: 450,
+        height: 65,
+        backgroundColor: "#fff",
+        alignItems: "center",
+        justifyContent: "space-around",
+        borderWidth: 0,
+        borderRadius: 2,
+        borderColor: 'rgba(221,221,221)',
+        borderTopWidth: 0.2,
+        shadowColor: 'rgb(221,221,221)',
+        shadowOpacity: 0.8,
+        shadowRadius: 5,
+        elevation: 0.3,
+      },
 })

@@ -32,11 +32,10 @@ const style = StyleSheet.create({
     },
 
     texto:{
-        position: "absolute",
         fontFamily:'poppinsb',
         fontSize: 18,
-        left:75,
-        top:29,
+        alignSelf:"center",
+        top:27,
     },
 
     button:{

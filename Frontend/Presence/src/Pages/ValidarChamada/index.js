@@ -1,8 +1,7 @@
 
 import React, { useState, useContext } from "react";
-import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable, FlatList,  ScrollView, ImageBackground} from "react-native";
+import { SafeAreaView, View, Text, StyleSheet, Modal, Pressable, FlatList, ImageBackground} from "react-native";
 import PressableBtnBack from "../../components/PressableBtnBack";
-import PressablesConf from "../../components/pressablesConf";
 import PressableCircle from "../../components/pressableCircle";
 import IconO from 'react-native-vector-icons/Octicons';
 import IconLo from 'react-native-vector-icons/MaterialIcons';
@@ -11,6 +10,7 @@ import PressablesModal from "../../components/pressablesModalS";
 import PressablesModal2 from "../../components/pressableModalN";
 import config from "../../config/config.json";
 import IconX from 'react-native-vector-icons/Ionicons';
+import IconA from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Inputs from "../../components/inputs";
 import { Context } from '../../context/Provider';
@@ -28,7 +28,7 @@ moment.locale('pt-br');
 const EmptyListMessage = ({item}) => {
   return (
     // Flat List Item
-    <View>
+    <View style={{padding: 30}}>
       <Text style={{ fontFamily: "poppinsr", fontSize: 18, textAlign: 'center',}}>
         Você não respondeu nenhuma chamada!
       </Text>
@@ -477,8 +477,13 @@ export default function ValidarChamada({ navigation }) {
                 Insira o código da chamada
               </Text>
               {message && (
-                <Text>{message}</Text>
-              )}
+                  <>
+                    <View style={{display:'flex' , flexDirection:'row'}}>
+                    <IconA name='alert-triangle' size={20} style={{marginRight:10, color:'#fff'}}/>
+                    <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message}</Text>
+                    </View>
+                  </>
+                )}
               <Inputs place="Código da chamada" iconeF="check" onChange={(text) => setCodigoChamada(text)}/>
               <PressablesModal
                 texto="Validar"
