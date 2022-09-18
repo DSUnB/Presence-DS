@@ -33,20 +33,18 @@ export default function Turma({ navigation }) {
   // =============================================
   // DECLARAÇÕES DE STATES E CONTEXTOS:
 
-  const {alunosTurma} = useContext(Context);
+  const {alunosTurma, setAlunosTurma} = useContext(Context);
   const {codTurma} = useContext(Context);
   const {setNome} = useContext(Context);
   const {setCurso} = useContext(Context);
   const {setChamadasFeita} = useContext(Context);
   const {setPorcentagem1} = useContext(Context);
   const {setIdAlun} = useContext(Context);
-
   const [isRefreshing, setResfreshing] = useState(false);
-  const [lastSearchParams, setSearchParams] = useState();
 
   const onRefreshSeach = () => {
     setResfreshing(true);
-    console.log('Back, façam a função de vcs aqui para recarregarem a flatlist');
+    PesquisarAlunos();
     setResfreshing(false);
   }
 
@@ -113,6 +111,31 @@ export default function Turma({ navigation }) {
     // navigation.navigate('StatusAlun');
   }
   // =========================================================
+
+  // =========================================================
+  // FUNÇÃO PARA PESQUISAR ALUNOS DA TURMA:
+  async function PesquisarAlunos(){
+    let reqs = await fetch(config.urlRootNode+'professor/turma/alunos', {
+      method: 'POST',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        codigoTurma: codTurma,
+      })
+    });
+    let res= await reqs.json();
+    if (res) {
+      if (res == '403'){
+        null
+      }
+        else{
+          setAlunosTurma(res);
+        }
+    }
+}
+// =========================================================
 
   return (
     <ImageBackground source={require('../../assets/images/VetorMain.png')} resizeMode="cover">
