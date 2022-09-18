@@ -44,8 +44,6 @@ export default function Chamada({navigation}){
   const [modalActive3, setModalActive3] = useState(false);
   const [message, setMessage] = useState(null);
   const [isRefreshing, setResfreshing] = useState(false);
-  const [lastSearchParams, setSearchParams] = useState('');
-
   const {codChamada} = useContext(Context);
   const {situation, setSituation} = useContext(Context);
   const {codTurma} = useContext(Context);
@@ -53,6 +51,8 @@ export default function Chamada({navigation}){
   const {diaChamada, setDiaChamada} = useContext(Context);
   const {mesNominalChamada, setMesNominalChamada} = useContext(Context);
   const {respostaChamada, setRespostaChamada} = useContext(Context);
+  const {setPorcentagem1} = useContext(Context);
+  const {setAlunosTurma} = useContext(Context);
 
   // =========================================================
   // FUNÇÃO PARA ALTERAR ESTADO PARA DESATIVAR CHAMADA:
@@ -142,12 +142,67 @@ export default function Chamada({navigation}){
       navigation.navigate('CriarChamada');
     }
   }
+  // =========================================================
 
+  // =========================================================
+  // FUNÇÃO PARA PESQUISAR SE ALGUM ALUNO RESPONDEU A CHAMADA:
+  async function PesquisarRespostas(){
+    let reqs = await fetch(config.urlRootNode+'professor/chamada/resposta', {
+      method: 'POST',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        codigoChamada: codChamada,
+      })
+    });
+    let res= await reqs.json();
+    if (res){
+      if (res == '403'){
+        null;
+      }
+      else if (res){
+        setRespostaChamada(res);
+        PorcentagemPresenca();
+      }
+    }
+}
+// =========================================================
+
+// =========================================================
+  // FUNÇÃO PARA AJUSTAR A PORCENTAGEM DA CHAMADA:
+  async function PorcentagemPresenca(){
+    let reqs = await fetch(config.urlRootNode+'professor/porcentagem/chamada', {
+      method: 'POST',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        codigoTurma: codTurma,
+        codigoChamada: codChamada,
+      })
+    });
+    let res= await reqs.json();
+    if (res) {
+      if (res[1] == 0){
+        setAlunosTurma([1,0]);
+      }
+      else {
+        setPorcentagem1(res);
+      }
+    }
+}
+// =========================================================
+  
+  // =========================================================
   const onRefreshSeach = () => {
     setResfreshing(true);
-    console.log('Back, façam a função de vcs aqui para recarregarem a flatlist');
+    PesquisarRespostas();
     setResfreshing(false);
   }
+  // =========================================================
 
   // =========================================================
   return (

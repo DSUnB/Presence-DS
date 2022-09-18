@@ -133,7 +133,7 @@ export default function CriarChamada({ navigation }) {
   const [message3, setMessage3]=useState(null);
   const {nomeCurso, setNomeCurso} = useContext(Context);
   const {codTurma} = useContext(Context);
-  const {setCodChamada, codChamada} = useContext(Context);
+  const {setCodChamada} = useContext(Context);
   const {setDADOS} = useContext(Context);
   const {setSituation} = useContext(Context);
   const {chamadas, setChamadas} = useContext(Context);
