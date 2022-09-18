@@ -6,7 +6,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 export default function BtnClose(props) {
     return(
-        <View>
+        <View style={{display:"flex"}}>
             <Psb onPress={props.click}>
                 <LinearGradient
                 // Button Linear Gradient
@@ -32,11 +32,10 @@ const style = StyleSheet.create({
     },
 
     texto:{
-        position: "absolute",
         fontFamily:'poppinsb',
         fontSize: 18,
-        left:83,
-        top:29,
+        alignSelf:"center",
+        top:27,
     },
 
     button:{

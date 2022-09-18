@@ -12,6 +12,7 @@ import PressablesModal2 from "../../components/pressableModalN";
 import { LinearGradient } from "expo-linear-gradient";
 import Inputs from "../../components/inputs";
 import IconLu from 'react-native-vector-icons/SimpleLineIcons';
+import IconA from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DatePicker from 'react-native-modern-datepicker';
 import { Context } from '../../context/Provider';
@@ -446,8 +447,13 @@ export default function CriarChamada({ navigation }) {
                 Editar sua turma
               </Text>
               {message && (
-                <Text>{message}</Text>
-              )}
+                  <>
+                    <View style={{display:'flex', flexDirection:'row'}}>
+                    <IconA name='alert-triangle' size={20} style={{marginRight:10, color:'#fff'}}/>
+                    <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message}</Text>
+                    </View>
+                  </>
+                )}
               <Inputs place="Nova Matéria" iconeF="book" onChange={(text) => setMateria(text)}/>
               <Inputs place="Nova Turma" iconeO="people" onChange={(text) => setTurma(text)}/>
             </View>
@@ -472,14 +478,20 @@ export default function CriarChamada({ navigation }) {
           >
 
             <Text
-              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", paddingBottom: 50 }}
+              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", top: -25}}
               >
               Deseja deletar essa turma?
             </Text>
 
-              {message2 && (
-                <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message}</Text>
-              )}
+            {message2 && (
+                  <>
+                    <View style={{display:'flex' , flexDirection:'row', top:-25}}>
+                      <IconA name='alert-triangle' size={20} style={{marginRight:10, color:'#fff'}}/>
+                      <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message2}</Text>
+                    </View>
+                  </>
+                )}
+                
             <View style={style.alinhamento}>
               <PressablesModal
                 texto="Sim"
@@ -646,7 +658,7 @@ const style = StyleSheet.create({
     height: 173,
     borderRadius: 22,
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "center",
   },
   alinhamento: {
     position: 'absolute',

@@ -7,7 +7,7 @@ import IconCa from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function StatusAlun({ navigation }) {
 
-  const [alunx, setAlunx] = useState('Alana Gabriele Amorim Silva');
+  const [alunx, setAlunx] = useState('GUILHERME D AVILA RODRIGUES CARNEIRO SAMPAIO');
   const [materia, setMateria] = useState('Cálculo 2');
 
   const DADOS = [
@@ -54,11 +54,11 @@ export default function StatusAlun({ navigation }) {
         </View>
 
         {/* Aluno(a) Selecionado */}
-        <View style={{ position: "absolute", top:115, left:40, width:"90%", flex:1, flexDirection:"row", alignItems: "center"}}>
+        <View style={{ position: "absolute", top:115, width:"90%", flex:1, flexDirection:"row", alignItems: "center"}}>
           <View style={{backgroundColor:"#dff1f1", borderRadius: 70, width:70, height:70}}>
             <IconCa style={{ alignSelf:"center", padding:17 }} name='school-outline' size={35}/>
           </View>
-            <View style={{flex:1, flexDirection:"column", alignContent:"center", left:25}}>
+            <View style={{flex:1, flexDirection:"column", alignContent:"center", left:15}}>
               <Text style={{ fontFamily: "poppinsm", fontSize: 16, color:'black'}}>
               {alunx}
             </Text>
@@ -85,7 +85,7 @@ export default function StatusAlun({ navigation }) {
                 data={options}
                 horizontal
                 renderItem={({item}) =>(
-                <Pressable style={{ paddingRight:24 }} onPress={() => navigation.navigate('CriarChamada')}>
+                <Pressable style={{ paddingRight:24 }}>
                   <View>
                     <LinearGradient
                       colors = {['#2C5E7A' , '#338995']}
@@ -114,7 +114,7 @@ export default function StatusAlun({ navigation }) {
             <FlatList
               data={DADOS}
               renderItem={({ item }) => (
-                <Pressable onPress={() => navigate.navigation('ValidarChamada')}>
+                <Pressable>
                   <View style={style.alunos}>
                     <View style={{flexDirection: "row", justifyContent:'space-between'}}>
                       <IconCa style={{position:'absolute', alignSelf:'center', marginLeft:14, paddingTop:12, }} name='calendar-range-outline' size={18}/>

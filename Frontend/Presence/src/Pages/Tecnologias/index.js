@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, ImageBackground, Pressable } from 'react-native'
 import Tecnologia from '../../components/Tecnologia'
-import JS from '../../assets/images/javascript.png'
+import JS from '../../assets/images/JavaScript.png'
 import EXPO from '../../assets/images/Expo.png'
 import RN from '../../assets/images/ReactNative.png'
 import MYSQL from '../../assets/images/MySQL.png'

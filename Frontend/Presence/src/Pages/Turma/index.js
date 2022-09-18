@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { SafeAreaView, Text, StyleSheet, View, FlatList, Pressable, ImageBackground } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { SafeAreaView, Text, StyleSheet, View, FlatList, Pressable, ImageBackground, RefreshControl } from 'react-native';
 import PressableBtnBack from '../../components/PressableBtnBack';
 import IconP from 'react-native-vector-icons/Ionicons';
 import config from "../../config/config.json";
@@ -26,6 +26,15 @@ export default function Turma({ navigation }) {
   // DECLARAÇÕES DE STATES E CONTEXTOS:
 
   const {alunosTurma} = useContext(Context);
+
+  const [isRefreshing, setResfreshing] = useState(false);
+  const [lastSearchParams, setSearchParams] = useState();
+
+  const onRefreshSeach = () => {
+    setResfreshing(true);
+    console.log('Back, façam a função de vcs aqui para recarregarem a flatlist');
+    setResfreshing(false);
+  }
 
   // =============================================
 
@@ -66,7 +75,8 @@ export default function Turma({ navigation }) {
                 </View>
               </Pressable>
             )}
-          ></FlatList>
+            refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={onRefreshSeach} />}
+          />
         </View>   
       </SafeAreaView>
     </ImageBackground>
