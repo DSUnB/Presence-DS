@@ -131,6 +131,7 @@ export default function CriarChamada({ navigation }) {
   const [message, setMessage]=useState(null);
   const [message2, setMessage2]=useState(null);
   const [message3, setMessage3]=useState(null);
+  const [message4, setMessage4]=useState(null);
   const {nomeCurso, setNomeCurso} = useContext(Context);
   const {codTurma} = useContext(Context);
   const {setCodChamada} = useContext(Context);
@@ -169,9 +170,9 @@ export default function CriarChamada({ navigation }) {
       let res= await reqs.json();
       if(res){
         if (res == '202.1'){
-            setMessage3('Você já realizou uma chamada hoje!');
+            setMessage4('Você já fez uma chamada!');
             setTimeout(() => {
-              setMessage3(null);
+              setMessage4(null);
               setModalActive4(false);
             }, 2000);
         }
@@ -595,7 +596,7 @@ export default function CriarChamada({ navigation }) {
         </View>
       </Modal>
 
-        {/* Modal Confirmar */}
+        {/* Modal Confirmar chamada */}
         <Modal visible={modalActive4} animationType="fade" transparent={true}>
         <View style={style.fundoModal}>
           <LinearGradient
@@ -604,13 +605,23 @@ export default function CriarChamada({ navigation }) {
             style={style.modal2}
           >
             <Text
-              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", paddingBottom: 50 }}
+              style={{ fontFamily: "poppinsb", fontSize: 15, color: "white", top:-55, marginBottom:-55 }}
               >
               Deseja criar uma chamada?
             </Text>
                 {message3 && (
-                    <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message3}</Text>
-                  )}
+                     <View style={{display:'flex' , flexDirection:'row', alignItems:"center"}}>
+                     <IconA name='alert-triangle' size={15} style={{marginRight:10, color:'#fff'}}/>
+                     <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message3}</Text>
+                     </View>
+                )}
+
+                {message4 && (
+                     <View style={{display:'flex' , flexDirection:'row', alignItems:"center"}}>
+                     <IconA name='alert-triangle' size={15} style={{marginRight:10, color:'#fff'}}/>
+                     <Text style={{fontFamily:'poppinsr', fontSize:15, color:'#fff'}}>{message4}</Text>
+                     </View>
+                )}
 
               <View style={style.alinhamento}>
                 <PressablesModal
@@ -681,6 +692,7 @@ const style = StyleSheet.create({
   },
   fundoModal: {
     flex: 1,
+    flexDirection:"row",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0,0,0,0.2)",

@@ -730,7 +730,7 @@ app.delete('/aluno/turma/sair', async (req,res) =>{
                         'codigoTurma': req.body.codigoTurma
                     }
                 });
-                if (reqs2) {
+                if (reqs1) {
                     res.status(202).send(JSON.stringify('202'));
                 }
             }

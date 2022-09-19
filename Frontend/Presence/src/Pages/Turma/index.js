@@ -22,7 +22,7 @@ const EmptyListMessage = ({item}) => {
         Ainda não há alunos na sua turma.
       </Text>
       <Text style={{ fontFamily: "poppinsr", fontSize: 12, textAlign: 'center'}}>
-        Compartilhe o código da turma para que possam entrar!
+        Compartilhe o código da turma ou atualize a página!
       </Text>
     </View>    
   );
