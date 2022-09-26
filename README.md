@@ -57,5 +57,6 @@ Festival de Solstício| Finalização do projeto.
 ![Inserir um título](https://user-images.githubusercontent.com/101230741/188219800-057faebf-00f8-4edd-8fb6-ceddcf01e929.png)
 
 **Progresso**
-![Final do Banner](https://user-images.githubusercontent.com/101230741/188221910-4bb3dab1-41be-4d47-a861-2607bc5e3b2c.jpg)
+![Gráfico Readme Md ](https://user-images.githubusercontent.com/101230741/192329136-1914316e-3e29-4962-9a72-1e73d452eb48.png)
+
 
